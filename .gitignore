@@ -1,10 +1,12 @@
 # Default ignored files
-/shelf/
+/.idea/shelf/
 /workspace.xml
 
 .gradle
 **/build/
 !src/**/build/
+!**/src/main/**/build/
+!**/src/test/**/build/
 
 # Ignore Gradle GUI config
 gradle-app.setting
@@ -23,4 +25,13 @@ gradle-app.setting
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
 
