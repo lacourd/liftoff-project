@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 
 
 @Entity
-public class User extends AbstractEntity{
+public class User extends AbstractEntity {
 
     @NotNull
     private String username;
