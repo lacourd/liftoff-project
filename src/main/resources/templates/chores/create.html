@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head">
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+<body class="container">
+<header th:replace="fragments :: header"></header>
+<form method="post" action="/chores/create">
+    <div class="form-group">
+        <label>Name:
+            <input th:field="${chore.name}" class="form-control">
+        </label>
+        <p class="error" th:errors="${chore.name}"></p>
+    </div>
+    <div class="form-group">
+        <label>Description:
+            <input th:field="${chore.choreDescription}" class="form-control">
+        </label>
+        <p class="error" th:errors="${chore.choreDescription}"></p>
+    </div>
+    <div class="form-group">
+        <label>Assign to:
+            <select th:field="${chore.childAssigned}">
+                <option th:each="child : ${children}"
+                        th:value="${child.id}"
+                        th:text="${child.name}"></option>
+            </select>
+            <p class="error" th:errors="${chore.childAssigned}"></p>
+        </label>
+    </div>
+    <div class="form-group">
+        <label>Due Day:
+            <input th:field="${chore.dueDay}" class="form-control">
+        </label>
+        <p class="error" th:errors="${chore.dueDay}"></p>
+    </div>
+    <div class="form-group">
+        <label>Reward Points
+            <input th:field="${chore.rewardPoints}" class="form-control">
+        </label>
+        <p class="error" th:errors="${chore.rewardPoints}"></p>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Add Chore" class="btn btn-success">
+    </div>
+</form>
+
+</body>
+</html>
