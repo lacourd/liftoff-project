@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+
+<header th:replace="fragments :: header"></header>
+
+<form method="post" action="/rewards/create">
+   <div class="form-group">
+      <label>Name:
+         <input th:field="${reward.name}" class="form-control">
+      </label>
+      <p class="error" th:errors="${reward.name}"></p>
+   </div>
+   <div class="form-group">
+      <label>Description:
+         <input th:field="${reward.description}" class="form-control">
+      </label>
+      <p class="error" th:errors="${reward.description}"></p>
+   </div>
+   <div class="form-group">
+      <label>Reward Points
+         <input th:field="${reward.points}" class="form-control">
+      </label>
+      <p class="error" th:errors="${reward.points}"></p>
+   </div>
+   <div class="form-group">
+      <input type="submit" value="Add Reward" class="btn btn-success">
+   </div>
+</form>
+
+</body>
+</html>
