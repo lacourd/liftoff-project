@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+
+<header th:replace="fragments :: header"></header>
+
+<p th:unless="${rewards} and ${reward.size()}">No rewards!</p>
+<table class="table table-striped">
+   <thead>
+   <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Rewards Value</th>
+   </tr>
+   </thead>
+   <tr th:each="reward : ${rewards}">
+      <!--        <a th:href="'/reward/detail?rewardId=' + ${reward.id}"-->
+      <td th:text="${reward.name}"></td>
+      <td th:text="${reward.description}"></td>
+      <td th:text="${reward.points}"></td>
+   </tr>
+</table>
+
+
+</body>
+</html>
