@@ -5,7 +5,7 @@
 
 <header th:replace="fragments :: header"></header>
 
-<p th:unless="${rewards} and ${reward.size()}">No rewards!</p>
+<p th:unless="${rewards} and ${rewards.size()}">No rewards!</p>
 <table class="table table-striped">
    <thead>
    <tr>
