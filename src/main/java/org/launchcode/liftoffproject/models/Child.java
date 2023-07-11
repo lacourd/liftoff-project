@@ -1,8 +1,10 @@
 package org.launchcode.liftoffproject.models;
 
+import javax.persistence.Entity;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+@Entity
 public class Child extends User {
 
     @NotBlank(message = "Child's first name is required")

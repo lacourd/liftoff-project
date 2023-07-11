@@ -1,10 +1,13 @@
 package org.launchcode.liftoffproject.models;
 
+import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
+import java.util.List;
 
+@Entity
 public class Parent extends User {
 
     @NotBlank (message = "First Name is required")
@@ -18,13 +21,10 @@ public class Parent extends User {
 
 
     @ManyToOne
-    public void Child() {
-        ArrayList<Object> children = new ArrayList<>();
-    }
+    private List<Child> children = new ArrayList<>();
 
-    public void Chores() {
-        ArrayList<Object> chores = new ArrayList<>();
-    }
+    private List<Chore> chores = new ArrayList<>();
+
 
     public Parent(String firstName, String lastName) {
         this.firstName = firstName;
