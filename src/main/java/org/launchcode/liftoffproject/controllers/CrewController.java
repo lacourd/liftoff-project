@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping("rewards")
+@RequestMapping("crew")
 public class CrewController {
 
     @Autowired
@@ -25,7 +25,7 @@ public class CrewController {
 
     @GetMapping
     public String displayAllRewards(Model model) {
-        model.addAttribute("title","All Rewards");
+        model.addAttribute("title","All Crew Members");
         model.addAttribute("crew", Parent.getChildren());
         return "crew/index";
     };
