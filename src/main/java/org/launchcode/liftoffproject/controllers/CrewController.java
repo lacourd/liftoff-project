@@ -25,7 +25,7 @@ public class CrewController {
     @GetMapping
     public String displayAllRewards(Model model) {
         model.addAttribute("title","All Rewards");
-        model.addAttribute("crew", Parent.getCrew());
+        model.addAttribute("crew", Parent.getChildren());
         return "crew/index";
     };
 

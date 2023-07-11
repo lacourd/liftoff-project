@@ -19,7 +19,7 @@ public class Parent extends User {
     private String lastName;
 
     @OneToMany(mappedBy = "parent")
-    private List<Child> children = new ArrayList<>();
+    private static final List<Child> children = new ArrayList<>();
 
     @OneToMany(mappedBy = "parentCreator")
     private List<Chore> chores = new ArrayList<>();
@@ -48,5 +48,19 @@ public class Parent extends User {
         this.lastName = lastName;
     }
 
+    public static List<Child> getChildren() {
+        return children;
+    }
 
+    public void setChildren(List<Child> children) {
+        this.children = children;
+    }
+
+    public List<Chore> getChores() {
+        return chores;
+    }
+
+    public void setChores(List<Chore> chores) {
+        this.chores = chores;
+    }
 }
