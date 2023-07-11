@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+
+<header th:replace="fragments :: header"></header>
+
+<p th:unless="${crew} and ${crew.size()}">No crew members!</p>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Chores Assigned</th>
+        <th>Reward Points Earned</th>
+    </tr>
+    </thead>
+    <tr th:each="member : ${crew}">
+        <!--        <a th:href="'/reward/detail?rewardId=' + ${reward.id}"-->
+        <td th:text="${member.firstName + ' ' member.lastName}"></td>
+        <td>Add chores assigned here</td>
+        <td th:text="${member.rewardPoints}"></td>
+    </tr>
+</table>
+
+
+</body>
+</html>
