@@ -22,6 +22,8 @@ public class Child extends User {
     @ManyToOne
     private Parent parent;
 
+    public Child(){}
+
     public Child(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
