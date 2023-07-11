@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+
+<header th:replace="fragments :: header"></header>
+
+<p th:unless="${chorePerformances} and ${chorePerformances.size()}">No chore performances!</p>
+
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid black;
+        padding: 10px;
+    }
+
+    .table-striped tr:nth-of-type(odd) {
+        background-color: #f2f2f2;
+    }
+</style>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Chore</th>
+        <th>Child</th>
+        <th>Rating</th>
+    </tr>
+    </thead>
+    <tr th:each="chorePerformance : ${chorePerformances}">
+        <td th:text="${chorePerformance.chore}"></td>
+        <td th:text="${chorePerformance.child}"></td>
+        <td th:text="${chorePerformance.rating}"></td>
+    </tr>
+</table>
+
+
+</body>
+</html>
