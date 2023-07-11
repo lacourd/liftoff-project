@@ -1,6 +1,8 @@
 package org.launchcode.liftoffproject.models;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -17,6 +19,8 @@ public class Child extends User {
 
     private int points;
 
+    @ManyToOne
+    private Parent parent;
 
     public Child(String firstName, String lastName) {
         this.firstName = firstName;

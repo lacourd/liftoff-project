@@ -1,7 +1,7 @@
 package org.launchcode.liftoffproject.models;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
@@ -18,11 +18,10 @@ public class Parent extends User {
     @Size (max = 50, message = "Last Name is too long")
     private String lastName;
 
-
-
-    @ManyToOne
+    @OneToMany(mappedBy = "parent")
     private List<Child> children = new ArrayList<>();
 
+    @OneToMany(mappedBy = "parentCreator")
     private List<Chore> chores = new ArrayList<>();
 
 

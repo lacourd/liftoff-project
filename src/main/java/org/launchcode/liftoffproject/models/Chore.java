@@ -1,8 +1,6 @@
 package org.launchcode.liftoffproject.models;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +14,11 @@ public class Chore extends AbstractEntity{
     @NotBlank
     private String choreDescription;
 
-    @ManyToOne
+    @OneToOne
 //    will need to be a List<Child> eventually if we want to be able to assign a chore to multiple children
     private Child childAssigned;
 
+    @ManyToOne
     private Parent parentCreator;
 
     private boolean completed;
