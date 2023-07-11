@@ -1,5 +1,6 @@
 package org.launchcode.liftoffproject.controllers;
 
+import org.launchcode.liftoffproject.data.ChildRepository;
 import org.launchcode.liftoffproject.data.RewardRepository;
 import org.launchcode.liftoffproject.models.Parent;
 import org.launchcode.liftoffproject.models.Child;
@@ -20,7 +21,7 @@ import javax.validation.Valid;
 public class CrewController {
 
     @Autowired
-    private RewardRepository rewardRepository;
+    private ChildRepository childRepository;
 
     @GetMapping
     public String displayAllRewards(Model model) {
@@ -43,7 +44,7 @@ public class CrewController {
             model.addAttribute(new Child());
             return "crew/add";
         }
-        rewardRepository.save(newChild);
+        childRepository.save(newChild);
         return "redirect:";
     }
 
