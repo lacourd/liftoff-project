@@ -1,6 +1,7 @@
 package org.launchcode.liftoffproject.controllers;
 
 import org.launchcode.liftoffproject.data.UserRepository;
+import org.launchcode.liftoffproject.models.Parent;
 import org.launchcode.liftoffproject.models.User;
 import org.launchcode.liftoffproject.models.dto.LoginFormDTO;
 import org.launchcode.liftoffproject.models.dto.RegisterFormDTO;
@@ -75,9 +76,9 @@ public class AuthenticationController {
             return "register";
         }
 
-        User newUser = new User(registerFormDTO.getUsername(), registerFormDTO.getPassword());
-        userRepository.save(newUser);
-        setUserInSession(request.getSession(), newUser);
+        Parent newParent = new Parent(registerFormDTO.getUsername(), registerFormDTO.getPassword(), registerFormDTO.getFirstName(), registerFormDTO.getLastName());
+        userRepository.save(newParent);
+        setUserInSession(request.getSession(), newParent);
 
         return "redirect:";
     }
