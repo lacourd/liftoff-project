@@ -1,11 +1,22 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
+
 <body class="container">
 
-<h1>Yer Ship!</h1>
-
 <header th:replace="fragments :: header"></header>
+<h1> Welcome to Treasure TasK
+</h1>
+
+</body>
+
+<div class="button-container">
+    <a th:href="@{/register}"><button>Register</button></a>
+</div>
+
+<div class="button-container">
+    <a th:href="@{/login}"><button>Login</button></a>
+</div>
 
 </body>
 </html>
