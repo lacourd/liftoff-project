@@ -24,8 +24,10 @@ public class Parent extends User {
     @OneToMany(mappedBy = "parentCreator")
     private List<Chore> chores = new ArrayList<>();
 
+    public Parent() {}
 
-    public Parent(String firstName, String lastName) {
+    public Parent(String username, String password, String firstName, String lastName) {
+        super(username, password);
         this.firstName = firstName;
         this.lastName = lastName;
     }
