@@ -1,10 +1,7 @@
 package org.launchcode.liftoffproject.models;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotBlank;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Reward extends AbstractEntity {
@@ -15,10 +12,6 @@ public class Reward extends AbstractEntity {
     private String name;
 
     private String description;
-
-//    Assign reward to chore?
-//    @ManyToMany(mappedBy = "rewards")
-//    private final List<Chore> chores = new ArrayList<>();
 
     public Reward(String name, int points, String description) {
         this.name = name;
@@ -51,7 +44,5 @@ public class Reward extends AbstractEntity {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    //    public List<Chore> getChores() {return chores;}
 
 }
