@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https//www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body class="container">
+
+<table class="table table-striped">
+    <tr>
+        <th>Chore</th>
+        <td th:text="${chore.id}"></td>
+    </tr>
+    <tr>
+        <th>Description</th>
+        <td th:text="${chore.choreDetails.description}"></td>
+    </tr>
+    <tr>
+        <th>Due Date</th>
+        <td th:text="${chore.choreDetails.dueDate}"></td>
+    </tr>
+    <tr>
+        <th>Reward Points</th>
+        <td th:text="${chore.choreDetails.rewardPoints}"></td>
+    </tr>
+</table>
+
+</body>
+</html>
