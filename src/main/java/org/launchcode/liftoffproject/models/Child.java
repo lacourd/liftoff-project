@@ -3,6 +3,7 @@ package org.launchcode.liftoffproject.models;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -24,10 +25,19 @@ public class Child extends User {
 
     public Child(){}
 
-    public Child(String firstName, String lastName) {
+    public Child(String firstName, String lastName, Parent parent) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.parent = parent;
     }
+
+    public Child(String username, String password, String firstName, String lastName, Parent parent) {
+        super(username, password);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.parent = parent;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -50,5 +60,13 @@ public class Child extends User {
 
     public void setPoints(int points) {
         this.points = points;
+    }
+
+    public Parent getParent() {
+        return parent;
+    }
+
+    public void setParent(Parent parent) {
+        this.parent = parent;
     }
 }

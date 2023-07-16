@@ -8,15 +8,32 @@
 <form method="post" action="/crew/add">
     <div class="form-group">
         <label>First Name:
-            <input th:field="${child.firstName}" class="form-control">
+            <input th:field="${addCrewFormDTO.firstName}" class="form-control">
         </label>
-        <p class="error" th:errors="${child.firstName}"></p>
+        <p class="error" th:errors="${addCrewFormDTO.firstName}"></p>
     </div>
     <div class="form-group">
         <label>Last Name:
-            <input th:field="${child.lastName}" class="form-control">
+            <input th:field="${addCrewFormDTO.lastName}" class="form-control">
         </label>
-        <p class="error" th:errors="${child.lastName}"></p>
+        <p class="error" th:errors="${addCrewFormDTO.lastName}"></p>
+    </div>
+    <div class="form-group">
+        <label>Username
+            <input class="form-control" th:field="${addCrewFormDTO.username}" />
+        </label>
+        <p class="error" th:errors="${addCrewFormDTO.username}"></p>
+    </div>
+    <div class="form-group">
+        <label>Password
+            <input class="form-control" th:field="${addCrewFormDTO.password}" type="password" />
+        </label>
+        <p class="error" th:errors="${addCrewFormDTO.password}"></p>
+    </div>
+    <div class="form-group">
+        <label>Verify Password
+            <input class="form-control" th:field="${addCrewFormDTO.verifyPassword}" type="password" />
+        </label>
     </div>
     <div class="form-group">
         <input type="submit" value="Add Crew Member" class="btn btn-success">
