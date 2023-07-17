@@ -3,10 +3,7 @@ package org.launchcode.liftoffproject.controllers;
 import org.launchcode.liftoffproject.data.ChildRepository;
 import org.launchcode.liftoffproject.data.RewardRepository;
 import org.launchcode.liftoffproject.data.UserRepository;
-import org.launchcode.liftoffproject.models.Parent;
-import org.launchcode.liftoffproject.models.Child;
-import org.launchcode.liftoffproject.models.Reward;
-import org.launchcode.liftoffproject.models.User;
+import org.launchcode.liftoffproject.models.*;
 import org.launchcode.liftoffproject.models.dto.AddCrewFormDTO;
 import org.launchcode.liftoffproject.models.dto.RegisterFormDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,9 +85,11 @@ public class CrewController {
         }
 
         Parent parent = getParentFromSession(request.getSession());
-        Child newChild = new Child(addCrewFormDTO.getUsername(), addCrewFormDTO.getPassword(), addCrewFormDTO.getFirstName(), addCrewFormDTO.getLastName(), parent);
-        userRepository.save(newChild);
-
+        Child newChild = new Child(addCrewFormDTO.getFirstName(), addCrewFormDTO.getLastName(), parent);
+        childRepository.save(newChild);
+        ChildUser newChildUser = new ChildUser(addCrewFormDTO.getUsername(), addCrewFormDTO.getPassword());
+        userRepository.save(newChildUser);
+        userRepository.save(parent);
         return "redirect:";
     }
 

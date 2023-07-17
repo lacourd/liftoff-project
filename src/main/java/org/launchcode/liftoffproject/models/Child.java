@@ -1,14 +1,12 @@
 package org.launchcode.liftoffproject.models;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
-public class Child extends User {
+public class Child extends AbstractEntity{
 
     @NotBlank(message = "Child's first name is required")
     @Size(max = 50, message = "Child's name is too long")
@@ -23,6 +21,9 @@ public class Child extends User {
     @ManyToOne
     private Parent parent;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private ChildUser userAccount;
+
     public Child(){}
 
     public Child(String firstName, String lastName, Parent parent) {
@@ -31,12 +32,6 @@ public class Child extends User {
         this.parent = parent;
     }
 
-    public Child(String username, String password, String firstName, String lastName, Parent parent) {
-        super(username, password);
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.parent = parent;
-    }
 
     public String getFirstName() {
         return firstName;
@@ -68,5 +63,13 @@ public class Child extends User {
 
     public void setParent(Parent parent) {
         this.parent = parent;
+    }
+
+    public ChildUser getUserAccount() {
+        return userAccount;
+    }
+
+    public void setUserAccount(ChildUser userAccount) {
+        this.userAccount = userAccount;
     }
 }
