@@ -1,14 +1,17 @@
 package org.launchcode.liftoffproject.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Parent extends User {
+public class Parent extends AbstractEntity {
 
     @NotBlank (message = "First Name is required")
     @Size (max = 50, message = "Name is too long")
@@ -24,12 +27,16 @@ public class Parent extends User {
     @OneToMany(mappedBy = "parentCreator")
     private List<Chore> chores = new ArrayList<>();
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @NotNull
+    private ParentUser userAccount;
+
     public Parent() {}
 
-    public Parent(String username, String password, String firstName, String lastName) {
-        super(username, password);
+    public Parent(String firstName, String lastName, ParentUser parentUser) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.userAccount = parentUser;
     }
 
 
@@ -64,5 +71,13 @@ public class Parent extends User {
 
     public void setChores(List<Chore> chores) {
         this.chores = chores;
+    }
+
+    public ParentUser getUserAccount() {
+        return userAccount;
+    }
+
+    public void setUserAccount(ParentUser userAccount) {
+        this.userAccount = userAccount;
     }
 }

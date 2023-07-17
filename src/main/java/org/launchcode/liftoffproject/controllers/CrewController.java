@@ -1,6 +1,7 @@
 package org.launchcode.liftoffproject.controllers;
 
 import org.launchcode.liftoffproject.data.ChildRepository;
+import org.launchcode.liftoffproject.data.ParentRepository;
 import org.launchcode.liftoffproject.data.RewardRepository;
 import org.launchcode.liftoffproject.data.UserRepository;
 import org.launchcode.liftoffproject.models.*;
@@ -30,9 +31,12 @@ public class CrewController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private ParentRepository parentRepository;
+
     private static final String userSessionKey = "user";
 
-    public Parent getParentFromSession(HttpSession session) {
+    public ParentUser getParentFromSession(HttpSession session) {
         Integer parentId = (Integer) session.getAttribute(userSessionKey);
         if (parentId == null) {
             return null;
@@ -44,13 +48,15 @@ public class CrewController {
             return null;
         }
 
-        return (Parent) parent.get();
+        return (ParentUser) parent.get();
     }
 
     @GetMapping
-    public String displayAllCrewMembers(Model model) {
+    public String displayAllCrewMembers(Model model, HttpSession session) {
         model.addAttribute("title","All Crew Members");
-        model.addAttribute("crew", Parent.getChildren());
+        model.addAttribute("crew", getParentFromSession(session).getParent().getChildren());
+//        model.addAttribute("parentId", );
+        System.out.println(getParentFromSession(session).getParent());
         return "crew/index";
     };
 
@@ -84,12 +90,13 @@ public class CrewController {
             return "crew/add";
         }
 
-        Parent parent = getParentFromSession(request.getSession());
-        Child newChild = new Child(addCrewFormDTO.getFirstName(), addCrewFormDTO.getLastName(), parent);
-        childRepository.save(newChild);
+        ParentUser parentUser = getParentFromSession(request.getSession());
+        Parent parent = parentUser.getParent();
         ChildUser newChildUser = new ChildUser(addCrewFormDTO.getUsername(), addCrewFormDTO.getPassword());
         userRepository.save(newChildUser);
-        userRepository.save(parent);
+        Child newChild = new Child(addCrewFormDTO.getFirstName(), addCrewFormDTO.getLastName(), parent, newChildUser);
+        childRepository.save(newChild);
+        parentRepository.save(parent);
         return "redirect:";
     }
 

@@ -14,11 +14,14 @@
         <th>Reward Points Earned</th>
     </tr>
     </thead>
-    <tr th:each="member : ${crew}">
+    <tr th:each="child : ${crew}">
+        <div th:if="child.parent.id == parentId">
         <!--        <a th:href="'/reward/detail?rewardId=' + ${reward.id}"-->
-        <td th:text="${member.firstName + ' ' member.lastName}"></td>
+        <td th:text="${child.firstName}"></td>
+<!--        + ' ' child.lastName}"></td>-->
         <td>Add chores assigned here</td>
-        <td th:text="${member.rewardPoints}"></td>
+        <td th:text="${child.points}"></td>
+        </div>
     </tr>
 </table>
 

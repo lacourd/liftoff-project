@@ -32,6 +32,13 @@ public class Child extends AbstractEntity{
         this.parent = parent;
     }
 
+    public Child(String firstName, String lastName, Parent parent, ChildUser childUser) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.parent = parent;
+        this.userAccount = childUser;
+    }
+
 
     public String getFirstName() {
         return firstName;

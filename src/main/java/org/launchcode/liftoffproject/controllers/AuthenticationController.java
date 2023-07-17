@@ -1,7 +1,9 @@
 package org.launchcode.liftoffproject.controllers;
 
+import org.launchcode.liftoffproject.data.ParentRepository;
 import org.launchcode.liftoffproject.data.UserRepository;
 import org.launchcode.liftoffproject.models.Parent;
+import org.launchcode.liftoffproject.models.ParentUser;
 import org.launchcode.liftoffproject.models.User;
 import org.launchcode.liftoffproject.models.dto.LoginFormDTO;
 import org.launchcode.liftoffproject.models.dto.RegisterFormDTO;
@@ -23,6 +25,9 @@ public class AuthenticationController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    ParentRepository parentRepository;
 
     private static final String userSessionKey = "user";
 
@@ -76,10 +81,11 @@ public class AuthenticationController {
             return "register";
         }
 
-        Parent newParent = new Parent(registerFormDTO.getUsername(), registerFormDTO.getPassword(), registerFormDTO.getFirstName(), registerFormDTO.getLastName());
-        userRepository.save(newParent);
-        setUserInSession(request.getSession(), newParent);
-
+        ParentUser newParentUser = new ParentUser(registerFormDTO.getUsername(), registerFormDTO.getPassword());
+        userRepository.save(newParentUser);
+        setUserInSession(request.getSession(), newParentUser);
+        Parent newParent = new Parent(registerFormDTO.getFirstName(), registerFormDTO.getLastName(), newParentUser);
+        parentRepository.save(newParent);
         return "redirect:";
     }
 
