@@ -1,6 +1,53 @@
 body {
-  font-size: 14px;
+  font-family: 'IM Fell English SC', serif !important;
 }
+
+.bg-img {
+    background-image: url('/images/treasureTask-bg.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vmax;
+    overflow: visible;
+    width: 100%;
+}
+
 .error {
   color: red;
 }
+
+.form-signin {
+  max-width: 400px;
+  padding: 1rem;
+  background-color: #ffffff94;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input[type="text"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+p {
+    font-family: 'IM Fell English SC', serif !important;
+    font-size: 1.1rem;
+}
+
+a.nav-link {
+    font-family: 'Pirata One', cursive;
+    text-transform: uppercase;
+}
+
+/* potential paragraph and heading fonts:
+font-family: 'IM Fell Great Primer SC', serif;
+font-family: 'Pirata One', cursive;
+/*
