@@ -54,9 +54,7 @@ public class CrewController {
     @GetMapping
     public String displayAllCrewMembers(Model model, HttpSession session) {
         model.addAttribute("title","All Crew Members");
-        model.addAttribute("crew", getParentFromSession(session).getParent().getChildren());
-//        model.addAttribute("parentId", );
-        System.out.println(getParentFromSession(session).getParent());
+        model.addAttribute("crew", childRepository.findAllByParent(getParentFromSession(session).getParent()));
         return "crew/index";
     };
 
