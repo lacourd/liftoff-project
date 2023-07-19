@@ -16,24 +16,34 @@
 <body>
 
 <header th:fragment="header">
-   <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
-      <ul class="nav">
-          <img th:src="@{/images/treasureTask-logo.jpg}" alt="Logo Image" height="75">
-         <li class="nav-item"> <a th:href="@{/}" class="nav-link">Home</a></li>
-        <li class="nav-item"><a th:href="@{/about}" class="nav-link">About</a></li>
-         <li class="nav-item"><a class="nav-link" href="/chores">Chores</a></li>
-         <li class="nav-item"><a class="nav-link" href="/rewards">Rewards</a></li>
-         <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
-      </ul>
-      <ul class="nav" style="float:right;">
-         <li class="nav-item"><a class="nav-link" href="/logout">Log out</a></li>
-      </ul>
-   </nav>
+
+    <div class="container">
+        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-2">
+            <div class="col-md-3 mb-md-0">
+                <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
+                    <img th:src="@{/images/treasureTask-logo.jpg}" alt="Logo Image" height="75">
+                </a>
+            </div>
+
+            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="/chores" class="nav-link pl-3">Chores!</a></li>
+                <li><a href="/rewards" class="nav-link pl-3">Rewards</a></li>
+                <li><a href="#" class="nav-link pl-3">Crew Members</a></li>
+            </ul>
+
+            <div class="col-md-3 text-end" style="text-align: right;">
+                <a href="/#login"><span class="btn btn-outline-primary me-2 login-btn">Sign In</span></a>
+                <a href="/register"><span class="btn btn-primary register-btn">Register</span></a>
+            </div>
+        </header>
+    </div>
+
 </header>
+
 <footer class="footer">
-    <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+    <nav class="navbar navbar-light" style="background-color: #2B2D2F;">
         <div class="container text-center">
-            <span class="text-black"> Copyright &copy; TreasureTask </span>
+            <span class="text-white"> Copyright &copy; TreasureTask </span>
         </div>
     </nav>
 </footer>
