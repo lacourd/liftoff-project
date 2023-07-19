@@ -6,12 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("chores")
@@ -43,5 +41,21 @@ public class ChoreController {
         }
         choreRepository.save(newChore);
         return "redirect:";
+    }
+
+    @GetMapping("detail")
+    public String displayEventDetails(@RequestParam Integer choreId, Model model) {
+
+        Optional<Chore> result = choreRepository.findById(choreId);
+
+        if (result.isEmpty()) {
+            model.addAttribute("title", "Invalid Chore ID: " + choreId);
+        } else {
+            Chore chore = result.get();
+            model.addAttribute("title", chore.getName() + " Details");
+            model.addAttribute("chore", chore);
+        }
+
+        return "chores/detail";
     }
 }
