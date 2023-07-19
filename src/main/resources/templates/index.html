@@ -11,6 +11,10 @@
 <div class="bg-img">
     <h1 hidden>Welcome to Treasure Task</h1>
 
+    <div class="scroll-img m-auto">
+        <p class="hp-about">With Treasure Task, parents can assign chores to their children to monitor weekly tasks. To better encourage children to not only complete their chores but also do them well, each chore can be worth a determined amount of points. Children can collect enough points to redeem rewards set by their parents. Child accounts can be created to help older children keep track of chores and rewards themselves, giving them a sense of responsibility.</p>
+    </div>
+
     <div class="form-signin w-100 m-auto modal-content rounded-4 shadow">
         <form method="post" th:action="@{/rewards/create}">
             <h2 class="mb-2" align="center">Welcome Aboard</h2>
@@ -30,6 +34,7 @@
             <p class="mt-3 mb-3 text-body-secondary" align="center">Don't have an account? <a href="/register">Register for one.</a></p>
         </form>
     </div>
+
 </div>
 
 <footer th:replace="fragments :: footer"></footer>
