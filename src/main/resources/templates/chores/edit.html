@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+
+<header th:replace="fragments :: header"></header>
+
+<form th:action="@{/chores/edit}" method="post">
+  <input type="hidden" name="choreId" th:value="${chore.id}" />
+  <div class="form-group">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" th:value="${chore.name}" th:field="${chore.name}" class="form-control" required />
+  </div>
+  <div class="form-group">
+    <label for="description">Description:</label>
+    <textarea id="description" name="description" class="form-control" required th:text="${chore.choreDescription}" th:field="${chore.choreDescription}"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="childAssigned">Assigned to:</label>
+    <input type="text" id="childAssigned" name="childAssigned" th:value="${chore.childAssigned}" th:field="${chore.childAssigned}" class="form-control" required />
+  </div>
+
+  <button type="submit" class="btn btn-primary">Save Changes</button>
+  <a th:href="@{/rewards}" class="btn btn-secondary">Cancel</a>
+</form>
+
+</body>
+</html>
