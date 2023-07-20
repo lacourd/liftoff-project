@@ -2,44 +2,49 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head">
     <meta charset="UTF-8"/>
-    <title></title>
+    <title>Create Chore</title>
 </head>
 <body class="container">
 <header th:replace="fragments :: header"></header>
-<form method="post" action="/chores/create">
+
+<form th:object="${chore}" method="post" th:action="@{/chores/create}">
     <div class="form-group">
         <label>Name:
-            <input th:field="${chore.name}" class="form-control">
+            <input th:field="*{name}" class="form-control">
         </label>
-        <p class="error" th:errors="${chore.name}"></p>
+        <p class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
     </div>
     <div class="form-group">
         <label>Description:
-            <input th:field="${chore.choreDescription}" class="form-control">
+            <input th:field="*{choreDescription}" class="form-control">
         </label>
-        <p class="error" th:errors="${chore.choreDescription}"></p>
+        <p class="error" th:if="${#fields.hasErrors('choreDescription')}" th:errors="*{choreDescription}"></p>
     </div>
     <div class="form-group">
         <label>Assign to:
-            <select th:field="${chore.childAssigned}">
+            <select th:field="*{childAssigned}" class="form-control">
                 <option th:each="child : ${children}"
-                        th:value="${child.id}"
+                        th:value="${child}"
                         th:text="${child.name}"></option>
             </select>
-            <p class="error" th:errors="${chore.childAssigned}"></p>
+            <p class="error" th:if="${#fields.hasErrors('childAssigned')}" th:errors="*{childAssigned}"></p>
         </label>
     </div>
     <div class="form-group">
         <label>Due Day:
-            <input th:field="${chore.dueDay}" class="form-control">
+            <select th:field="*{dueDay}" class="form-control">
+                <option th:each="day : ${T(org.launchcode.liftoffproject.models.Chore.DayOfTheWeek).values()}"
+                        th:value="${day}"
+                        th:text="${#strings.capitalize(day.name().toLowerCase())}"></option>
+            </select>
+            <p class="error" th:if="${#fields.hasErrors('dueDay')}" th:errors="*{dueDay}"></p>
         </label>
-        <p class="error" th:errors="${chore.dueDay}"></p>
     </div>
     <div class="form-group">
-        <label>Reward Points
-            <input th:field="${chore.rewardPoints}" class="form-control">
+        <label>Reward Points:
+            <input th:field="*{rewardPoints}" class="form-control">
         </label>
-        <p class="error" th:errors="${chore.rewardPoints}"></p>
+        <p class="error" th:if="${#fields.hasErrors('rewardPoints')}" th:errors="*{rewardPoints}"></p>
     </div>
     <div class="form-group">
         <input type="submit" value="Add Chore" class="btn btn-success">
