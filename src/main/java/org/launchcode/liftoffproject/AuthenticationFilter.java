@@ -52,7 +52,7 @@ public class AuthenticationFilter extends HandlerInterceptorAdapter {
         }
 
         // The user is NOT logged in
-        response.sendRedirect("/");
+        response.sendRedirect("/login");
         return false;
     }
 
