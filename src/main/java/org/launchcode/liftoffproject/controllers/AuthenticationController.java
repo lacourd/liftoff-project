@@ -1,7 +1,9 @@
 package org.launchcode.liftoffproject.controllers;
 
+import org.launchcode.liftoffproject.data.ParentRepository;
 import org.launchcode.liftoffproject.data.UserRepository;
 import org.launchcode.liftoffproject.models.Parent;
+import org.launchcode.liftoffproject.models.ParentUser;
 import org.launchcode.liftoffproject.models.User;
 import org.launchcode.liftoffproject.models.dto.LoginFormDTO;
 import org.launchcode.liftoffproject.models.dto.RegisterFormDTO;
@@ -23,6 +25,9 @@ public class AuthenticationController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    ParentRepository parentRepository;
 
     private static final String userSessionKey = "user";
 
@@ -76,11 +81,19 @@ public class AuthenticationController {
             return "register";
         }
 
-        Parent newParent = new Parent(registerFormDTO.getUsername(), registerFormDTO.getPassword(), registerFormDTO.getFirstName(), registerFormDTO.getLastName());
-        userRepository.save(newParent);
-        setUserInSession(request.getSession(), newParent);
-
+        ParentUser newParentUser = new ParentUser(registerFormDTO.getUsername(), registerFormDTO.getPassword());
+        userRepository.save(newParentUser);
+        setUserInSession(request.getSession(), newParentUser);
+        Parent newParent = new Parent(registerFormDTO.getFirstName(), registerFormDTO.getLastName(), newParentUser);
+        parentRepository.save(newParent);
         return "redirect:";
+    }
+
+    @GetMapping("/login")
+    public String displayLoginForm(Model model) {
+        model.addAttribute(new LoginFormDTO());
+        model.addAttribute("title", "Log In");
+        return "login";
     }
 
     @PostMapping("/login")
@@ -88,26 +101,26 @@ public class AuthenticationController {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Log In");
-            return "redirect:";
+            return "login";
         }
 
-        User theUser = userRepository.findByUsername(loginFormDTO.getUsername());
+        ParentUser theParentUser = (ParentUser) userRepository.findByUsername(loginFormDTO.getUsername());
 
-        if (theUser == null) {
+        if (theParentUser == null) {
             errors.rejectValue("username", "user.invalid", "The given username does not exist");
             model.addAttribute("title", "Log In");
-            return "redirect:";
+            return "login";
         }
 
         String password = loginFormDTO.getPassword();
 
-        if (!theUser.isMatchingPassword(password)) {
+        if (!theParentUser.isMatchingPassword(password)) {
             errors.rejectValue("password", "password.invalid", "Invalid password");
             model.addAttribute("title", "Log In");
-            return "redirect:";
+            return "login";
         }
 
-        setUserInSession(request.getSession(), theUser);
+        setUserInSession(request.getSession(), theParentUser);
 
         return "redirect:/chores";
     }
@@ -115,7 +128,7 @@ public class AuthenticationController {
     @GetMapping("/logout")
     public String logout(HttpServletRequest request){
         request.getSession().invalidate();
-        return "redirect:";
+        return "redirect:/login";
     }
 
 }
