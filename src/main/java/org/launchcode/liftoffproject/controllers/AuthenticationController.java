@@ -95,7 +95,7 @@ public class AuthenticationController {
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Log In");
-            return "redirect:";
+            return "login";
         }
 
         User theUser = userRepository.findByUsername(loginFormDTO.getUsername());
@@ -104,7 +104,7 @@ public class AuthenticationController {
         if (theUser == null) {
                 errors.rejectValue("username", "user.invalid", "The given username does not exist");
                 model.addAttribute("title", "Log In");
-                return "redirect:";
+                return "login";
             }
 
             String password = loginFormDTO.getPassword();
@@ -112,7 +112,7 @@ public class AuthenticationController {
             if (!theUser.isMatchingPassword(password)) {
                 errors.rejectValue("password", "password.invalid", "Invalid password");
                 model.addAttribute("title", "Log In");
-                return "redirect:";
+                return "login";
             }
 
             if (userRepository.findByUsername(loginFormDTO.getUsername()) instanceof ParentUser) {
