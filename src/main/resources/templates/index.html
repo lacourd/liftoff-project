@@ -11,17 +11,21 @@
 <div class="bg-img">
     <h1 hidden>Welcome to Treasure Task</h1>
 
-    <div class="form-signin w-100 m-auto modal-content rounded-4 shadow">
-        <form method="post" th:action="@{/rewards/create}">
+    <div class="scroll-img m-auto">
+        <p class="hp-about">With Treasure Task, parents can assign chores to their children to monitor weekly tasks. To better encourage children to not only complete their chores but also do them well, each chore can be worth a determined amount of points. Children can collect enough points to redeem rewards set by their parents. Child accounts can be created to help older children keep track of chores and rewards themselves, giving them a sense of responsibility.</p>
+    </div>
+
+    <div class="form-signin w-100 m-auto modal-content rounded-4 shadow" id="login">
+        <form method="post" th:action="@{/login}">
             <h2 class="mb-2" align="center">Welcome Aboard</h2>
             <p align="center">Avast, ye landlubbers! Approach the plank and set foot to log in!</p>
             <div class="form-floating">
                 <label for="floatingUsername" hidden>Username</label>
-                <input type="text" class="form-control" id="floatingUsername" field="${loginFormDTO.username}" placeholder="Username">
+                <input type="text" class="form-control" id="floatingUsername" th:field="${loginFormDTO.username}" placeholder="Username">
                 <p class="error" errors="${loginFormDTO.username}"></p>
             </div>
             <div class="form-floating">
-                <input class="form-control" id="floatingPassword" field="${loginFormDTO.password}" type="password" placeholder="Password">
+                <input class="form-control" id="floatingPassword" th:field="${loginFormDTO.password}" type="password" placeholder="Password">
                 <label for="floatingPassword" hidden>Password</label>
                 <p class="error" errors="${loginFormDTO.password}"></p>
             </div>
@@ -30,6 +34,7 @@
             <p class="mt-3 mb-3 text-body-secondary" align="center">Don't have an account? <a href="/register">Register for one.</a></p>
         </form>
     </div>
+
 </div>
 
 <footer th:replace="fragments :: footer"></footer>
