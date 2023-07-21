@@ -6,7 +6,7 @@
 <header th:replace="fragments :: header"></header>
 
 <main class="form-signin w-100 m-auto">
-<form method="post">
+<form method="post" th:action="@{/login}">
    <h2>Login</h2>
    <div class="form-floating">
       <label for="floatingUsername" hidden>Username</label>
