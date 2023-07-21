@@ -21,11 +21,11 @@
             <p align="center">Avast, ye landlubbers! Approach the plank and set foot to log in!</p>
             <div class="form-floating">
                 <label for="floatingUsername" hidden>Username</label>
-                <input type="text" class="form-control" id="floatingUsername" field="${loginFormDTO.username}" placeholder="Username">
+                <input type="text" class="form-control" id="floatingUsername" th:field="${loginFormDTO.username}" placeholder="Username">
                 <p class="error" errors="${loginFormDTO.username}"></p>
             </div>
             <div class="form-floating">
-                <input class="form-control" id="floatingPassword" field="${loginFormDTO.password}" type="password" placeholder="Password">
+                <input class="form-control" id="floatingPassword" th:field="${loginFormDTO.password}" type="password" placeholder="Password">
                 <label for="floatingPassword" hidden>Password</label>
                 <p class="error" errors="${loginFormDTO.password}"></p>
             </div>

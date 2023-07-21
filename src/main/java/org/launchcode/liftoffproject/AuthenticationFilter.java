@@ -25,7 +25,7 @@ public class AuthenticationFilter extends HandlerInterceptorAdapter {
 
     private static boolean isWhitelisted(String path) {
         for (String pathRoot : whitelist) {
-            if (path.startsWith(pathRoot)) {
+            if (path.startsWith(pathRoot) || path.equalsIgnoreCase("/") || path.endsWith(".css")) {
                 return true;
             }
         }
