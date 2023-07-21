@@ -11,6 +11,30 @@ body {
     width: 100%;
 }
 
+.scroll-img {
+    background-image: url(/images/scroll-bg.png);
+    background-size: contain;
+    height: 80vmin;
+    width: 550px;
+    max-width: 90%;
+    background-repeat: no-repeat;
+    overflow: visible;
+    align-items: center;
+    justify-content: center;
+    display: flex !important;
+}
+
+.hp-about {
+    width: 550px;
+    max-width: 65%;
+    text-align: center;
+    margin-right: 4rem;
+    margin-left: auto;
+    padding-left: 1rem;
+    padding-right: 1.3rem;
+    margin-bottom: 2rem;
+}
+
 .error {
   color: red;
 }
@@ -39,15 +63,92 @@ body {
 
 p {
     font-family: 'IM Fell English SC', serif !important;
-    font-size: 1.1rem;
+}
+
+@media (min-width: 1024px) {
+  p {
+    font-size: calc(16px + 10%);
+  }
+}
+
+@media (max-width: 600px) {
+  p {
+    font-size: calc(14px);
+  }
+  .hp-about {
+    padding-right: 0 !important;
+  }
 }
 
 a.nav-link {
     font-family: 'Pirata One', cursive;
-    text-transform: uppercase;
+    color: white;
+    font-size: xx-large;
 }
 
-/* potential paragraph and heading fonts:
-font-family: 'IM Fell Great Primer SC', serif;
-font-family: 'Pirata One', cursive;
-/*
+a.nav-link:hover {
+    color: grey;
+}
+
+.form-control-dark {
+  border-color: var(--bs-gray);
+}
+.form-control-dark:focus {
+  border-color: #fff;
+  box-shadow: 0 0 0 .25rem rgba(255, 255, 255, .25);
+}
+
+.text-small {
+  font-size: 85%;
+}
+
+.dropdown-toggle:not(:focus) {
+  outline: 0;
+}
+
+header {
+    background-color: #2B2D2F;
+}
+
+footer {
+    background-color: #2B2D2F;
+}
+
+.register-btn {
+    color: #2B2D2F;
+    background-color: white;
+    border-color: white;
+    font-size: x-large;
+    font-family: "Pirata One", cursive;
+}
+
+.register-btn:hover {
+    color: #2B2D2F;
+    background-color: grey;
+    border-color: grey;
+}
+
+.register-btn:active {
+    color: #2B2D2F !important;
+    background-color: grey !important;
+    border-color: grey !important;
+}
+
+.login-btn {
+    color: white;
+    border-color: white;
+    font-size: x-large;
+    font-family: "Pirata One", cursive;
+}
+
+.login-btn:hover {
+    color: #2B2D2F;
+    border-color: #2B2D2F;
+    background-color: white;
+}
+
+.login-btn:active {
+    color: #2B2D2F !important;
+    border-color: #2B2D2F !important;
+    background-color: white !important;
+}
