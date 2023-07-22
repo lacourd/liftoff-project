@@ -35,7 +35,7 @@
             <select th:field="*{dueDay}" class="form-control">
                 <option th:each="day : ${days}"
                         th:value="${day}"
-                        th:text="${#strings.capitalize(day.name().toLowerCase())}"></option>
+                        th:text="${day.displayName}"></option>
             </select>
             <p class="error" th:if="${#fields.hasErrors('dueDay')}" th:errors="*{dueDay}"></p>
         </label>
