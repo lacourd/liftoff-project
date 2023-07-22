@@ -93,17 +93,6 @@ public class Chore extends AbstractEntity{
         this.dueDay = dueDay;
     }
 
-    // Enum for the days of the week
-    public enum DayOfTheWeek {
-        SUNDAY,
-        MONDAY,
-        TUESDAY,
-        WEDNESDAY,
-        THURSDAY,
-        FRIDAY,
-        SATURDAY
-    }
-
     @Override
     public String toString() {
         return name;
