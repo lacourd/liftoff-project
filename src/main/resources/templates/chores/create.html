@@ -24,10 +24,10 @@
         <label>Assign to:
             <select th:field="*{childAssigned}" class="form-control">
                 <option th:each="child : ${children}"
-                        th:value="${child}"
-                        th:text="${child.name}"></option>
+                        th:value="${child.id}"
+                        th:text="${child.firstName}"></option>
             </select>
-            <p class="error" th:if="${#fields.hasErrors('childAssigned')}" th:errors="*{childAssigned}"></p>
+            <p class="error" th:errors="*{childAssigned}"></p>
         </label>
     </div>
     <div class="form-group">
