@@ -33,7 +33,7 @@
     <div class="form-group">
         <label>Due Day:
             <select th:field="*{dueDay}" class="form-control">
-                <option th:each="day : ${T(org.launchcode.liftoffproject.models.Chore.DayOfTheWeek).values()}"
+                <option th:each="day : ${days}"
                         th:value="${day}"
                         th:text="${#strings.capitalize(day.name().toLowerCase())}"></option>
             </select>
