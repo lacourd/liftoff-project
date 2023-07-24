@@ -2,7 +2,6 @@ package org.launchcode.liftoffproject.controllers;
 
 import org.launchcode.liftoffproject.data.ChoreRepository;
 import org.launchcode.liftoffproject.models.Chore;
-import org.launchcode.liftoffproject.models.Reward;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
