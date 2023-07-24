@@ -22,7 +22,7 @@ public class Chore extends AbstractEntity{
 
     private int rewardPoints;
 
-    @Enumerated(EnumType.STRING) // Storing the ENUM as a string in the database
+//    @Enumerated(EnumType.STRING) // Storing the ENUM as a string in the database
     private DayOfTheWeek dueDay;
 
     public Chore(){}

@@ -7,11 +7,11 @@ public enum DayOfTheWeek {
     WEDNESDAY("Wednesday"),
     THURSDAY("Thursday"),
     FRIDAY("Friday"),
-    SATURDAY("Saturday")
+    SATURDAY("Saturday");
     
 private final String displayName;
 
-EventType(String displayName) {
+DayOfTheWeek(String displayName) {
    this.displayName = displayName;
 }
 
