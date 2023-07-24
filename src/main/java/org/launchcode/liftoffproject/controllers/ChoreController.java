@@ -43,6 +43,30 @@ public class ChoreController {
         return "redirect:";
     }
 
+    @GetMapping("edit")
+    public String displayEditChoreForm(@RequestParam("choreId") int choreId, Model model) {
+        Chore chore = choreRepository.findById(choreId).orElse(null);
+        if (chore == null) {
+            return "redirect:/chores";
+        }
+        model.addAttribute("title", "Edit Chore");
+        model.addAttribute("chore", chore);
+        return "chores/edit";
+    }
+
+    @PostMapping("edit")
+    public String processEditChoreForm(@RequestParam(required = false) int choreId, @ModelAttribute Chore chore) {
+
+        Chore updatedChore = choreRepository.findById(choreId).orElse(null);
+
+        updatedChore.setName(chore.getName());
+        updatedChore.setChoreDescription(chore.getChoreDescription());
+        updatedChore.setChildAssigned(chore.getChildAssigned());
+        updatedChore.setDueDay(chore.getDueDay());
+        updatedChore.setRewardPoints(chore.getRewardPoints());
+        choreRepository.save(updatedChore);
+        return "redirect:/chores";
+
     @GetMapping("detail")
     public String displayEventDetails(@RequestParam Integer choreId, Model model) {
 
