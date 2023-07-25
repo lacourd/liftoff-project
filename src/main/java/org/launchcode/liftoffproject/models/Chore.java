@@ -2,8 +2,6 @@ package org.launchcode.liftoffproject.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Chore extends AbstractEntity{
@@ -15,7 +13,6 @@ public class Chore extends AbstractEntity{
     private String choreDescription;
 
     @OneToOne
-//    will need to be a List<Child> eventually if we want to be able to assign a chore to multiple children
     private Child childAssigned;
 
     @ManyToOne
@@ -25,17 +22,20 @@ public class Chore extends AbstractEntity{
 
     private int rewardPoints;
 
-    private String dueDay;
+//    @Enumerated(EnumType.STRING) // Storing the ENUM as a string in the database
+    private DayOfTheWeek dueDay;
 
     public Chore(){}
 
-    public Chore(String name, String choreDescription, int rewardPoints, String dueDay) {
+    public Chore(String name, String choreDescription, int rewardPoints, DayOfTheWeek dueDay) {
         this.name = name;
         this.choreDescription = choreDescription;
         this.rewardPoints = rewardPoints;
         this.dueDay = dueDay;
         this.completed = false;
     }
+
+    // Getters and Setters
 
     public String getName() {
         return name;
@@ -85,14 +85,16 @@ public class Chore extends AbstractEntity{
         this.rewardPoints = rewardPoints;
     }
 
-    public String getDueDay() {
+    public DayOfTheWeek getDueDay() {
         return dueDay;
     }
 
-    public void setDueDay(String dueDay) {
+    public void setDueDay(DayOfTheWeek dueDay) {
         this.dueDay = dueDay;
     }
 
     @Override
-    public String toString(){ return name; }
+    public String toString() {
+        return name;
+    }
 }

@@ -2,6 +2,7 @@ package org.launchcode.liftoffproject.controllers;
 
 import org.launchcode.liftoffproject.data.ChoreRepository;
 import org.launchcode.liftoffproject.models.Chore;
+import org.launchcode.liftoffproject.models.DayOfTheWeek;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +29,7 @@ public class ChoreController {
     @GetMapping("create")
     public String renderCreateChoreForm(Model model) {
       model.addAttribute("title","New Chore");
+      model.addAttribute("days", DayOfTheWeek.values());
       model.addAttribute(new Chore());
       return "chores/create";
     };
