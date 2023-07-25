@@ -66,6 +66,7 @@ public class ChoreController {
         updatedChore.setRewardPoints(chore.getRewardPoints());
         choreRepository.save(updatedChore);
         return "redirect:/chores";
+    }
 
     @GetMapping("detail")
     public String displayEventDetails(@RequestParam Integer choreId, Model model) {
