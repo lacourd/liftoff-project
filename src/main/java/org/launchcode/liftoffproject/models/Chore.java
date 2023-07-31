@@ -97,4 +97,19 @@ public class Chore extends AbstractEntity{
     public String toString() {
         return name;
     }
+
+//    @Override
+//    public void setUsername(String username) {
+//
+//    }
+//
+//    @Override
+//    public void setPassword(String encodedPassword) {
+//
+//    }
+//
+//    @Override
+//    public String getUsername() {
+//        return null;
+//    }
 }

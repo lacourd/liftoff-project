@@ -22,12 +22,12 @@
             <div class="form-floating">
                 <label for="floatingUsername" hidden>Username</label>
                 <input type="text" class="form-control" id="floatingUsername" th:field="${loginFormDTO.username}" placeholder="Username">
-                <p class="error" errors="${loginFormDTO.username}"></p>
+                <p class="error" th:errors="${loginFormDTO.username}"></p>
             </div>
             <div class="form-floating">
                 <input class="form-control" id="floatingPassword" th:field="${loginFormDTO.password}" type="password" placeholder="Password">
                 <label for="floatingPassword" hidden>Password</label>
-                <p class="error" errors="${loginFormDTO.password}"></p>
+                <p class="error" th:errors="${loginFormDTO.password}"></p>
             </div>
 
             <button type="submit" class="btn btn-primary w-100 py-2" value="Log In">LOGIN</button>

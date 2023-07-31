@@ -1,19 +1,21 @@
 package org.launchcode.liftoffproject.models;
 
-import javax.persistence.*;
-import javax.servlet.http.HttpSession;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
-public class Child extends AbstractEntity{
+public class Child extends AbstractEntity {
 
     @NotBlank(message = "Child's first name is required")
     @Size(max = 50, message = "Child's name is too long")
     private String firstName;
 
-    @NotBlank (message = "Child's last name is required")
-    @Size (max = 50, message = "Child's last name is too long")
+    @NotBlank(message = "Child's last name is required")
+    @Size(max = 50, message = "Child's last name is too long")
     private String lastName;
 
     private int points;
@@ -24,7 +26,8 @@ public class Child extends AbstractEntity{
     @OneToOne(cascade = CascadeType.ALL)
     private ChildUser userAccount;
 
-    public Child(){}
+    public Child() {
+    }
 
     public Child(String firstName, String lastName, Parent parent) {
         this.firstName = firstName;
@@ -39,6 +42,7 @@ public class Child extends AbstractEntity{
         this.userAccount = childUser;
     }
 
+    // Getters and setters for firstName, lastName, points, parent, and userAccount
 
     public String getFirstName() {
         return firstName;
@@ -79,4 +83,23 @@ public class Child extends AbstractEntity{
     public void setUserAccount(ChildUser userAccount) {
         this.userAccount = userAccount;
     }
+
+    public String getUsername() {
+        return null;
+    }
+
+//    @Override
+//    public void setUsername(String username) {
+//
+//    }
+//
+//    @Override
+//    public void setPassword(String encodedPassword) {
+//
+//    }
+//
+//    @Override
+//    public String getUsername() {
+//        return null;
+//    }
 }

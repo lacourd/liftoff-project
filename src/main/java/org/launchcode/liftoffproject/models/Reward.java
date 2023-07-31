@@ -45,4 +45,18 @@ public class Reward extends AbstractEntity {
         this.description = description;
     }
 
+//    @Override
+//    public void setUsername(String username) {
+//
+//    }
+//
+//    @Override
+//    public void setPassword(String encodedPassword) {
+//
+//    }
+//
+//    @Override
+//    public String getUsername() {
+//        return null;
+//    }
 }

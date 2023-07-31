@@ -156,3 +156,69 @@ footer {
     border-color: #2B2D2F !important;
     background-color: white !important;
 }
+/* child dashboard */
+
+/*  avatar image */
+.avatar-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.avatar:hover {
+  border-color: #007bff;
+}
+
+/*  selected avatar */
+.selected-avatar {
+  border-color: #007bff;
+}
+
+/*  avatar selection buttons */
+.avatar-option {
+  text-align: center;
+}
+
+.avatar-option button {
+  margin-top: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.avatar-option button:hover {
+  background-color: #0056b3;
+}
+
+/*  calendar */
+ .calendar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .day-button {
+      margin: 5px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      cursor: pointer;
+    }
+
+    .selected-day-chores {
+      margin-top: 30px;
+    }

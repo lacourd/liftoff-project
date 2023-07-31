@@ -2,6 +2,7 @@ package org.launchcode.liftoffproject.controllers;
 
 import org.launchcode.liftoffproject.data.ParentRepository;
 import org.launchcode.liftoffproject.data.UserRepository;
+import org.launchcode.liftoffproject.models.ChildUser;
 import org.launchcode.liftoffproject.models.Parent;
 import org.launchcode.liftoffproject.models.ParentUser;
 import org.launchcode.liftoffproject.models.User;
@@ -89,13 +90,6 @@ public class AuthenticationController {
         return "redirect:";
     }
 
-    @GetMapping("/login")
-    public String displayLoginForm(Model model) {
-        model.addAttribute(new LoginFormDTO());
-        model.addAttribute("title", "Log In");
-        return "login";
-    }
-
     @PostMapping("/login")
     public String processLoginForm(@ModelAttribute @Valid LoginFormDTO loginFormDTO, Errors errors, HttpServletRequest request, Model model) {
 
@@ -104,9 +98,10 @@ public class AuthenticationController {
             return "login";
         }
 
-        ParentUser theParentUser = (ParentUser) userRepository.findByUsername(loginFormDTO.getUsername());
+        User theUser = userRepository.findByUsername(loginFormDTO.getUsername());
 
-        if (theParentUser == null) {
+
+        if (theUser == null) {
             errors.rejectValue("username", "user.invalid", "The given username does not exist");
             model.addAttribute("title", "Log In");
             return "login";
@@ -114,21 +109,26 @@ public class AuthenticationController {
 
         String password = loginFormDTO.getPassword();
 
-        if (!theParentUser.isMatchingPassword(password)) {
+        if (!theUser.isMatchingPassword(password)) {
             errors.rejectValue("password", "password.invalid", "Invalid password");
             model.addAttribute("title", "Log In");
             return "login";
         }
 
-        setUserInSession(request.getSession(), theParentUser);
+        if (userRepository.findByUsername(loginFormDTO.getUsername()) instanceof ParentUser) {
+            ParentUser theParentUser = (ParentUser) userRepository.findByUsername(loginFormDTO.getUsername());
+            setUserInSession(request.getSession(), theParentUser);}
+        else if (userRepository.findByUsername(loginFormDTO.getUsername()) instanceof ChildUser)  {
+            ChildUser theChildUser = (ChildUser) userRepository.findByUsername(loginFormDTO.getUsername());
+            setUserInSession(request.getSession(), theChildUser);}
 
-        return "redirect:/chores";
+        return "redirect:/child/index";
     }
 
     @GetMapping("/logout")
     public String logout(HttpServletRequest request){
         request.getSession().invalidate();
-        return "redirect:/login";
+        return "redirect:/";
     }
 
 }

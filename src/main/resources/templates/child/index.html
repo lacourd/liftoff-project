@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head">
+    <meta charset="UTF-8"/>
+    <title>Index Logged In</title>
+</head>
+<body class="container">
+
+<header th:replace="fragments :: header">
+
+    <a href="/child/dashboard">Child Dashboard</a>
+
+</header>
+
+<h1>Welcome, <span th:text="${user.firstName}"></span>!</h1>
+
+<p>You are logged in.</p>
+
+<a href="/logout">Logout</a>
+
+</body>
+</html>
