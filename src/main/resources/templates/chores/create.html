@@ -23,7 +23,7 @@
     <div class="form-group">
         <label>Assign to:
             <select th:field="*{childAssigned}" class="form-control">
-                <option th:each="child : ${children}"
+                <option th:each="child : ${crew}"
                         th:value="${child.id}"
                         th:text="${child.firstName}"></option>
             </select>

@@ -24,6 +24,10 @@ public class Child extends AbstractEntity{
     @OneToOne(cascade = CascadeType.ALL)
     private ChildUser userAccount;
 
+    @OneToOne(mappedBy = "childAssigned")
+    private Chore chore;
+
+
     public Child(){}
 
     public Child(String firstName, String lastName, Parent parent) {
@@ -78,5 +82,13 @@ public class Child extends AbstractEntity{
 
     public void setUserAccount(ChildUser userAccount) {
         this.userAccount = userAccount;
+    }
+
+    public Chore getChore() {
+        return chore;
+    }
+
+    public void setChore(Chore chore) {
+        this.chore = chore;
     }
 }

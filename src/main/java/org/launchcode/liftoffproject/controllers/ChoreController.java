@@ -1,5 +1,6 @@
 package org.launchcode.liftoffproject.controllers;
 
+import org.launchcode.liftoffproject.data.ChildRepository;
 import org.launchcode.liftoffproject.data.ChoreRepository;
 import org.launchcode.liftoffproject.models.Chore;
 import org.launchcode.liftoffproject.models.DayOfTheWeek;
@@ -9,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Optional;
 
@@ -19,6 +21,12 @@ public class ChoreController {
     @Autowired
     private ChoreRepository choreRepository;
 
+    @Autowired
+    private AuthenticationController authenticationController;
+
+    @Autowired
+    private ChildRepository childRepository;
+
     @GetMapping
     public String displayAllChores(Model model) {
         model.addAttribute("title","All Chores");
@@ -27,20 +35,22 @@ public class ChoreController {
     };
 
     @GetMapping("create")
-    public String renderCreateChoreForm(Model model) {
+    public String renderCreateChoreForm(Model model, HttpSession session) {
       model.addAttribute("title","New Chore");
       model.addAttribute("days", DayOfTheWeek.values());
+      model.addAttribute("crew", childRepository.findAllByParent(authenticationController.getParentFromSession(session)));
       model.addAttribute(new Chore());
       return "chores/create";
     };
 
     @PostMapping("create")
-    public String processCreateChoreForm(@ModelAttribute @Valid Chore newChore, Errors errors, Model model) {
+    public String processCreateChoreForm(@ModelAttribute @Valid Chore newChore, Errors errors, Model model, HttpSession session) {
         if (errors.hasErrors()) {
             model.addAttribute("title","New Chore");
             model.addAttribute(new Chore());
             return "chores/create";
         }
+        newChore.setParentCreator(authenticationController.getParentFromSession(session));
         choreRepository.save(newChore);
         return "redirect:";
     }
