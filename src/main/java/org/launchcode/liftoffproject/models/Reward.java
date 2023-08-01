@@ -1,6 +1,7 @@
 package org.launchcode.liftoffproject.models;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -43,6 +44,19 @@ public class Reward extends AbstractEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @ManyToOne
+    private Child child;
+
+    // Getters and setters
+
+    public Child getChild() {
+        return child;
+    }
+
+    public void setChild(Child child) {
+        this.child = child;
     }
 
 }

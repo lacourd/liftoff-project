@@ -151,4 +151,7 @@ public class AuthenticationController {
         return "redirect:/";
     }
 
+    public ChildUser getChildUserFromSession(HttpSession session) {
+        return null;
+    }
 }

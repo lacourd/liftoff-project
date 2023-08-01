@@ -93,4 +93,7 @@ public class Child extends AbstractEntity{
     public void setChore(List<Chore> chore) {
         this.chore = chore;
     }
+
+    public void setAvatar(String avatarUrl) {
+    }
 }

@@ -9,4 +9,5 @@ import java.util.List;
 public interface ChildRepository extends PagingAndSortingRepository<Child, Integer> {
 
     List<Child> findAllByParent(Parent parent);
+
 }
