@@ -4,6 +4,7 @@
 <body>
 <header th:replace="fragments :: header"></header>
 
+<h1 th:if="${userType}" th:text="${'THIS IS A CHILD USER'}"></h1>
 <p th:unless="${chores} and ${chores.size()}">No chores!</p>
 <table class="table table-striped">
     <thead>
@@ -19,11 +20,10 @@
      <tr th:each="chore : ${chores}">
 <td> <a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
         <td th:text="${chore.choreDescription}"></td>
-        <td th:text="${chore.childAssigned}"></td>
+        <td th:text="${chore.childAssigned.firstName}"></td>
         <td th:text="${chore.dueDay.displayName}"></td>
         <td th:text="${chore.rewardPoints}"></td>
     </tr>
 </table>
-
 </body>
 </html>

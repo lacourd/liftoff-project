@@ -47,6 +47,26 @@ public class AuthenticationController {
         return user.get();
     }
 
+    public Parent getParentFromSession(HttpSession session) {
+        Integer parentId = (Integer) session.getAttribute(userSessionKey);
+        if (parentId == null) {
+            return null;
+        }
+
+        Optional<User> user = userRepository.findById(parentId);
+
+        if (user.isEmpty()) {
+            return null;
+        }
+        if (user.get() instanceof ParentUser) {
+            ParentUser parentUser = (ParentUser) user.get();
+            return parentUser.getParent();
+        }
+        return null;
+    }
+
+
+
     private static void setUserInSession(HttpSession session, User user) {
         session.setAttribute(userSessionKey, user.getId());
     }

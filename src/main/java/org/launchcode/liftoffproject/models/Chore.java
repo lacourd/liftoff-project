@@ -12,7 +12,7 @@ public class Chore extends AbstractEntity{
     @NotBlank
     private String choreDescription;
 
-    @OneToOne
+    @ManyToOne
     private Child childAssigned;
 
     @ManyToOne
