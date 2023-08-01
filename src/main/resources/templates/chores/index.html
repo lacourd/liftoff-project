@@ -4,6 +4,7 @@
 <body>
 <header th:replace="fragments :: header"></header>
 
+<h1 th:if="${userType}" th:text="${'THIS IS A CHILD USER'}"></h1>
 <p th:unless="${chores} and ${chores.size()}">No chores!</p>
 <table class="table table-striped">
     <thead>
@@ -24,6 +25,5 @@
         <td th:text="${chore.rewardPoints}"></td>
     </tr>
 </table>
-
 </body>
 </html>
