@@ -4,6 +4,8 @@ import javax.persistence.*;
 import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Child extends AbstractEntity{
@@ -24,8 +26,8 @@ public class Child extends AbstractEntity{
     @OneToOne(cascade = CascadeType.ALL)
     private ChildUser userAccount;
 
-    @OneToOne(mappedBy = "childAssigned")
-    private Chore chore;
+    @OneToMany(mappedBy = "childAssigned")
+    private List<Chore> chore = new ArrayList<>();
 
 
     public Child(){}
@@ -84,11 +86,11 @@ public class Child extends AbstractEntity{
         this.userAccount = userAccount;
     }
 
-    public Chore getChore() {
+    public List<Chore> getChore() {
         return chore;
     }
 
-    public void setChore(Chore chore) {
+    public void setChore(List<Chore> chore) {
         this.chore = chore;
     }
 }
