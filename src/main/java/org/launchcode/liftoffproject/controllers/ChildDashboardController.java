@@ -33,12 +33,12 @@ public class ChildDashboardController {
         this.earnedRewardsRepository = earnedRewardsRepository;
     }
 
-    @GetMapping("/child/dashboard")
+    @GetMapping("dashboard")
     public String childDashboard(Model model, HttpSession session) {
         Child child = (Child) session.getAttribute("child");
         if (child == null) {
-            // Handle case when the child is not logged in
-            return "redirect:/login"; // Redirect to the login page or display an error message
+            // if not child
+            return "redirect:/login";
         }
 
         // Fetch the child's chores and earned rewards
@@ -55,18 +55,18 @@ public class ChildDashboardController {
     public String updateAvatar(@RequestBody String avatarUrl, HttpSession session) {
         Child child = (Child) session.getAttribute("child");
         if (child == null) {
-            // Handle case when the child is not logged in
-            return "redirect:/login"; // Redirect to the login page or display an error message
+
+            return "redirect:/login";
         }
 
-        // Update the child's avatar URL in the database
+        // Update child's avatar  in the database
         child.setAvatar(avatarUrl);
         childRepository.save(child);
 
-        return "redirect:/dashboard"; // Redirect back to the dashboard
+        return "redirect:/dashboard";
     }
 
-    @PostMapping("/child/updateChoreCompletion")
+    @PostMapping("/updateChoreCompletion")
     public void updateChoreCompletion(@RequestBody ChoreCompletionRequest request) {
         Chore chore = choreRepository.findById(request.getChoreId()).orElse(null);
         if (chore != null) {
