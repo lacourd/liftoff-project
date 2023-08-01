@@ -15,11 +15,9 @@ public class ChildUser extends User{
         super(username, password);
     }
 
-    public ChildUser getChildUser() {
-        return null;
+    public Child getChild() {
+        return child;
     }
 
-    public Child getChild() {
-        return null;
-    }
+    public void setChild(Child child) {this.child = child;}
 }

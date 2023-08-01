@@ -29,6 +29,8 @@ public class Child extends AbstractEntity{
     @OneToMany(mappedBy = "childAssigned")
     private List<Chore> chore = new ArrayList<>();
 
+    private String avatar;
+
 
     public Child(){}
 
@@ -93,6 +95,8 @@ public class Child extends AbstractEntity{
     public void setChore(List<Chore> chore) {
         this.chore = chore;
     }
+
+    public String getAvatar() {return avatar;}
 
     public void setAvatar(String avatarUrl) {
     }

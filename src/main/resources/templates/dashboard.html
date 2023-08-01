@@ -5,7 +5,7 @@
     <title>Child Dashboard</title>
 
 </head>
-<body class="container", th:userType>
+<body th:if="${userType}">
 
 <header th:replace="fragments :: header"></header>
 

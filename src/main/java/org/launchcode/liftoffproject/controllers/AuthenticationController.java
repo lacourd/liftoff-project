@@ -2,10 +2,7 @@ package org.launchcode.liftoffproject.controllers;
 
 import org.launchcode.liftoffproject.data.ParentRepository;
 import org.launchcode.liftoffproject.data.UserRepository;
-import org.launchcode.liftoffproject.models.ChildUser;
-import org.launchcode.liftoffproject.models.Parent;
-import org.launchcode.liftoffproject.models.ParentUser;
-import org.launchcode.liftoffproject.models.User;
+import org.launchcode.liftoffproject.models.*;
 import org.launchcode.liftoffproject.models.dto.LoginFormDTO;
 import org.launchcode.liftoffproject.models.dto.RegisterFormDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +58,24 @@ public class AuthenticationController {
         if (user.get() instanceof ParentUser) {
             ParentUser parentUser = (ParentUser) user.get();
             return parentUser.getParent();
+        }
+        return null;
+    }
+
+    public Child getChildFromSession(HttpSession session) {
+        Integer childId = (Integer) session.getAttribute(userSessionKey);
+        if (childId == null) {
+            return null;
+        }
+
+        Optional<User> user = userRepository.findById(childId);
+
+        if (user.isEmpty()) {
+            return null;
+        }
+        if (user.get() instanceof ChildUser) {
+            ChildUser childUser = (ChildUser) user.get();
+            return childUser.getChild();
         }
         return null;
     }
@@ -149,9 +164,5 @@ public class AuthenticationController {
     public String logout(HttpServletRequest request){
         request.getSession().invalidate();
         return "redirect:/";
-    }
-
-    public ChildUser getChildUserFromSession(HttpSession session) {
-        return null;
     }
 }

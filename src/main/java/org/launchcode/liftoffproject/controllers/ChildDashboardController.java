@@ -20,26 +20,21 @@ import java.util.List;
 @Controller
 public class ChildDashboardController {
 
-    private final ChildRepository childRepository;
-    private final ChoreRepository choreRepository;
-    private final EarnedRewardsRepository earnedRewardsRepository;
+    @Autowired
+    private ChildRepository childRepository;
 
     @Autowired
-    public ChildDashboardController(ChildRepository childRepository,
-                                    ChoreRepository choreRepository,
-                                    EarnedRewardsRepository earnedRewardsRepository) {
-        this.childRepository = childRepository;
-        this.choreRepository = choreRepository;
-        this.earnedRewardsRepository = earnedRewardsRepository;
-    }
+    private ChoreRepository choreRepository;
+
+    @Autowired
+    private EarnedRewardsRepository earnedRewardsRepository;
+
+    @Autowired
+    private AuthenticationController authenticationController;
 
     @GetMapping("dashboard")
     public String childDashboard(Model model, HttpSession session) {
-        Child child = (Child) session.getAttribute("child");
-        if (child == null) {
-            // if not child
-            return "redirect:/login";
-        }
+        Child child = authenticationController.getChildFromSession(session);
 
         // Fetch the child's chores and earned rewards
         List<Chore> chores = choreRepository.findAllByChildAssigned(child);
