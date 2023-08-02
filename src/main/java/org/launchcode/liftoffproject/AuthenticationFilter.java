@@ -66,20 +66,7 @@ public class AuthenticationFilter extends HandlerInterceptorAdapter {
 
         if (user instanceof ChildUser) {
             System.out.println("This is a child user");
-            model.addObject("userType","userType");
+            model.addObject("childUser","childUser");
         }
     }
-
-//    public boolean afterCompletion(HttpServletRequest request, HttpServletResponse response, Model model) {
-//        HttpSession session = request.getSession();
-//        User user = authenticationController.getUserFromSession(session);
-//
-//        if (user instanceof ChildUser) {
-//        System.out.println("This is a child user");
-//        model.addAttribute("userType", "userType");
-//        return true;
-//    }
-//
-//        return true;
-//}
 }
