@@ -112,10 +112,13 @@ a.nav-link:hover {
 
 header {
     background-color: #2B2D2F;
+    margin-bottom: 3rem;
 }
 
 footer {
     background-color: #2B2D2F;
+    position: sticky;
+    margin-top: 3rem;
 }
 
 .register-btn {
