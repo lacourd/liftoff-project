@@ -5,7 +5,7 @@ import org.launchcode.liftoffproject.data.ChoreRepository;
 import org.launchcode.liftoffproject.data.EarnedRewardsRepository;
 import org.launchcode.liftoffproject.models.Child;
 import org.launchcode.liftoffproject.models.Chore;
-import org.launchcode.liftoffproject.models.ChoreCompletionRequest;
+
 import org.launchcode.liftoffproject.models.Reward;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -75,26 +75,26 @@ public class ChildDashboardController {
     }
 
 
-//    private static class ChoreCompletionRequest {
-//        private int choreId;
-//        private boolean completed;
-//
-//        // Getters and setters
-//
-//        public int getChoreId() {
-//            return choreId;
-//        }
-//
-//        public void setChoreId(int choreId) {
-//            this.choreId = choreId;
-//        }
-//
-//        public boolean isCompleted() {
-//            return completed;
-//        }
-//
-//        public void setCompleted(boolean completed) {
-//            this.completed = completed;
-//        }
-//    }
+    private static class ChoreCompletionRequest {
+        private int choreId;
+        private boolean completed;
+
+        // Getters and setters
+
+        public int getChoreId() {
+            return choreId;
+        }
+
+        public void setChoreId(int choreId) {
+            this.choreId = choreId;
+        }
+
+        public boolean isCompleted() {
+            return completed;
+        }
+
+        public void setCompleted(boolean completed) {
+            this.completed = completed;
+        }
+    }
 }

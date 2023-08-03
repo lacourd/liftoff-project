@@ -158,6 +158,9 @@ footer {
 }
 
 /* child dashboard */
+.points{
+    color: 	#FFFFFF;
+}
 
 <style th:inline="text">
 
@@ -171,20 +174,8 @@ footer {
   }
 
   h1 span {
-      /* Add any additional styles for the child's first name if needed */
-  }
-    /* Styling for the avatar selection container
-    .avatar-container {
-      display: flex;
-      justify-content: space-between;
-      max-width: 200px;
-      margin: 0 auto;
-    }
 
-    /* Styling for the selected avatar section
-    .avatar-selected {
-      text-align: center;
-    }*/
+  }
 
     /* Styling for the points display section */
     /* Style for the Points Display */
@@ -197,16 +188,16 @@ footer {
    }
 
    h2 span {
-       /* Add any additional styles for the child's points if needed */
+
    }
 
-    /* Styling for the redeem reward button */
+    /* redeem reward button */
     .reward-button {
       text-align: right;
       margin: 20px auto;
     }
 
-    /* Style for the Redeem Reward Button */
+
     .reward-button {
         text-align: center;
         margin-bottom: 20px;
@@ -223,7 +214,7 @@ footer {
     }
 
 
-/* Styling for the calendar buttons */
+/*  calendar buttons */
 #calendar {
   text-align: center;
   margin-top: 20px;
@@ -245,39 +236,39 @@ footer {
   cursor: pointer;
 }
 
-/* Styling for the chores table */
+/*  chores table */
 #choresTable {
   max-width: 600px;
   margin: 20px auto;
 }
 
-/* Styling for the chores table headers */
+/*  chores table headers */
 #choresTable th {
   background-color: lightgray;
   text-align: center;
   padding: 10px;
 }
 
-/* Styling for the chores table cells */
+/*  chores table cells */
 #choresTable td {
   text-align: center;
   padding: 10px;
 }
 
-/* Styling for the rewards table */
+/* rewards table */
 table {
   max-width: 600px;
   margin: 20px auto;
 }
 
-/* Styling for the rewards table headers */
+/*  rewards table headers */
 table th {
   background-color: lightgray;
   text-align: center;
   padding: 10px;
 }
 
-/* Styling for the rewards table cells */
+/*  rewards table cells */
 table td {
   text-align: center;
   padding: 10px;

@@ -23,7 +23,7 @@
         <td th:text="${chore.choreDescription}"></td>
         <td th:text="${chore.childAssigned.firstName}"></td>
         <td th:text="${chore.dueDay.displayName}"></td>
-         <<p th:if="${chore.dueDate}" th:text="${chore.dueDate.displayName}"></p>
+         <p th:if="${chore.dueDate}" th:text="${chore.dueDate.displayName}"></p>
         <td th:text="${chore.rewardPoints}"></td>
     </tr>
 </table>
