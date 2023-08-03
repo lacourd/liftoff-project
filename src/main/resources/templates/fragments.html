@@ -25,14 +25,15 @@
             </div>
 
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="/chores" class="nav-link pl-3">Chores!</a></li>
-                <li><a href="/rewards" class="nav-link pl-3">Rewards</a></li>
-                <li><a href="/crew" class="nav-link pl-3">Crew Members</a></li>
+                <li><a th:if="${loggedInUser}" href="/chores" class="nav-link pl-3">Chores!</a></li>
+                <li><a th:if="${loggedInUser}" href="/rewards" class="nav-link pl-3">Rewards</a></li>
+                <li><a th:if="${loggedInUser}" th:unless="${childUser}" href="/crew" class="nav-link pl-3">Crew Members</a></li>
             </ul>
 
             <div class="col-md-3 text-end mr-3" style="text-align: right;">
-                <a href="/#login"><span class="btn btn-outline-primary me-2 login-btn">Sign In</span></a>
-                <a href="/register"><span class="btn btn-primary register-btn">Register</span></a>
+                <a th:if="${loggedInUser}" href="/logout"><span class="btn btn-outline-primary me-2 login-btn">Logout</span></a>
+                <a th:unless="${loggedInUser}" href="/#login"><span class="btn btn-outline-primary me-2 login-btn">Sign In</span></a>
+                <a th:unless="${loggedInUser}" href="/register"><span class="btn btn-primary register-btn">Register</span></a>
             </div>
         </div>
 </header>
