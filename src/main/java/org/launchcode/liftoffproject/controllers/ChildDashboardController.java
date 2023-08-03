@@ -46,20 +46,6 @@ public class ChildDashboardController {
         return "dashboard";
     }
 
-    @PostMapping("/updateAvatar")
-    public String updateAvatar(@RequestBody String avatarUrl, HttpSession session) {
-        Child child = (Child) session.getAttribute("child");
-        if (child == null) {
-
-            return "redirect:/login";
-        }
-
-        // Update child's avatar  in the database
-        child.setAvatar(avatarUrl);
-        childRepository.save(child);
-
-        return "redirect:/dashboard";
-    }
 
     @PostMapping("/updateChoreCompletion")
     @ResponseBody

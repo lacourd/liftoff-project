@@ -1,5 +1,7 @@
 package org.launchcode.liftoffproject.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
@@ -24,20 +26,21 @@ public class Chore extends AbstractEntity{
     private int rewardPoints;
 
 //    @Enumerated(EnumType.STRING) // Storing the ENUM as a string in the database
-    private DayOfTheWeek dueDay;
+    //private DayOfTheWeek dueDay;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dueDate;
 
     public Chore(){}
 
-    public Chore(String name, String choreDescription, int rewardPoints, DayOfTheWeek dueDay, LocalDate dueDate) {
+    public Chore(String name, String choreDescription, int rewardPoints, LocalDate dueDate) {
         this.name = name;
         this.choreDescription = choreDescription;
         this.rewardPoints = rewardPoints;
-        this.dueDay = dueDay;
+        //this.dueDay = dueDay;
         this.dueDate = dueDate;
         this.completed = false;
-    }
+    }// DayOfTheWeek dueDay,
 
     // Getters and Setters
 
@@ -89,13 +92,13 @@ public class Chore extends AbstractEntity{
         this.rewardPoints = rewardPoints;
     }
 
-    public DayOfTheWeek getDueDay() {
-        return dueDay;
-    }
-
-    public void setDueDay(DayOfTheWeek dueDay) {
-        this.dueDay = dueDay;
-    }
+//    public DayOfTheWeek getDueDay() {
+//        return dueDay;
+//    }
+//
+//    public void setDueDay(DayOfTheWeek dueDay) {
+//        this.dueDay = dueDay;
+//    }
 
     @Override
     public String toString() {

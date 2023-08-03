@@ -12,8 +12,7 @@
         <th>Name</th>
         <th>Description</th>
         <th>Assigned to:</th>
-        <th>Due Day</th>
-        <th>Date</th>
+        <th>Due Date</th>
         <th>Rewards Value</th>
         <th>Completed</th>
     </tr>
@@ -22,8 +21,7 @@
 <td> <a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
         <td th:text="${chore.choreDescription}"></td>
         <td th:text="${chore.childAssigned.firstName}"></td>
-        <td th:text="${chore.dueDay.displayName}"></td>
-         <p th:if="${chore.dueDate}" th:text="${chore.dueDate.displayName}"></p>
+         <td th:text="${#temporals.format(chore.dueDate, 'yyyy-MM-dd')}"></td>
         <td th:text="${chore.rewardPoints}"></td>
     </tr>
 </table>

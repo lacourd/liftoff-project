@@ -5,6 +5,7 @@ import org.launchcode.liftoffproject.data.ChoreRepository;
 import org.launchcode.liftoffproject.models.Chore;
 import org.launchcode.liftoffproject.models.DayOfTheWeek;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -38,22 +40,21 @@ public class ChoreController {
     @GetMapping("create")
     public String renderCreateChoreForm(Model model, HttpSession session) {
       model.addAttribute("title","New Chore");
-      model.addAttribute("days", DayOfTheWeek.values());
+      //model.addAttribute("days", DayOfTheWeek.values());
       model.addAttribute("crew", childRepository.findAllByParent(authenticationController.getParentFromSession(session)));
-        model.addAttribute("chore", new Chore());
+      model.addAttribute("chore", new Chore());
       return "chores/create";
     };
 
     @PostMapping("create")
     public String processCreateChoreForm(@ModelAttribute @Valid Chore newChore, Errors errors, Model model, HttpSession session) {
         if (errors.hasErrors()) {
-            model.addAttribute("title","New Chore");
-            model.addAttribute("chore", new Chore());
+            model.addAttribute("title", "New Chore");
             return "chores/create";
         }
         newChore.setParentCreator(authenticationController.getParentFromSession(session));
         choreRepository.save(newChore);
-        return "redirect:";
+        return "redirect:/chores";
     }
 
     @GetMapping("edit")
@@ -75,7 +76,7 @@ public class ChoreController {
         updatedChore.setName(chore.getName());
         updatedChore.setChoreDescription(chore.getChoreDescription());
         updatedChore.setChildAssigned(chore.getChildAssigned());
-        updatedChore.setDueDay(chore.getDueDay());
+        //updatedChore.setDueDay(chore.getDueDay());
         updatedChore.setDueDate((LocalDate) chore.getDueDate());
         updatedChore.setRewardPoints(chore.getRewardPoints());
         choreRepository.save(updatedChore);
@@ -97,4 +98,12 @@ public class ChoreController {
 
         return "chores/detail";
     }
+
+
+    @GetMapping("/chores/{dueDate}")
+    public List<Chore> getChoresForDate(@PathVariable("dueDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dueDate) {
+
+        return choreRepository.findByDueDate(dueDate);
+    }
 }
+
