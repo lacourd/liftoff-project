@@ -10,51 +10,71 @@
 
    <h2 th:unless="${rewards} and ${rewards.size()}">No rewards!</h2>
 
-   <table class="table table-striped">
-      <thead>
-      <tr>
-         <th>Name</th>
-         <th>Description</th>
-         <th>Rewards Value</th>
-      </tr>
-      </thead>
-      <tr th:each="reward : ${rewards}">
-         <!--        <a th:href="'/reward/detail?rewardId=' + ${reward.id}"-->
-         <td th:text="${reward.name}"></td>
-         <td th:text="${reward.description}"></td>
-         <td th:text="${reward.points}"></td>
-         <td>
-            <form th:action="@{/rewards/edit}" method="get">
-               <input type="hidden" name="rewardId" th:value="${reward.id}" />
-               <button type="submit" class="btn btn-primary">Edit</button>
-            </form>
-         </td>
-         <td>
-            <form th:action="@{/rewards/delete}" method="post">
-               <input type="hidden" name="rewardIds" th:value="${reward.id}" />
-               <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
-         </td>
-      </tr>
-   </table>
+   <th:block th:unless="${childUser}">
+      <table class="table table-striped">
+         <thead>
+         <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Rewards Value</th>
+         </tr>
+         </thead>
+         <tr th:each="reward : ${rewards}">
+            <!--        <a th:href="'/reward/detail?rewardId=' + ${reward.id}"-->
+            <td th:text="${reward.name}"></td>
+            <td th:text="${reward.description}"></td>
+            <td th:text="${reward.points}"></td>
+            <td>
+               <form th:action="@{/rewards/edit}" method="get">
+                  <input type="hidden" name="rewardId" th:value="${reward.id}" />
+                  <button type="submit" class="btn btn-primary">Edit</button>
+               </form>
+            </td>
+            <td>
+               <form th:action="@{/rewards/delete}" method="post">
+                  <input type="hidden" name="rewardIds" th:value="${reward.id}" />
+                  <button type="submit" class="btn btn-danger">Delete</button>
+               </form>
+            </td>
+         </tr>
+      </table>
 
-   <h2>Create Reward</h2>
+      <h2>Create Reward</h2>
 
-   <form th:action="@{/rewards/create}" method="post">
-      <div class="form-group">
-         <label for="name">Name:</label>
-         <input type="text" id="name" name="name" class="form-control" required />
-      </div>
-      <div class="form-group">
-         <label for="description">Description:</label>
-         <textarea id="description" name="description" class="form-control" required></textarea>
-      </div>
-      <div class="form-group">
-         <label for="points">Reward Points:</label>
-         <input type="number" id="points" name="points" class="form-control" required />
-      </div>
-      <button type="submit" class="btn btn-success">Add Reward</button>
-   </form>
+      <form th:action="@{/rewards/create}" method="post">
+         <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" class="form-control" required />
+         </div>
+         <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" class="form-control" required></textarea>
+         </div>
+         <div class="form-group">
+            <label for="points">Reward Points:</label>
+            <input type="number" id="points" name="points" class="form-control" required />
+         </div>
+         <button type="submit" class="btn btn-success">Add Reward</button>
+      </form>
+   </th:block>
+
+   <th:block th:if="${childUser}">
+      <table class="table table-striped">
+         <thead>
+         <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Rewards Value</th>
+         </tr>
+         </thead>
+         <tr th:each="reward : ${rewards}">
+            <!--        <a th:href="'/reward/detail?rewardId=' + ${reward.id}"-->
+            <td th:text="${reward.name}"></td>
+            <td th:text="${reward.description}"></td>
+            <td th:text="${reward.points}"></td>
+         </tr>
+      </table>
+   </th:block>
 
 </main>
 
