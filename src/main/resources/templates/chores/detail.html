@@ -1,30 +1,39 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https//www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
-<body class="container">
+
+<body>
+
 <header th:replace="fragments :: header"></header>
-<table class="table table-striped">
-    <tr>
-        <th>Name</th>
-        <td th:text="${chore.name}"></td>
-    </tr>
-    <tr>
-        <th>Description</th>
-        <td th:text="${chore.choreDescription}"></td>
-    </tr>
-    <tr>
-        <th>Assigned</th>
-<!--        <td th:text="${chore.childAssigned}"></td>-->
-    </tr>
-    <tr>
-        <th>Due Day</th>
-        <td th:text="${chore.dueDay}"></td>
-    </tr>
-    <tr>
-        <th>Reward Points</th>
-        <td th:text="${chore.rewardPoints}"></td>
-    </tr>
-</table>
-<footer t:replace="fragments :: footer"></footer>
+
+<main class="container">
+
+    <table class="table table-striped">
+        <tr>
+            <th>Name</th>
+            <td th:text="${chore.name}"></td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td th:text="${chore.choreDescription}"></td>
+        </tr>
+        <tr>
+            <th>Assigned</th>
+    <!--        <td th:text="${chore.childAssigned}"></td>-->
+        </tr>
+        <tr>
+            <th>Due Day</th>
+            <td th:text="${chore.dueDay}"></td>
+        </tr>
+        <tr>
+            <th>Reward Points</th>
+            <td th:text="${chore.rewardPoints}"></td>
+        </tr>
+    </table>
+
+</main>
+
+<footer th:replace="fragments :: footer"></footer>
+
 </body>
 </html>
