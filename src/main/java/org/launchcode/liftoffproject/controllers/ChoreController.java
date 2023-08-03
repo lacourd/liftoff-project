@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Controller
@@ -39,7 +40,7 @@ public class ChoreController {
       model.addAttribute("title","New Chore");
       model.addAttribute("days", DayOfTheWeek.values());
       model.addAttribute("crew", childRepository.findAllByParent(authenticationController.getParentFromSession(session)));
-      model.addAttribute(new Chore());
+        model.addAttribute("chore", new Chore());
       return "chores/create";
     };
 
@@ -47,7 +48,7 @@ public class ChoreController {
     public String processCreateChoreForm(@ModelAttribute @Valid Chore newChore, Errors errors, Model model, HttpSession session) {
         if (errors.hasErrors()) {
             model.addAttribute("title","New Chore");
-            model.addAttribute(new Chore());
+            model.addAttribute("chore", new Chore());
             return "chores/create";
         }
         newChore.setParentCreator(authenticationController.getParentFromSession(session));
@@ -75,6 +76,7 @@ public class ChoreController {
         updatedChore.setChoreDescription(chore.getChoreDescription());
         updatedChore.setChildAssigned(chore.getChildAssigned());
         updatedChore.setDueDay(chore.getDueDay());
+        updatedChore.setDueDate((LocalDate) chore.getDueDate());
         updatedChore.setRewardPoints(chore.getRewardPoints());
         choreRepository.save(updatedChore);
         return "redirect:/chores";

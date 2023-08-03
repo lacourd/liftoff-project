@@ -5,14 +5,14 @@ import org.launchcode.liftoffproject.data.ChoreRepository;
 import org.launchcode.liftoffproject.data.EarnedRewardsRepository;
 import org.launchcode.liftoffproject.models.Child;
 import org.launchcode.liftoffproject.models.Chore;
+import org.launchcode.liftoffproject.models.ChoreCompletionRequest;
 import org.launchcode.liftoffproject.models.Reward;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -62,34 +62,39 @@ public class ChildDashboardController {
     }
 
     @PostMapping("/updateChoreCompletion")
-    public void updateChoreCompletion(@RequestBody ChoreCompletionRequest request) {
+    @ResponseBody
+    public ResponseEntity<String> updateChoreCompletion(@RequestBody ChoreCompletionRequest request) {
         Chore chore = choreRepository.findById(request.getChoreId()).orElse(null);
         if (chore != null) {
             chore.setCompleted(request.isCompleted());
             choreRepository.save(chore);
+            return ResponseEntity.ok("Chore completion status updated successfully.");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Chore not found.");
         }
     }
 
-    private static class ChoreCompletionRequest {
-        private int choreId;
-        private boolean completed;
 
-        // Getters and setters
-
-        public int getChoreId() {
-            return choreId;
-        }
-
-        public void setChoreId(int choreId) {
-            this.choreId = choreId;
-        }
-
-        public boolean isCompleted() {
-            return completed;
-        }
-
-        public void setCompleted(boolean completed) {
-            this.completed = completed;
-        }
-    }
+//    private static class ChoreCompletionRequest {
+//        private int choreId;
+//        private boolean completed;
+//
+//        // Getters and setters
+//
+//        public int getChoreId() {
+//            return choreId;
+//        }
+//
+//        public void setChoreId(int choreId) {
+//            this.choreId = choreId;
+//        }
+//
+//        public boolean isCompleted() {
+//            return completed;
+//        }
+//
+//        public void setCompleted(boolean completed) {
+//            this.completed = completed;
+//        }
+//    }
 }

@@ -7,35 +7,24 @@
 </head>
 <body th:if="${userType}">
 
-<header th:replace="fragments :: header"></header>
-
+<header th:replace="dashfragment :: header"></header>
 <h1>Welcome, <span th:text="${child.firstName}"></span>!</h1>
 
-<!-- Avatar Selection -->
-<h2>Choose Your Avatar</h2>
-<div class="avatar-container">
-    <!-- Avatar 1 -->
-    <img th:src="@{/static/images/avatar.png}" alt="Avatar 1" class="avatar" onclick="selectAvatar('@{/static/images/avatar.png}')">
-    <!-- Avatar 2 -->
-    <img th:src="@{/static/images/avatar2.png}" alt="Avatar 2" class="avatar" onclick="selectAvatar('@{/static/images/avatar2.png}')">
-</div>
-
-<!-- Avatar Display -->
-<h2>Your Avatar</h2>
-<img id="selectedAvatar" alt="Selected Avatar" class="avatar" th:src="${child.avatar}">
-
-<h2>Chores for <span id="selectedDay"></span></h2>
 
 <!-- Calendar -->
-<div id="calendar">
-    <button class="day" onclick="showChores('Sunday')">Sunday</button>
-    <button class="day" onclick="showChores('Monday')">Monday</button>
-    <button class="day" onclick="showChores('Tuesday')">Tuesday</button>
-    <button class="day" onclick="showChores('Wednesday')">Wednesday</button>
-    <button class="day" onclick="showChores('Thursday')">Thursday</button>
-    <button class="day" onclick="showChores('Friday')">Friday</button>
-    <button class="day" onclick="showChores('Saturday')">Saturday</button>
-</div>
+<h2>Chores for <span id="selectedDay"></span></h2>
+
+<!-- Add the input field for the date picker -->
+<label for="daySelect">Select a day:</label>
+<select id="daySelect" onchange="showChores(this.value)">
+    <option value="Sunday">Sunday</option>
+    <option value="Monday">Monday</option>
+    <option value="Tuesday">Tuesday</option>
+    <option value="Wednesday">Wednesday</option>
+    <option value="Thursday">Thursday</option>
+    <option value="Friday">Friday</option>
+    <option value="Saturday">Saturday</option>
+</select>
 
 <!-- chores table -->
 <table class="table table-striped" id="choresTable">
@@ -52,19 +41,34 @@
 
 <!-- Script for showing chores and marking them complete -->
 <script>
-    function showChores(day) {
-        document.getElementById("selectedDay").textContent = day;
-        const chores = ${chores}; // Your chores data from the model
-        const choresBody = document.getElementById("choresBody");
-        choresBody.innerHTML = "";
-        chores.filter(chore => chore.day === day).forEach(chore => {
+    // Function to display the chores for the selected date
+      function showChores(selectedDay) {
+        document.getElementById("selectedDay").textContent = selectedDay;
+        const dayButtons = document.getElementsByClassName("day");
+        for (let i = 0; i < dayButtons.length; i++) {
+            dayButtons[i].classList.remove("selected");
+        }
+        // Find the option with the selectedDay value and add the "selected" class to highlight the selected day in the dropdown
+        const daySelect = document.getElementById("daySelect");
+        for (let i = 0; i < daySelect.options.length; i++) {
+            if (daySelect.options[i].value === selectedDay) {
+                daySelect.options[i].selected = true;
+                break;
+            }
+        }
+
+       // chores based on the selected day(needs work)
+       const chores = ${chores};
+      const choresBody = document.getElementById("choresBody");
+      choresBody.innerHTML = "";
+       chores.filter(chore => chore.day === day).forEach(chore => {
             const row = document.createElement("tr");
-            row.innerHTML = `
-                <td>${chore.name}</td>
-                <td>${chore.choreDescription}</td>
-                <td>${chore.rewardPoints}</td>
-                <td>
-                    <input type="checkbox" onchange="markChoreComplete(${chore.id}, this.checked)" ${chore.completed ? 'checked' : ''}>
+          row.innerHTML = `
+               <td>${chore.name}</td>
+               <td>${chore.choreDescription}</td>
+               <td>${chore.rewardPoints}</td>
+               <td>
+                <input type="checkbox" onchange="markChoreComplete(${chore.id}, this.checked)" ${chore.completed ? 'checked' : ''}
                 </td>
             `;
             choresBody.appendChild(row);
@@ -81,13 +85,36 @@
             body: JSON.stringify({ choreId, completed })
         });
     }
+
+    // Function to highlight the current day on the calendar
+    function highlightCurrentDay() {
+        const currentDate = new Date();
+        const dayOfWeek = currentDate.getDay();
+        const dayButtons = document.getElementsByClassName("day");
+        dayButtons[dayOfWeek].classList.add("current-day");
+    }
+
+    // Call the function to highlight the current day when the page loads
+    highlightCurrentDay();
+
+    // Initialize the date picker
+    $(function() {
+        $("#datepicker").datepicker({
+            dateFormat: "DD",
+            onSelect: function(selectedDate) {
+
+                showChores(selectedDate);
+            }
+        });
+    });
 </script>
 
+
 <!-- Avatar selection script -->
-<script>
+<!--script>
     function selectAvatar(avatarUrl) {
         // Update the avatar on the page
-        document.getElementById("selectedAvatar").src = avatarUrl;
+        document.getElementById("selectedAvatar").querySelector("img").src = "/images/" + {avatar.png, avatar2.png};
 
         // Send an AJAX request to update the avatar in the backend
         fetch("/updateAvatar", {
@@ -95,28 +122,12 @@
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ avatarUrl })
+            body: JSON.stringify({ avatarUrl: avatarUrl, avatarId: avatarId })
         });
     }
-</script>
+</-script-->
 
 <!-- Chores and Rewards -->
-<h2>Earned Rewards</h2>
-
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Reward Points</th>
-    </tr>
-    </thead>
-    <tr th:each="reward : ${earnedRewards}">
-        <td th:text="${reward.name}"></td>
-        <td th:text="${reward.description}"></td>
-        <td th:text="${reward.points}"></td>
-    </tr>
-</table>
 
 <h2>Chores</h2>
 
@@ -143,6 +154,24 @@
         </td>
     </tr>
 </table>
+
+<h2>Earned Rewards</h2>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Reward Points</th>
+    </tr>
+    </thead>
+    <tr th:each="reward : ${earnedRewards}">
+        <td th:text="${reward.name}"></td>
+        <td th:text="${reward.description}"></td>
+        <td th:text="${reward.points}"></td>
+    </tr>
+</table>
+
 
 </body>
 </html>

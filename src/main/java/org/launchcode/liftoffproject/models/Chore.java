@@ -2,6 +2,7 @@ package org.launchcode.liftoffproject.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 
 @Entity
 public class Chore extends AbstractEntity{
@@ -25,13 +26,16 @@ public class Chore extends AbstractEntity{
 //    @Enumerated(EnumType.STRING) // Storing the ENUM as a string in the database
     private DayOfTheWeek dueDay;
 
+    private LocalDate dueDate;
+
     public Chore(){}
 
-    public Chore(String name, String choreDescription, int rewardPoints, DayOfTheWeek dueDay) {
+    public Chore(String name, String choreDescription, int rewardPoints, DayOfTheWeek dueDay, LocalDate dueDate) {
         this.name = name;
         this.choreDescription = choreDescription;
         this.rewardPoints = rewardPoints;
         this.dueDay = dueDay;
+        this.dueDate = dueDate;
         this.completed = false;
     }
 
@@ -97,4 +101,13 @@ public class Chore extends AbstractEntity{
     public String toString() {
         return name;
     }
+
+    public Object getDueDate() { return dueDate;
+    }
+
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
 }
+
+

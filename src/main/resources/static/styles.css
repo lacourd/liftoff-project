@@ -159,67 +159,126 @@ footer {
 
 /* child dashboard */
 
-/*  avatar image */
-.avatar-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-}
+<style th:inline="text">
 
-.avatar {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  border: 2px solid #ccc;
-  cursor: pointer;
-  transition: border-color 0.3s ease;
-}
+  /* Style for the Welcome message */
+  h1 {
+      font-size: 24px;
+      font-weight: bold;
+      text-align: left;
+      margin: 20px 0;
+      color:white;
+  }
 
-.avatar:hover {
-  border-color: #007bff;
-}
+  h1 span {
+      /* Add any additional styles for the child's first name if needed */
+  }
+    /* Styling for the avatar selection container
+    .avatar-container {
+      display: flex;
+      justify-content: space-between;
+      max-width: 200px;
+      margin: 0 auto;
+    }
 
-/*  selected avatar */
-.selected-avatar {
-  border-color: #007bff;
-}
+    /* Styling for the selected avatar section
+    .avatar-selected {
+      text-align: center;
+    }*/
 
-/*  avatar selection buttons */
-.avatar-option {
+    /* Styling for the points display section */
+    /* Style for the Points Display */
+   h2 {
+       font-size: 22px;
+       font-weight: bold;
+       text-align: center;
+       margin-bottom: 10px;
+
+   }
+
+   h2 span {
+       /* Add any additional styles for the child's points if needed */
+   }
+
+    /* Styling for the redeem reward button */
+    .reward-button {
+      text-align: right;
+      margin: 20px auto;
+    }
+
+    /* Style for the Redeem Reward Button */
+    .reward-button {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .reward-button a {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #3498db;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+
+/* Styling for the calendar buttons */
+#calendar {
   text-align: center;
+  margin-top: 20px;
 }
 
-.avatar-option button {
-  margin-top: 10px;
-  background-color: #007bff;
-  color: #fff;
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.day {
+  background-color: lightblue;
+  color: black;
   border: none;
-  padding: 5px 10px;
+  padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
-.avatar-option button:hover {
-  background-color: #0056b3;
+/* Styling for the chores table */
+#choresTable {
+  max-width: 600px;
+  margin: 20px auto;
 }
 
-/*  calendar */
- .calendar {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      margin-top: 20px;
-    }
+/* Styling for the chores table headers */
+#choresTable th {
+  background-color: lightgray;
+  text-align: center;
+  padding: 10px;
+}
 
-    .day-button {
-      margin: 5px;
-      padding: 10px;
-      border: 1px solid #ccc;
-      cursor: pointer;
-    }
+/* Styling for the chores table cells */
+#choresTable td {
+  text-align: center;
+  padding: 10px;
+}
 
-    .selected-day-chores {
-      margin-top: 30px;
-    }
+/* Styling for the rewards table */
+table {
+  max-width: 600px;
+  margin: 20px auto;
+}
+
+/* Styling for the rewards table headers */
+table th {
+  background-color: lightgray;
+  text-align: center;
+  padding: 10px;
+}
+
+/* Styling for the rewards table cells */
+table td {
+  text-align: center;
+  padding: 10px;
+}

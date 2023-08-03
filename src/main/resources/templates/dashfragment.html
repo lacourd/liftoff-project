@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:fragment="head">
+  <meta charset="UTF-8"/>
+  <title>Liftoff Project</title>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+  <link rel="stylesheet" th:href="@{/styles.css}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=IM+Fell+DW+Pica:ital@1&family=IM+Fell+English+SC&family=IM+Fell+Great+Primer+SC&family=Pirata+One&family=Poppins:wght@300&family=Syne&display=swap" rel="stylesheet">
+
+
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
+</head>
+
+<body>
+
+<header th:fragment2="header">
+  <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-2">
+    <div class="col-md-3 mb-md-0 ml-3">
+      <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
+        <img th:src="@{/images/treasureTask-logo.jpg}" alt="Logo Image" height="75">
+      </a>
+    </div>
+
+
+
+    <!-- Avatar Display >
+    <div id="selectedAvatar" class="avatar-selected">
+      <h2>Your Avatar</h2>
+      <img alt="Selected Avatar" class="avatar" th:src="${child.avatar}">
+    </div--->
+
+    <!-- Points Display -->
+    <h2>Points: <span th:text="${child.points}"></span></h2>
+
+    <!-- Redeem Reward Button -->
+    <div class="reward-button">
+      <a th:href="@{/rewards}" th:classappend="${child.points >= minimumPointsRequired} ? 'redeem-button' : 'disabled-button'">
+        Redeem Reward
+      </a>
+    </div>
+
+    <div class="col-md-3 text-end mr-3" style="text-align: right;">
+      <a href="/logout"><span class="btn btn-outline-primary me-2 login-btn">Sign Out</span></a>
+      <!--a href="/register"><span class="btn btn-primary register-btn">Register</span></a-->
+    </div>
+  </div>
+</header>
+
+<footer class="py-3">
+  <ul class="nav justify-content-center pb-3">
+    <li class="nav-item"><a href="/"><img th:src="@{/images/treasureTask-logo.jpg}" alt="Logo Image" height="75"></a></li>
+  </ul>
+  <p class="text-center text-body-secondary mb-0" style="font-family: 'Pirata One', cursive !important; color: white !important">Copyright &copy; TreasureTask | <a href="https://www.vecteezy.com/free-vector/pirate" target="_blank">Pirate Vectors by Vecteezy</a></p>
+</footer>
+
+</body>
+
+</html>

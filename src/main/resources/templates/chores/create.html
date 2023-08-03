@@ -40,6 +40,14 @@
             <p class="error" th:if="${#fields.hasErrors('dueDay')}" th:errors="*{dueDay}"></p>
         </label>
     </div>
+<!--added-->
+    <div class="form-group">
+        <label>Due Date:
+            <input type="date" th:field="*{dueDate}" class="form-control">
+        </label>
+        <p class="error" th:if="${#fields.hasErrors('dueDate')}" th:errors="*{dueDate}"></p>
+    </div>
+
     <div class="form-group">
         <label>Reward Points:
             <input th:field="*{rewardPoints}" class="form-control">
