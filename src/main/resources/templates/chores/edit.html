@@ -27,6 +27,18 @@
     <label for="rewardPoints">Rewards Value:</label>
     <input type="number" id="rewardPoints" name="rewardPoints" th:value="${chore.rewardPoints}" th:field="${chore.rewardPoints}" class="form-control" required />
   </div>
+  <div class="form-group">
+    <label for="dayOfTheWeek">Day of the Week:</label>
+    <input type="number" id="dayOfTheWeek" name="rewardPoints" th:value="${chore.dayOfTheWeek}" th:field="${chore.dayOfTheWeek}" class="form-control" required />
+  </div>
+  <div class="form-group">
+    <label for="detailedDescription">Detailed Description:</label>
+    <input type="number" id="detailedDescription" name="detailedDescription" th:value="${chore.detailedDescription}" th:field="${chore.detailedDescription}" class="form-control" required />
+  </div>
+  <div class="form-group">
+    <label for="supplies">Supplies:</label>
+    <input type="number" id="supplies" name="supplies" th:value="${chore.supplies}" th:field="${chore.supplies}" class="form-control" required />
+  </div>
   <button type="submit" class="btn btn-primary">Save Changes</button>
   <a th:href="@{/rewards}" class="btn btn-secondary">Cancel</a>
 </form>

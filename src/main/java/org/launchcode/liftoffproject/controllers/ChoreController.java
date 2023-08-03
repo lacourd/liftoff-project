@@ -76,6 +76,9 @@ public class ChoreController {
         updatedChore.setChildAssigned(chore.getChildAssigned());
         updatedChore.setDueDay(chore.getDueDay());
         updatedChore.setRewardPoints(chore.getRewardPoints());
+        updatedChore.setDayOfTheWeek(chore.getDayOfTheWeek());
+        updatedChore.setDetailedDescription(chore.getDetailedDescription());
+        updatedChore.setSupplies(chore.getSupplies());
         choreRepository.save(updatedChore);
         return "redirect:/chores";
     }

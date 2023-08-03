@@ -14,7 +14,7 @@
     </tr>
     <tr>
         <th>Assigned</th>
-<!--        <td th:text="${chore.childAssigned}"></td>-->
+        <td th:text="${chore.childAssigned}"></td>-->
     </tr>
     <tr>
         <th>Due Day</th>
@@ -23,6 +23,18 @@
     <tr>
         <th>Reward Points</th>
         <td th:text="${chore.rewardPoints}"></td>
+    </tr>
+    <tr>
+        <th>Day of the Week</th>
+        <td th:text="${chore.dayOfTheWeek}"></td>
+    </tr>
+    <tr>
+        <th>Detailed Description</th>
+        <td th:text="${chore.detailedDescription}"></td>
+    </tr>
+    <tr>
+        <th>Supplies</th>
+        <td th:text="${chore.supplies}"></td>
     </tr>
 </table>
 <footer t:replace="fragments :: footer"></footer>
