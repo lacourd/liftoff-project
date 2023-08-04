@@ -6,6 +6,8 @@
 
 <header th:replace="fragments :: header"></header>
 
+<img src="/images/rewards-hero.jpg" width="100%">
+
 <main class="container">
 
    <h2 th:unless="${rewards} and ${rewards.size()}">No rewards!</h2>
@@ -59,21 +61,31 @@
    </th:block>
 
    <th:block th:if="${childUser}">
-      <table class="table table-striped">
-         <thead>
-         <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Rewards Value</th>
-         </tr>
-         </thead>
-         <tr th:each="reward : ${rewards}">
-            <!--        <a th:href="'/reward/detail?rewardId=' + ${reward.id}"-->
-            <td th:text="${reward.name}"></td>
-            <td th:text="${reward.description}"></td>
-            <td th:text="${reward.points}"></td>
-         </tr>
-      </table>
+<!--      <table>-->
+<!--         <thead>-->
+<!--         <tr>-->
+<!--            <th>Name</th>-->
+<!--         </tr>-->
+<!--         </thead>-->
+<!--      <tr>-->
+<!--         <td>test</td>-->
+<!--         <td th:text="${loggedInUser.points}"></td>-->
+<!--      </tr>-->
+<!--      </table>-->
+      <h2 class="total-points">300</h2>
+      <h2 style="text-align: center; font-family: 'Pirata One', cursive;">Total Points</h2>
+
+      <div class="row">
+         <div class="col-sm-12">
+            <div th:each="reward : ${rewards}" class="col-md-4 col-sm-6">
+               <div th:replace="fragments :: reward-card"></div>
+            </div>
+         </div>
+      </div>
+
+      <h2 style="text-align: center;">Want to earn more points?</h2>
+      <div style="text-align: center;"><a href="/chores" class="btn btn-success">Complete A Chore!</a></div>
+
    </th:block>
 
 </main>
