@@ -165,8 +165,6 @@ footer {
 
 <style th:inline="text">
 
- /* Apply flexbox to the container */
-
  body.dashboard{
      background-color: #f5f5f5;
      font-family: sans-serif;
