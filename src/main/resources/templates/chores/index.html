@@ -4,11 +4,13 @@
 <body>
 <header th:replace="fragments :: header"></header>
 
+
 <p th:unless="${chores} and ${chores.size()}">No chores!</p>
+
 <table class="table table-striped">
     <thead>
     <tr>
-        <th>Name</th>
+        <th>Chore</th>
         <th>Description</th>
         <th>Assigned to:</th>
         <th>Due Day</th>
@@ -17,13 +19,13 @@
     </thead>
     <tr th:each="chore : ${chores}">
 <!--        <a th:href="'/chore/detail?choreId=' + ${chore.id}"-->
-<<td> <a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
+<td> <a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
         <td th:text="${chore.choreDescription}"></td>
         <td th:text="${chore.childAssigned}"></td>
         <td th:text="${chore.dueDay}"></td>
         <td th:text="${chore.rewardPoints}"></td>
     </tr>
 </table>
-
+    <a class="btn btn-outline-dark" href="/chores/create" role="button">Create a Chore</a>
 </body>
 </html>
