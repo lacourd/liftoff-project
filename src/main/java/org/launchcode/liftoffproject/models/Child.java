@@ -1,7 +1,6 @@
 package org.launchcode.liftoffproject.models;
 
 import javax.persistence.*;
-import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
@@ -20,6 +19,8 @@ public class Child extends AbstractEntity{
 
     private int points;
 
+    private int earnedPoints; // Add this field
+
     @ManyToOne
     private Parent parent;
 
@@ -31,23 +32,36 @@ public class Child extends AbstractEntity{
 
     private String avatar;
 
+    public Child() {
+    }
 
-    public Child(){}
+    //public Child(String firstName, String lastName, Parent parent, ChildUser newChildUser){}
 
-    public Child(String firstName, String lastName, Parent parent) {
+//    public Child(String firstName, String lastName, Parent parent, ChildUser newChildUser) {
+//        super();
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.parent = parent;
+//        this.userAccount = newChildUser;
+//    }
+
+
+//     added constructor for reward
+    public Child(String firstName, String lastName, Parent parent, ChildUser userAccount) {
+
+        if (parent != null) {
+            Integer id = parent.getId();
+            if (id == null) {
+                throw new IllegalArgumentException("Parent ID cannot be null");
+            }
+        } else {
+            throw new IllegalArgumentException("Parent cannot be null");
+        }
         this.firstName = firstName;
         this.lastName = lastName;
         this.parent = parent;
+        this.userAccount = userAccount;
     }
-
-    public Child(String firstName, String lastName, Parent parent, ChildUser childUser) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.parent = parent;
-        this.userAccount = childUser;
-    }
-
-
     public String getFirstName() {
         return firstName;
     }
@@ -64,22 +78,6 @@ public class Child extends AbstractEntity{
         this.lastName = lastName;
     }
 
-    public int getPoints() {
-        return points;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
-    }
-
-    public Parent getParent() {
-        return parent;
-    }
-
-    public void setParent(Parent parent) {
-        this.parent = parent;
-    }
-
     public ChildUser getUserAccount() {
         return userAccount;
     }
@@ -88,16 +86,21 @@ public class Child extends AbstractEntity{
         this.userAccount = userAccount;
     }
 
-    public List<Chore> getChore() {
-        return chore;
+
+    public int getEarnedPoints() {
+        return earnedPoints;
     }
 
-    public void setChore(List<Chore> chore) {
-        this.chore = chore;
+    public void setEarnedPoints(int earnedPoints) {
+        this.earnedPoints = earnedPoints; // child - from approved completed chores
     }
 
-    public String getAvatar() {return avatar;}
+    public String getAvatar() {
+        return avatar;
+    }
 
     public void setAvatar(String avatarUrl) {
+        this.avatar
+                = avatarUrl;
     }
 }

@@ -3,6 +3,8 @@ package org.launchcode.liftoffproject.controllers;
 import org.launchcode.liftoffproject.data.ChildRepository;
 import org.launchcode.liftoffproject.data.ChoreRepository;
 import org.launchcode.liftoffproject.models.Chore;
+import org.launchcode.liftoffproject.models.Child;
+import org.launchcode.liftoffproject.models.ChoreCompletion;
 import org.launchcode.liftoffproject.models.DayOfTheWeek;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -47,16 +49,20 @@ public class ChoreController {
     };
 
     @PostMapping("create")
-    public String processCreateChoreForm(@ModelAttribute @Valid Chore newChore, Errors errors, Model model, HttpSession session) {
+    public String processCreateChoreForm(@ModelAttribute @Valid Chore chore, Errors errors, Model model, HttpSession session) {
         if (errors.hasErrors()) {
             model.addAttribute("title", "New Chore");
             return "chores/create";
         }
-        newChore.setParentCreator(authenticationController.getParentFromSession(session));
-        choreRepository.save(newChore);
+
+        Child child = chore.getChildAssigned();
+        chore.setChildAssigned(child);
+
+        choreRepository.save(chore);
+
+
         return "redirect:/chores";
     }
-
     @GetMapping("edit")
     public String displayEditChoreForm(@RequestParam("choreId") int choreId, Model model) {
         Chore chore = choreRepository.findById(choreId).orElse(null);
@@ -99,11 +105,70 @@ public class ChoreController {
         return "chores/detail";
     }
 
+    // Endpoint for marking a chore complete by the child
+    @GetMapping("/complete")
+    public String markChoreComplete(@RequestParam Integer choreId, @RequestParam boolean completed) {
+        Chore chore = choreRepository.findById(choreId).orElse(null);
 
-    @GetMapping("/chores/{dueDate}")
-    public List<Chore> getChoresForDate(@PathVariable("dueDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dueDate) {
+        if (chore != null) {
+            if (completed) {
+                // Mark the chore as complete and add a new completion entry
+                ChoreCompletion completion = new ChoreCompletion();
+                completion.setChore(chore);
+                completion.setCompletedByChild(true);
+                completion.setApprovedByParent(false);
+                chore.getCompletions().add(completion);
+            } else {
+                // Update existing completion if it exists and is marked by the child
+                for (ChoreCompletion completion : chore.getCompletions()) {
+                    if (completion.isCompletedByChild()) {
+                        // Update the existing completion to indicate it is not complete
+                        completion.setCompletedByChild(false);
+                        completion.setApprovedByParent(false);
+                        break;
+                    }
+                }
+            }
+            choreRepository.save(chore);
+        }
 
-        return choreRepository.findByDueDate(dueDate);
+        return "redirect:/chores";
     }
+
+
+
+
+    // Endpoint for approving a completed chore by the parent
+    @PostMapping("approve")
+    public String approveChore(@RequestParam Integer choreId) {
+        Chore chore = choreRepository.findById(choreId).orElse(null);
+
+        if (chore != null) {
+            for (ChoreCompletion completion : chore.getCompletions()) {
+                if (completion.isCompletedByChild() && !completion.isApprovedByParent()) {
+                    completion.setApprovedByParent(true);
+
+                    // Update the child's earnedPoints field
+                    Child childAssigned = chore.getChildAssigned();
+                    childAssigned.setEarnedPoints(childAssigned.getEarnedPoints() + chore.getRewardPoints());
+
+                    childRepository.save(childAssigned);
+                }
+            }
+            choreRepository.save(chore);
+        }
+
+        return "redirect:/chores";
+
+
+    }
+
+
+
+//    @GetMapping("/chores/{dueDate}")
+//    public List<Chore> getChoresForDate(@PathVariable("dueDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dueDate) {
+//
+//        return choreRepository.findByDueDate(dueDate);
+//    }
 }
 

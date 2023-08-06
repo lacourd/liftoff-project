@@ -5,68 +5,86 @@
     <title>Child Dashboard</title>
 
 </head>
-<body th:if="${userType}">
+<body class="dashboard" th:if="${userType}">
 
 <header th:replace="dashfragment :: header"></header>
-<h1>Welcome, <span th:text="${child.firstName}"></span>!</h1>
+
+<!-- Display Selected Avatar -->
+<div class="mwanzo">
+    <img id="selectedAvatar" src="avatar1.png" alt="Selected Avatar" width="150" height="150">
+
+        <select id="avatarSelect" onchange="changeAvatar()">
+            <option value="images/avatar1.png">Avatar 1</option>
+            <option value="images/avatar2.png">Avatar 2</option>
+            <option value="images/avatar3.png">Avatar 3</option>
+
+        </select>
+
+            `
+    <h3>Welcome, <span th:text="${child.firstName}"></span>!
+    </h3>
+
+
+</div>
+
 
 
 <!-- Calendar -->
 <!--  date picker -->
-<label for="datePicker">Select a date:</label>
-<input type="date" id="datePicker" onchange="showChores(this.value)">
+<!-- Calendar -->
+<h2 id="calenderSelection">Chore Dashboard</h2>
+<form id="datePickerForm">
+    <label for="selectedDate">Select a date:</label>
+    <input type="date" id="selectedDate" name="selectedDate" onchange="showChores(this.value)">
+</form>
 
-<!-- chores table -->
+<!-- Chores table -->
 <h2>Chores for <span id="selectedDay"></span></h2>
-<table class="table table-striped" id="choresTable">
+<table>
     <thead>
     <tr>
         <th>Name</th>
         <th>Description</th>
         <th>Due Date</th>
         <th>Reward Points</th>
-        <th>Complete</th>
+        <th>Completed</th>
     </tr>
     </thead>
     <tbody id="choresBody"></tbody>
 </table>
 
-<!-- Script for showing chores and marking them complete -->
+<!-- Chores script -->
 <script>
+    function showChores(selectedDate) {
+        const date = new Date(selectedDate);
+        const selectedDay = date.toLocaleDateString('en-US', { weekday: 'long' });
+        document.getElementById("selectedDay").textContent = selectedDay;
 
-   function showChores(selectedDate) {
-    const date = new Date(selectedDate);
-    const selectedDay = date.toLocaleDateString('en-US', { weekday: 'long' });
-    document.getElementById("selectedDay").textContent = selectedDay;
+        // Fetch chores for the selected date
+        fetch(`/chores/${date.toISOString()}`)
+            .then(response => response.json())
+            .then(chores => {
+                const choresBody = document.getElementById("choresBody");
+                choresBody.innerHTML = "";
 
-    // Fetch chores for the selected date
-    fetch(`/chores/${dueDate.toISOString()}`)
-        .then(response => response.json())
-        .then(chores => {
-            const choresBody = document.getElementById("choresBody");
-            choresBody.innerHTML = "";
-
-            chores.forEach(chore => {
-                const row = document.createElement("tr");
-                row.innerHTML = `
-                    <td>${chore.name}</td>
-                    <td>${chore.choreDescription}</td>
-                    <td>${chore.dueDate}</td>
-                    <td>${chore.rewardPoints}</td>
-                    <td>
-                        <input type="checkbox" onchange="markChoreComplete(${chore.id}, this.checked)" ${chore.completed ? 'checked' : ''} />
-                    </td>
-                `;
-                choresBody.appendChild(row);
-            });
-        })
-        .catch(error => console.error('Error fetching chores:', error));
-}
-
-
+                chores.forEach(chore => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${chore.name}</td>
+                        <td>${chore.choreDescription}</td>
+                        <td>${chore.dueDate}</td>
+                        <td>${chore.rewardPoints}</td>
+                        <td>
+                            <input type="checkbox" onchange="markChoreComplete(${chore.id}, this.checked)" ${chore.completed ? 'checked' : ''} />
+                        </td>
+                    `;
+                    choresBody.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error fetching chores:', error));
+    }
 
     function markChoreComplete(choreId, completed) {
-
         fetch("/updateChoreCompletion", {
             method: "POST",
             headers: {
@@ -76,31 +94,9 @@
         });
     }
 
-    //  current day
-    function highlightCurrentDay() {
-        const currentDate = new Date();
-        const dayOfWeek = currentDate.getDay();
-        const dayButtons = document.getElementsByClassName("day");
-        dayButtons[dayOfWeek].classList.add("current-day");
-    }
-
-
-    highlightCurrentDay();
-
-
-    $(function() {
-        $("#datePicker").datepicker({
-            dateFormat: "yy-mm-dd",
-            onSelect: function(selectedDate) {
-                showChores(selectedDate);
-            }
-        });
-    });
-
     const currentDate = new Date().toISOString().split("T")[0];
     showChores(currentDate);
 </script>
-
 
 
 <!-- Chores and Rewards -->
@@ -123,10 +119,10 @@
         <td th:text="${#temporals.format(chore.dueDate, 'yyyy-MM-dd')}"></td>
         <td th:text="${chore.rewardPoints}"></td>
         <td>
-            <form th:action="@{/chores/markComplete}" method="post">
-                <input type="hidden" name="choreId" th:value="${chore.id}" />
-                <button type="submit" class="btn btn-primary">Mark Complete</button>
-            </form>
+            <a th:href="@{/chores/complete(choreId=${chore.id},completed=true)}"
+               class="btn btn-primary"
+               th:if="${not chore.completed}">Mark as Complete</a>
+            <span th:if="${chore.completed}" class="text-success">Completed</span>
         </td>
     </tr>
 </table>
@@ -147,6 +143,16 @@
         <td th:text="${reward.points}"></td>
     </tr>
 </table>
+
+<!--Avatar script-->
+<script>
+    function changeAvatar() {
+        const avatarSelect = document.getElementById("avatarSelect");
+        const selectedAvatar = avatarSelect.value;
+        const selectedAvatarImg = document.getElementById("selectedAvatar");
+        selectedAvatarImg.src = selectedAvatar;
+    }
+</script>
 
 
 </body>

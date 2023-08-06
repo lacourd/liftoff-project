@@ -5,9 +5,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
-public class Chore extends AbstractEntity{
+public class Chore extends AbstractEntity {
 
     @NotBlank
     private String name;
@@ -25,24 +26,28 @@ public class Chore extends AbstractEntity{
 
     private int rewardPoints;
 
-//    @Enumerated(EnumType.STRING) // Storing the ENUM as a string in the database
-    //private DayOfTheWeek dueDay;
-
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dueDate;
 
-    public Chore(){}
+    @OneToMany(mappedBy = "chore", cascade = CascadeType.ALL)
+    private List<ChoreCompletion> completions;
+
+    public Chore() {
+    }
 
     public Chore(String name, String choreDescription, int rewardPoints, LocalDate dueDate) {
         this.name = name;
         this.choreDescription = choreDescription;
         this.rewardPoints = rewardPoints;
-        //this.dueDay = dueDay;
         this.dueDate = dueDate;
         this.completed = false;
-    }// DayOfTheWeek dueDay,
+    }
 
     // Getters and Setters
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -92,25 +97,24 @@ public class Chore extends AbstractEntity{
         this.rewardPoints = rewardPoints;
     }
 
-//    public DayOfTheWeek getDueDay() {
-//        return dueDay;
-//    }
-//
-//    public void setDueDay(DayOfTheWeek dueDay) {
-//        this.dueDay = dueDay;
-//    }
-
-    @Override
-    public String toString() {
-        return name;
-    }
-
-    public Object getDueDate() { return dueDate;
+    public LocalDate getDueDate() {
+        return dueDate;
     }
 
     public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
+
+    public List<ChoreCompletion> getCompletions() {
+        return completions;
+    }
+
+    public void setCompletions(List<ChoreCompletion> completions) {
+        this.completions = completions;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }
-
-
