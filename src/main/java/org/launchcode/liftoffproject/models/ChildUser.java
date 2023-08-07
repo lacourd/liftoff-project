@@ -14,4 +14,10 @@ public class ChildUser extends User{
     public ChildUser(String username, String password) {
         super(username, password);
     }
+
+    public Child getChild() {
+        return child;
+    }
+
+    public void setChild(Child child) {this.child = child;}
 }

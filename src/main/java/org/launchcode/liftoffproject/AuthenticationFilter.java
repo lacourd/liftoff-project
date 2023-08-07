@@ -2,8 +2,12 @@ package org.launchcode.liftoffproject;
 
 import org.launchcode.liftoffproject.controllers.AuthenticationController;
 import org.launchcode.liftoffproject.data.UserRepository;
+import org.launchcode.liftoffproject.models.ChildUser;
+import org.launchcode.liftoffproject.models.ParentUser;
 import org.launchcode.liftoffproject.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,8 +56,23 @@ public class AuthenticationFilter extends HandlerInterceptorAdapter {
         }
 
         // The user is NOT logged in
-        response.sendRedirect("/login");
+        response.sendRedirect("/#login");
         return false;
     }
 
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView model) {
+        HttpSession session = request.getSession();
+        User user = authenticationController.getUserFromSession(session);
+
+        if (user instanceof ChildUser) {
+            System.out.println("This is a child user");
+            if (model == null) {
+                model = new ModelAndView("childUser");
+            }
+            model.addObject("childUser", "childUser");
+        }
+        if (user != null) {
+            model.addObject("loggedInUser","loggedInUser");
+        }
+    }
 }

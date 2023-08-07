@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head">
+    <meta charset="UTF-8"/>
+    <title>Child Dashboard</title>
+
+</head>
+<body class="dashboard">
+
+<header th:unless="${childUser}" th:replace="fragments :: header"></header>
+
+
+<!--<header th:if="${childUser}" th:replace="dashfragment :: header"></header>-->
+
+<main class="container" th:if="${childUser}">
+<!-- Display Selected Avatar -->
+<div class="mwanzo">
+    <img id="selectedAvatar" src="avatar1.png" alt="Selected Avatar" width="150" height="150">
+
+        <select id="avatarSelect" onchange="changeAvatar()">
+            <option value="images/avatar1.png">Avatar 1</option>
+            <option value="images/avatar2.png">Avatar 2</option>
+            <option value="images/avatar3.png">Avatar 3</option>
+
+        </select>
+
+            `
+    <h3>Welcome, <span th:text="${child.firstName}"></span>!
+    </h3>
+
+
+</div>
+
+
+
+<!-- Calendar -->
+<!--  date picker -->
+<!-- Calendar -->
+<h2 id="calenderSelection">Chore Dashboard</h2>
+<form id="datePickerForm">
+    <label for="selectedDate">Select a date:</label>
+    <input type="date" id="selectedDate" name="selectedDate" onchange="showChores(this.value)">
+</form>
+
+<!-- Chores table -->
+<h2>Chores for <span id="selectedDay"></span></h2>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Due Date</th>
+        <th>Reward Points</th>
+        <th>Completed</th>
+    </tr>
+    </thead>
+    <tbody id="choresBody"></tbody>
+</table>
+
+<!-- Chores script -->
+<script>
+    function showChores(selectedDate) {
+        const date = new Date(selectedDate);
+        const selectedDay = date.toLocaleDateString('en-US', { weekday: 'long' });
+        document.getElementById("selectedDay").textContent = selectedDay;
+
+        // Fetch chores for the selected date
+        fetch(`/chores/${date.toISOString()}`)
+            .then(response => response.json())
+            .then(chores => {
+                const choresBody = document.getElementById("choresBody");
+                choresBody.innerHTML = "";
+
+                chores.forEach(chore => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${chore.name}</td>
+                        <td>${chore.choreDescription}</td>
+                        <td>${chore.dueDate}</td>
+                        <td>${chore.rewardPoints}</td>
+                        <td>
+                            <input type="checkbox" onchange="markChoreComplete(${chore.id}, this.checked)" ${chore.completed ? 'checked' : ''} />
+                        </td>
+                    `;
+                    choresBody.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error fetching chores:', error));
+    }
+
+    function markChoreComplete(choreId, completed) {
+        fetch("/updateChoreCompletion", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ choreId, completed })
+        });
+    }
+
+    const currentDate = new Date().toISOString().split("T")[0];
+    showChores(currentDate);
+</script>
+
+
+<!-- Chores and Rewards -->
+
+<h2>Chores</h2>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Due Date</th>
+        <th>Reward Points</th>
+        <th>Complete</th>
+    </tr>
+    </thead>
+    <tr th:each="chore : ${chores}">
+        <td th:text="${chore.name}"></td>
+        <td th:text="${chore.choreDescription}"></td>
+        <td th:text="${#temporals.format(chore.dueDate, 'yyyy-MM-dd')}"></td>
+        <td th:text="${chore.rewardPoints}"></td>
+        <td>
+            <a th:href="@{/chores/complete(choreId=${chore.id},completed=true)}"
+               class="btn btn-primary"
+               th:if="${not chore.completed}">Mark as Complete</a>
+            <span th:if="${chore.completed}" class="text-success">Completed</span>
+        </td>
+    </tr>
+</table>
+
+<h2>Earned Rewards</h2>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Reward Points</th>
+    </tr>
+    </thead>
+    <tr th:each="reward : ${earnedRewards}">
+        <td th:text="${reward.name}"></td>
+        <td th:text="${reward.description}"></td>
+        <td th:text="${reward.points}"></td>
+    </tr>
+</table>
+
+<!--Avatar script-->
+<script>
+    function changeAvatar() {
+        const avatarSelect = document.getElementById("avatarSelect");
+        const selectedAvatar = avatarSelect.value;
+        const selectedAvatarImg = document.getElementById("selectedAvatar");
+        selectedAvatarImg.src = selectedAvatar;
+    }
+</script>
+
+</main>
+
+</body>
+</html>

@@ -1,7 +1,9 @@
 package org.launchcode.liftoffproject.models;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 
 @Entity
 public class Reward extends AbstractEntity {
@@ -12,6 +14,11 @@ public class Reward extends AbstractEntity {
     private String name;
 
     private String description;
+
+    // points redemption
+    private boolean redeemed;
+
+    private LocalDate redemptionDate;
 
     public Reward(String name, int points, String description) {
         this.name = name;
@@ -45,4 +52,35 @@ public class Reward extends AbstractEntity {
         this.description = description;
     }
 
+    @ManyToOne
+    private Child child;
+
+    // Getters and setters
+
+    public Child getChild() {
+        return child;
+    }
+
+    public void setChild(Child child) {
+        this.child = child;
+    }
+
+
+
+    //points redemption
+    public boolean isRedeemed() {
+        return redeemed;
+    }
+
+    public void setRedeemed(boolean redeemed) {
+        this.redeemed = redeemed;
+    }
+
+    public LocalDate getRedemptionDate() {
+        return redemptionDate;
+    }
+
+    public void setRedemptionDate(LocalDate redemptionDate) {
+        this.redemptionDate = redemptionDate;
+    }
 }

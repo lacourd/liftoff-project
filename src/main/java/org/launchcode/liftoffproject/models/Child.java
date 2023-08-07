@@ -1,9 +1,10 @@
 package org.launchcode.liftoffproject.models;
 
 import javax.persistence.*;
-import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Child extends AbstractEntity{
@@ -24,22 +25,41 @@ public class Child extends AbstractEntity{
     @OneToOne(cascade = CascadeType.ALL)
     private ChildUser userAccount;
 
-    public Child(){}
+    @OneToMany(mappedBy = "childAssigned")
+    private List<Chore> chore = new ArrayList<>();
 
-    public Child(String firstName, String lastName, Parent parent) {
+    private String avatar;
+
+    public Child() {
+    }
+
+    //public Child(String firstName, String lastName, Parent parent, ChildUser newChildUser){}
+
+//    public Child(String firstName, String lastName, Parent parent, ChildUser newChildUser) {
+//        super();
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.parent = parent;
+//        this.userAccount = newChildUser;
+//    }
+
+
+//     added constructor for reward
+    public Child(String firstName, String lastName, Parent parent, ChildUser userAccount) {
+
+        if (parent != null) {
+            Integer id = parent.getId();
+            if (id == null) {
+                throw new IllegalArgumentException("Parent ID cannot be null");
+            }
+        } else {
+            throw new IllegalArgumentException("Parent cannot be null");
+        }
         this.firstName = firstName;
         this.lastName = lastName;
         this.parent = parent;
+        this.userAccount = userAccount;
     }
-
-    public Child(String firstName, String lastName, Parent parent, ChildUser childUser) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.parent = parent;
-        this.userAccount = childUser;
-    }
-
-
     public String getFirstName() {
         return firstName;
     }
@@ -54,6 +74,14 @@ public class Child extends AbstractEntity{
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public ChildUser getUserAccount() {
+        return userAccount;
+    }
+
+    public void setUserAccount(ChildUser userAccount) {
+        this.userAccount = userAccount;
     }
 
     public int getPoints() {
@@ -72,11 +100,12 @@ public class Child extends AbstractEntity{
         this.parent = parent;
     }
 
-    public ChildUser getUserAccount() {
-        return userAccount;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setUserAccount(ChildUser userAccount) {
-        this.userAccount = userAccount;
+    public void setAvatar(String avatarUrl) {
+        this.avatar
+                = avatarUrl;
     }
 }

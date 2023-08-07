@@ -1,57 +1,96 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
-<body class="container">
+
+<body>
 
 <header th:replace="fragments :: header"></header>
 
-<h2 th:unless="${rewards} and ${rewards.size()}">No rewards!</h2>
+<img src="/images/rewards-hero.jpg" width="100%">
 
-<table class="table table-striped">
-   <thead>
-   <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Rewards Value</th>
-   </tr>
-   </thead>
-   <tr th:each="reward : ${rewards}">
-      <!--        <a th:href="'/reward/detail?rewardId=' + ${reward.id}"-->
-      <td th:text="${reward.name}"></td>
-      <td th:text="${reward.description}"></td>
-      <td th:text="${reward.points}"></td>
-      <td>
-         <form th:action="@{/rewards/edit}" method="get">
-            <input type="hidden" name="rewardId" th:value="${reward.id}" />
-            <button type="submit" class="btn btn-primary">Edit</button>
-         </form>
-      </td>
-      <td>
-         <form th:action="@{/rewards/delete}" method="post">
-            <input type="hidden" name="rewardIds" th:value="${reward.id}" />
-            <button type="submit" class="btn btn-danger">Delete</button>
-         </form>
-      </td>
-   </tr>
-</table>
+<main class="container">
 
-<h2>Create Reward</h2>
+   <h2 th:unless="${rewards} and ${rewards.size()}">No rewards!</h2>
 
-<form th:action="@{/login}" method="post">
-   <div class="form-group">
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name" class="form-control" required />
-   </div>
-   <div class="form-group">
-      <label for="description">Description:</label>
-      <textarea id="description" name="description" class="form-control" required></textarea>
-   </div>
-   <div class="form-group">
-      <label for="points">Reward Points:</label>
-      <input type="number" id="points" name="points" class="form-control" required />
-   </div>
-   <button type="submit" class="btn btn-success">Add Reward</button>
-</form>
+   <th:block th:unless="${childUser}">
+      <table class="table table-striped">
+         <thead>
+         <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Rewards Value</th>
+         </tr>
+         </thead>
+         <tr th:each="reward : ${rewards}">
+            <!--        <a th:href="'/reward/detail?rewardId=' + ${reward.id}"-->
+            <td th:text="${reward.name}"></td>
+            <td th:text="${reward.description}"></td>
+            <td th:text="${reward.points}"></td>
+            <td>
+               <form th:action="@{/rewards/edit}" method="get">
+                  <input type="hidden" name="rewardId" th:value="${reward.id}" />
+                  <button type="submit" class="btn btn-primary">Edit</button>
+               </form>
+            </td>
+            <td>
+               <form th:action="@{/rewards/delete}" method="post">
+                  <input type="hidden" name="rewardIds" th:value="${reward.id}" />
+                  <button type="submit" class="btn btn-danger">Delete</button>
+               </form>
+            </td>
+         </tr>
+      </table>
+
+      <h2>Create Reward</h2>
+
+      <form th:action="@{/rewards/create}" method="post">
+         <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" class="form-control" required />
+         </div>
+         <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" class="form-control" required></textarea>
+         </div>
+         <div class="form-group">
+            <label for="points">Reward Points:</label>
+            <input type="number" id="points" name="points" class="form-control" required />
+         </div>
+         <button type="submit" class="btn btn-success">Add Reward</button>
+      </form>
+   </th:block>
+
+   <th:block th:if="${childUser}">
+<!--      <table>-->
+<!--         <thead>-->
+<!--         <tr>-->
+<!--            <th>Name</th>-->
+<!--         </tr>-->
+<!--         </thead>-->
+<!--      <tr>-->
+<!--         <td>test</td>-->
+<!--         <td th:text="${loggedInUser.points}"></td>-->
+<!--      </tr>-->
+<!--      </table>-->
+      <h2 class="total-points">300</h2>
+      <h2 style="text-align: center; font-family: 'Pirata One', cursive;">Total Points</h2>
+
+      <div class="row">
+         <div class="col-sm-12">
+            <div th:each="reward : ${rewards}" class="col-md-4 col-sm-6">
+               <div th:replace="fragments :: reward-card"></div>
+            </div>
+         </div>
+      </div>
+
+      <h2 style="text-align: center;">Want to earn more points?</h2>
+      <div style="text-align: center;"><a href="/chores" class="btn btn-success">Complete A Chore!</a></div>
+
+   </th:block>
+
+</main>
+
+<footer th:replace="fragments :: footer"></footer>
 
 </body>
 </html>
