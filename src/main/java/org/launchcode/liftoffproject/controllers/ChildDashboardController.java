@@ -64,7 +64,7 @@ public class ChildDashboardController {
             earnedRewardsRepository.save(redeemedReward);
 
             // Reduce child's earned points by the reward points
-            child.setEarnedPoints(child.getEarnedPoints() - redeemedReward.getPoints());
+            child.setPoints(child.getPoints() - redeemedReward.getPoints());
             childRepository.save(child);
 
             return ResponseEntity.ok("Reward redeemed successfully.");

@@ -150,7 +150,7 @@ public class ChoreController {
 
                     // Update the child's earnedPoints field
                     Child childAssigned = chore.getChildAssigned();
-                    childAssigned.setEarnedPoints(childAssigned.getEarnedPoints() + chore.getRewardPoints());
+                    childAssigned.setPoints(childAssigned.getPoints() + chore.getRewardPoints());
 
                     childRepository.save(childAssigned);
                 }
