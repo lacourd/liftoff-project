@@ -8,7 +8,7 @@
 <header th:replace="fragments :: header"></header>
 <form method="post" action="/chores/create">
     <div class="form-group">
-        <label>Chore:
+        <label>Task:
             <input th:field="${chore.name}" class="form-control">
         </label>
         <p class="error" th:errors="${chore.name}"></p>
