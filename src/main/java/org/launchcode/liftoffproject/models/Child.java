@@ -84,13 +84,20 @@ public class Child extends AbstractEntity{
         this.userAccount = userAccount;
     }
 
-
-    public int getEarnedPoints() {
-        return earnedPoints;
+    public int getPoints() {
+        return points;
     }
 
-    public void setEarnedPoints(int earnedPoints) {
-        this.earnedPoints = earnedPoints; // child - from approved completed chores
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public Parent getParent() {
+        return parent;
+    }
+
+    public void setParent(Parent parent) {
+        this.parent = parent;
     }
 
     public String getAvatar() {
