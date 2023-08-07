@@ -162,6 +162,11 @@ footer {
     border-color: #2B2D2F !important;
     background-color: white !important;
 }
+.create-chore-btn {
+    color: #2B2D2F;
+    border: 2px solid black;
+    background-color: white;
+}
 
 .card-container {
      justify-content: center;

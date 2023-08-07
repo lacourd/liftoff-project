@@ -16,7 +16,7 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>Name</th>
+                <th>Task</th>
                 <th>Description</th>
                 <th>Assigned to:</th>
                 <th>Due Day</th>
@@ -32,13 +32,14 @@
                 <td th:text="${chore.rewardPoints}"></td>
             </tr>
         </table>
+          <a class="btn btn-outline-dark" href="/chores/create" role="button">Create a Chore</a>
     </th:block>
 
     <th:block th:if="${childUser}">
         <table class="table table-striped">
             <thead>
             <tr>
-                <th>Name</th>
+                <th>Task</th>
                 <th>Description</th>
                 <th>Due Day</th>
                 <th>Rewards Value</th>
