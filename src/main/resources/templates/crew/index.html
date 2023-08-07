@@ -1,31 +1,38 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
-<body class="container">
+
+<body>
 
 <header th:replace="fragments :: header"></header>
 
-<p th:unless="${crew} and ${crew.size()}">No crew members!</p>
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Chores Assigned</th>
-        <th>Reward Points Earned</th>
-    </tr>
-    </thead>
-    <tr th:each="child : ${crew}">
-<!--        <div th:if="child.parent.id == parentId">-->
-        <!--        <a th:href="'/reward/detail?rewardId=' + ${reward.id}"-->
-        <td th:text="${child.firstName}"></td>
-<!--        + ' ' child.lastName}"></td>-->
-        <td>Add chores assigned here</td>
-        <td th:text="${child.points}"></td>
-        </div>
-    </tr>
-</table>
+<main class="container">
 
-<a class="btn btn-outline-dark" href="/crew/add" role="button">Add a new Crew Member</a>
+    <p th:unless="${crew} and ${crew.size()}">No crew members!</p>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Chores Assigned</th>
+            <th>Reward Points Earned</th>
+        </tr>
+        </thead>
+        <tr th:each="child : ${crew}">
+    <!--        <div th:if="child.parent.id == parentId">-->
+            <!--        <a th:href="'/reward/detail?rewardId=' + ${reward.id}"-->
+            <td th:text="${child.firstName}"></td>
+    <!--        + ' ' child.lastName}"></td>-->
+            <td>Add chores assigned here</td>
+            <td th:text="${child.points}"></td>
+            </div>
+        </tr>
+    </table>
+
+  <a class="btn btn-outline-dark" href="/crew/add" role="button">Add a new Crew Member</a>
+  
+</main>
+
+<footer th:replace="fragments :: footer"></footer>
 
 </body>
 </html>

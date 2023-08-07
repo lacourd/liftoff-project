@@ -1,31 +1,64 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
+
 <body>
+
 <header th:replace="fragments :: header"></header>
 
+<main class="container">
 
-<p th:unless="${chores} and ${chores.size()}">No chores!</p>
+    <h1 th:if="${childUser}" th:text="${'THIS IS A CHILD USER'}"></h1>
+    <h1 th:unless="${childUser}" th:text="${'THIS IS A PARENT USER'}"></h1>
+    <p th:unless="${chores} and ${chores.size()}">No chores!</p>
 
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>Task</th>
-        <th>Description</th>
-        <th>Assigned to:</th>
-        <th>Due Day</th>
-        <th>Rewards Value</th>
-    </tr>
-    </thead>
-    <tr th:each="chore : ${chores}">
-<!--        <a th:href="'/chore/detail?choreId=' + ${chore.id}"-->
-<td> <a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
-        <td th:text="${chore.choreDescription}"></td>
-        <td th:text="${chore.childAssigned}"></td>
-        <td th:text="${chore.dueDay}"></td>
-        <td th:text="${chore.rewardPoints}"></td>
-    </tr>
-</table>
-    <a class="btn btn-outline-dark" href="/chores/create" role="button">Create a Chore</a>
+    <th:block th:unless="${childUser}">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Task</th>
+                <th>Description</th>
+                <th>Assigned to:</th>
+                <th>Due Day</th>
+                <th>Rewards Value</th>
+                <th>Completed</th>
+            </tr>
+            </thead>
+            <tr th:each="chore : ${chores}">
+                <td> <a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
+                <td th:text="${chore.choreDescription}"></td>
+                <td th:text="${chore.childAssigned.firstName}"></td>
+                <td th:text="${#temporals.format(chore.dueDate, 'yyyy-MM-dd')}"></td>
+                <td th:text="${chore.rewardPoints}"></td>
+            </tr>
+        </table>
+          <a class="btn btn-outline-dark" href="/chores/create" role="button">Create a Chore</a>
+    </th:block>
+
+    <th:block th:if="${childUser}">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Task</th>
+                <th>Description</th>
+                <th>Due Day</th>
+                <th>Rewards Value</th>
+                <th>Completed</th>
+            </tr>
+            </thead>
+            <tr th:each="chore : ${chores}">
+                <td> <a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
+                <td th:text="${chore.choreDescription}"></td>
+                <td th:text="${#temporals.format(chore.dueDate, 'yyyy-MM-dd')}"></td>
+                <td th:text="${chore.rewardPoints}"></td>
+            </tr>
+        </table>
+    </th:block>
+
+</main>
+
+<footer th:replace="fragments :: footer"></footer>
+
 </body>
 </html>
+

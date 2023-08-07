@@ -2,9 +2,7 @@ package org.launchcode.liftoffproject.controllers;
 
 import org.launchcode.liftoffproject.data.ParentRepository;
 import org.launchcode.liftoffproject.data.UserRepository;
-import org.launchcode.liftoffproject.models.Parent;
-import org.launchcode.liftoffproject.models.ParentUser;
-import org.launchcode.liftoffproject.models.User;
+import org.launchcode.liftoffproject.models.*;
 import org.launchcode.liftoffproject.models.dto.LoginFormDTO;
 import org.launchcode.liftoffproject.models.dto.RegisterFormDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +43,44 @@ public class AuthenticationController {
 
         return user.get();
     }
+
+    public Parent getParentFromSession(HttpSession session) {
+        Integer parentId = (Integer) session.getAttribute(userSessionKey);
+        if (parentId == null) {
+            return null;
+        }
+
+        Optional<User> user = userRepository.findById(parentId);
+
+        if (user.isEmpty()) {
+            return null;
+        }
+        if (user.get() instanceof ParentUser) {
+            ParentUser parentUser = (ParentUser) user.get();
+            return parentUser.getParent();
+        }
+        return null;
+    }
+
+    public Child getChildFromSession(HttpSession session) {
+        Integer childId = (Integer) session.getAttribute(userSessionKey);
+        if (childId == null) {
+            return null;
+        }
+
+        Optional<User> user = userRepository.findById(childId);
+
+        if (user.isEmpty()) {
+            return null;
+        }
+        if (user.get() instanceof ChildUser) {
+            ChildUser childUser = (ChildUser) user.get();
+            return childUser.getChild();
+        }
+        return null;
+    }
+
+
 
     private static void setUserInSession(HttpSession session, User user) {
         session.setAttribute(userSessionKey, user.getId());
@@ -89,13 +125,6 @@ public class AuthenticationController {
         return "redirect:";
     }
 
-    @GetMapping("/login")
-    public String displayLoginForm(Model model) {
-        model.addAttribute(new LoginFormDTO());
-        model.addAttribute("title", "Log In");
-        return "login";
-    }
-
     @PostMapping("/login")
     public String processLoginForm(@ModelAttribute @Valid LoginFormDTO loginFormDTO, Errors errors, HttpServletRequest request, Model model) {
 
@@ -104,31 +133,36 @@ public class AuthenticationController {
             return "login";
         }
 
-        ParentUser theParentUser = (ParentUser) userRepository.findByUsername(loginFormDTO.getUsername());
+        User theUser = userRepository.findByUsername(loginFormDTO.getUsername());
 
-        if (theParentUser == null) {
-            errors.rejectValue("username", "user.invalid", "The given username does not exist");
-            model.addAttribute("title", "Log In");
-            return "login";
-        }
 
-        String password = loginFormDTO.getPassword();
+        if (theUser == null) {
+                errors.rejectValue("username", "user.invalid", "The given username does not exist");
+                model.addAttribute("title", "Log In");
+                return "login";
+            }
 
-        if (!theParentUser.isMatchingPassword(password)) {
-            errors.rejectValue("password", "password.invalid", "Invalid password");
-            model.addAttribute("title", "Log In");
-            return "login";
-        }
+            String password = loginFormDTO.getPassword();
 
-        setUserInSession(request.getSession(), theParentUser);
+            if (!theUser.isMatchingPassword(password)) {
+                errors.rejectValue("password", "password.invalid", "Invalid password");
+                model.addAttribute("title", "Log In");
+                return "login";
+            }
 
-        return "redirect:/chores";
+            if (userRepository.findByUsername(loginFormDTO.getUsername()) instanceof ParentUser) {
+                ParentUser theParentUser = (ParentUser) userRepository.findByUsername(loginFormDTO.getUsername());
+                setUserInSession(request.getSession(), theParentUser);}
+            else if (userRepository.findByUsername(loginFormDTO.getUsername()) instanceof ChildUser)  {
+                ChildUser theChildUser = (ChildUser) userRepository.findByUsername(loginFormDTO.getUsername());
+                setUserInSession(request.getSession(), theChildUser);}
+
+            return "redirect:/dashboard";
     }
 
     @GetMapping("/logout")
     public String logout(HttpServletRequest request){
         request.getSession().invalidate();
-        return "redirect:/login";
+        return "redirect:/";
     }
-
 }

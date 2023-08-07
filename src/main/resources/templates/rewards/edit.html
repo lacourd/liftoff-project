@@ -1,27 +1,34 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
-<body class="container">
+
+<body>
 
 <header th:replace="fragments :: header"></header>
 
-<form th:action="@{/rewards/edit}" method="post">
-  <input type="hidden" name="rewardId" th:value="${reward.id}" />
-  <div class="form-group">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" th:value="${reward.name}" th:field="${reward.name}" class="form-control" required />
-  </div>
-  <div class="form-group">
-    <label for="description">Description:</label>
-    <textarea id="description" name="description" class="form-control" required th:text="${reward.description}" th:field="${reward.description}"></textarea>
-  </div>
-  <div class="form-group">
-    <label for="points">Rewards Value:</label>
-    <input type="number" id="points" name="points" th:value="${reward.points}" th:field="${reward.points}" class="form-control" required />
-  </div>
-  <button type="submit" class="btn btn-primary">Save Changes</button>
-  <a th:href="@{/rewards}" class="btn btn-secondary">Cancel</a>
-</form>
+<main class="container">
+
+  <form th:action="@{/rewards/edit}" method="post">
+    <input type="hidden" name="rewardId" th:value="${reward.id}" />
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" th:value="${reward.name}" th:field="${reward.name}" class="form-control" required />
+    </div>
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <textarea id="description" name="description" class="form-control" required th:text="${reward.description}" th:field="${reward.description}"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="points">Rewards Value:</label>
+      <input type="number" id="points" name="points" th:value="${reward.points}" th:field="${reward.points}" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a th:href="@{/rewards}" class="btn btn-secondary">Cancel</a>
+  </form>
+
+</main>
+
+<footer th:replace="fragments :: footer"></footer>
 
 </body>
 </html>

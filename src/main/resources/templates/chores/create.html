@@ -2,49 +2,70 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head">
     <meta charset="UTF-8"/>
-    <title></title>
+    <title>Create Chore</title>
 </head>
-<body class="container">
+
+<body>
+
 <header th:replace="fragments :: header"></header>
-<form method="post" action="/chores/create">
-    <div class="form-group">
-        <label>Task:
-            <input th:field="${chore.name}" class="form-control">
-        </label>
-        <p class="error" th:errors="${chore.name}"></p>
-    </div>
-    <div class="form-group">
-        <label>Description:
-            <input th:field="${chore.choreDescription}" class="form-control">
-        </label>
-        <p class="error" th:errors="${chore.choreDescription}"></p>
-    </div>
-    <div class="form-group">
-        <label>Assign to:
-            <select th:field="${chore.childAssigned}">
-                <option th:each="child : ${children}"
-                        th:value="${child.id}"
-                        th:text="${child.firstName}"></option>
-            </select>
-            <p class="error" th:errors="${chore.childAssigned}"></p>
-        </label>
-    </div>
-    <div class="form-group">
-        <label>Due Day:
-            <input th:field="${chore.dueDay}" class="form-control">
-        </label>
-        <p class="error" th:errors="${chore.dueDay}"></p>
-    </div>
-    <div class="form-group">
-        <label>Reward Points
-            <input th:field="${chore.rewardPoints}" class="form-control">
-        </label>
-        <p class="error" th:errors="${chore.rewardPoints}"></p>
-    </div>
-    <div class="form-group">
-        <input type="submit" value="Add Chore" class="btn btn-success">
-    </div>
-</form>
+
+<main class="container">
+
+     <form th:object="${chore}" method="post" th:action="@{/chores/create}">
+      <div class="form-group">
+          <label>Task:
+              <input th:field="*{name}" class="form-control">
+          </label>
+          <p class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+      </div>
+      <div class="form-group">
+          <label>Description:
+              <input th:field="*{choreDescription}" class="form-control">
+          </label>
+          <p class="error" th:if="${#fields.hasErrors('choreDescription')}" th:errors="*{choreDescription}"></p>
+      </div>
+      <div class="form-group">
+          <label>Assign to:
+              <select th:field="*{childAssigned}" class="form-control">
+                  <option th:each="child : ${crew}"
+                          th:value="${child.id}"
+                          th:text="${child.firstName}"></option>
+              </select>
+              <p class="error" th:errors="*{childAssigned}"></p>
+          </label>
+      </div>
+      <!--div class="form-group">
+          <label>Due Day:
+              <select th:field="*{dueDay}" class="form-control">
+                  <option th:each="day : ${days}"
+                          th:value="${day}"
+                          th:text="${day.displayName}"></option>
+              </select>
+              <p class="error" th:if="${#fields.hasErrors('dueDay')}" th:errors="*{dueDay}"></p>
+          </label>
+      </div-->
+  <!--added-->
+      <div class="form-group">
+          <label>Due Date:
+              <input type="date" th:field="*{dueDate}" class="form-control">
+          </label>
+          <p class="error" th:if="${#fields.hasErrors('dueDate')}" th:errors="*{dueDate}"></p>
+      </div>
+
+      <div class="form-group">
+          <label>Reward Points:
+              <input th:field="*{rewardPoints}" class="form-control">
+          </label>
+          <p class="error" th:if="${#fields.hasErrors('rewardPoints')}" th:errors="*{rewardPoints}"></p>
+      </div>
+      <div class="form-group">
+          <input type="submit" value="Add Chore" class="btn btn-success">
+      </div>
+  </form>
+
+</main>
+
+<footer th:replace="fragments :: footer"></footer>
 
 </body>
 </html>
