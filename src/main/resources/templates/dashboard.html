@@ -5,10 +5,14 @@
     <title>Child Dashboard</title>
 
 </head>
-<body class="dashboard" th:if="${childUser}">
+<body class="dashboard">
 
-<header th:replace="dashfragment :: header"></header>
+<header th:unless="${childUser}" th:replace="fragments :: header"></header>
 
+
+<!--<header th:if="${childUser}" th:replace="dashfragment :: header"></header>-->
+
+<main class="container" th:if="${childUser}">
 <!-- Display Selected Avatar -->
 <div class="mwanzo">
     <img id="selectedAvatar" src="avatar1.png" alt="Selected Avatar" width="150" height="150">
@@ -154,6 +158,7 @@
     }
 </script>
 
+</main>
 
 </body>
 </html>

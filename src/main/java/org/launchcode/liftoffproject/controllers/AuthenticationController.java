@@ -157,7 +157,7 @@ public class AuthenticationController {
                 ChildUser theChildUser = (ChildUser) userRepository.findByUsername(loginFormDTO.getUsername());
                 setUserInSession(request.getSession(), theChildUser);}
 
-            return "redirect:/chores";
+            return "redirect:/dashboard";
     }
 
     @GetMapping("/logout")
