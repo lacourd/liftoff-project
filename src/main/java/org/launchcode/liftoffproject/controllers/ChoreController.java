@@ -2,6 +2,7 @@ package org.launchcode.liftoffproject.controllers;
 
 import org.launchcode.liftoffproject.data.ChildRepository;
 import org.launchcode.liftoffproject.data.ChoreRepository;
+import org.launchcode.liftoffproject.data.CompletedChoreRepository;
 import org.launchcode.liftoffproject.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,6 +23,9 @@ public class ChoreController {
 
     @Autowired
     private ChoreRepository choreRepository;
+
+    @Autowired
+    private CompletedChoreRepository completedChoreRepository;
 
     @Autowired
     private AuthenticationController authenticationController;
@@ -157,7 +161,9 @@ public class ChoreController {
                     childRepository.save(childAssigned);
                 }
             }
-            choreRepository.save(chore);
+            completedChoreRepository.save(chore);
+            choreRepository.delete(chore);
+
         }
 
         return "redirect:/chores";
