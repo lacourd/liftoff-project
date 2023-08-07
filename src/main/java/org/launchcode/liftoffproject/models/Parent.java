@@ -65,7 +65,7 @@ public class Parent extends AbstractEntity {
         this.children = children;
     }
 
-    public List<Chore> getChores() {
+    public List<Chore> getChores(String username) {
         return chores;
     }
 

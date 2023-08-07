@@ -28,7 +28,7 @@
                 <td> <a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
                 <td th:text="${chore.choreDescription}"></td>
                 <td th:text="${chore.childAssigned.firstName}"></td>
-                <td th:text="${chore.dueDay.displayName}"></td>
+                <td th:text="${#temporals.format(chore.dueDate, 'yyyy-MM-dd')}"></td>
                 <td th:text="${chore.rewardPoints}"></td>
             </tr>
         </table>
@@ -48,7 +48,7 @@
             <tr th:each="chore : ${chores}">
                 <td> <a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
                 <td th:text="${chore.choreDescription}"></td>
-                <td th:text="${chore.dueDay.displayName}"></td>
+                <td th:text="${#temporals.format(chore.dueDate, 'yyyy-MM-dd')}"></td>
                 <td th:text="${chore.rewardPoints}"></td>
             </tr>
         </table>
