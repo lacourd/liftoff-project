@@ -2,10 +2,7 @@ package org.launchcode.liftoffproject.controllers;
 
 import org.launchcode.liftoffproject.data.ChildRepository;
 import org.launchcode.liftoffproject.data.ChoreRepository;
-import org.launchcode.liftoffproject.models.Chore;
-import org.launchcode.liftoffproject.models.Child;
-import org.launchcode.liftoffproject.models.ChoreCompletion;
-import org.launchcode.liftoffproject.models.DayOfTheWeek;
+import org.launchcode.liftoffproject.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -33,9 +30,17 @@ public class ChoreController {
     private ChildRepository childRepository;
 
     @GetMapping
-    public String displayAllChores(Model model) {
+    public String displayAllChores(Model model, HttpSession session) {
         model.addAttribute("title","All Chores");
-        model.addAttribute("chores", choreRepository.findAll());
+
+        if (authenticationController.getChildFromSession(session) != null) {
+            Child child = authenticationController.getChildFromSession(session);
+            model.addAttribute("chores", choreRepository.findAllByChildAssigned(child));
+        } else {
+            Parent parent = authenticationController.getParentFromSession(session);
+            model.addAttribute("chores", choreRepository.findAllByParentCreator(parent));
+        }
+
         return "chores/index";
     };
 
@@ -49,16 +54,13 @@ public class ChoreController {
     };
 
     @PostMapping("create")
-    public String processCreateChoreForm(@ModelAttribute @Valid Chore chore, Errors errors, Model model, HttpSession session) {
+    public String processCreateChoreForm(@ModelAttribute @Valid Chore newChore, Errors errors, Model model, HttpSession session) {
         if (errors.hasErrors()) {
             model.addAttribute("title", "New Chore");
             return "chores/create";
         }
-
-        Child child = chore.getChildAssigned();
-        chore.setChildAssigned(child);
-
-        choreRepository.save(chore);
+        newChore.setParentCreator(authenticationController.getParentFromSession(session));
+        choreRepository.save(newChore);
 
 
         return "redirect:/chores";
