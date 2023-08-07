@@ -56,7 +56,7 @@ public class AuthenticationFilter extends HandlerInterceptorAdapter {
         }
 
         // The user is NOT logged in
-        response.sendRedirect("/login");
+        response.sendRedirect("/#login");
         return false;
     }
 
@@ -71,18 +71,8 @@ public class AuthenticationFilter extends HandlerInterceptorAdapter {
             }
             model.addObject("childUser", "childUser");
         }
+        if (user != null) {
+            model.addObject("loggedInUser","loggedInUser");
+        }
     }
-
-//    public boolean afterCompletion(HttpServletRequest request, HttpServletResponse response, Model model) {
-//        HttpSession session = request.getSession();
-//        User user = authenticationController.getUserFromSession(session);
-//
-//        if (user instanceof ChildUser) {
-//        System.out.println("This is a child user");
-//        model.addAttribute("userType", "userType");
-//        return true;
-//    }
-//
-//        return true;
-//}
 }

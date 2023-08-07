@@ -1,29 +1,63 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
+
 <body>
+
 <header th:replace="fragments :: header"></header>
 
-<h1 th:if="${userType}" th:text="${'THIS IS A CHILD USER'}"></h1>
-<p th:unless="${chores} and ${chores.size()}">No chores!</p>
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Assigned to:</th>
-        <th>Due Date</th>
-        <th>Rewards Value</th>
-        <th>Completed</th>
-    </tr>
-    </thead>
-     <tr th:each="chore : ${chores}">
-<td> <a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
-        <td th:text="${chore.choreDescription}"></td>
-        <td th:text="${chore.childAssigned.firstName}"></td>
-         <td th:text="${#temporals.format(chore.dueDate, 'yyyy-MM-dd')}"></td>
-        <td th:text="${chore.rewardPoints}"></td>
-    </tr>
-</table>
+<main class="container">
+
+    <h1 th:if="${childUser}" th:text="${'THIS IS A CHILD USER'}"></h1>
+    <h1 th:unless="${childUser}" th:text="${'THIS IS A PARENT USER'}"></h1>
+    <p th:unless="${chores} and ${chores.size()}">No chores!</p>
+
+    <th:block th:unless="${childUser}">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Assigned to:</th>
+                <th>Due Day</th>
+                <th>Rewards Value</th>
+                <th>Completed</th>
+            </tr>
+            </thead>
+            <tr th:each="chore : ${chores}">
+                <td> <a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
+                <td th:text="${chore.choreDescription}"></td>
+                <td th:text="${chore.childAssigned.firstName}"></td>
+                <td th:text="${#temporals.format(chore.dueDate, 'yyyy-MM-dd')}"></td>
+                <td th:text="${chore.rewardPoints}"></td>
+            </tr>
+        </table>
+    </th:block>
+
+    <th:block th:if="${childUser}">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Due Day</th>
+                <th>Rewards Value</th>
+                <th>Completed</th>
+            </tr>
+            </thead>
+            <tr th:each="chore : ${chores}">
+                <td> <a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
+                <td th:text="${chore.choreDescription}"></td>
+                <td th:text="${#temporals.format(chore.dueDate, 'yyyy-MM-dd')}"></td>
+                <td th:text="${chore.rewardPoints}"></td>
+            </tr>
+        </table>
+    </th:block>
+
+</main>
+
+<footer th:replace="fragments :: footer"></footer>
+
 </body>
 </html>
+

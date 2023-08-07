@@ -2,6 +2,11 @@ body {
   font-family: 'IM Fell English SC', serif !important;
 }
 
+main {
+  padding-bottom: 3rem;
+  padding-top: 3rem;
+}
+
 .bg-img {
     background-image: url('/images/treasureTask-bg.jpg');
     background-size: cover;
@@ -116,6 +121,7 @@ header {
 
 footer {
     background-color: #2B2D2F;
+    position: sticky;
 }
 
 .register-btn {
@@ -156,6 +162,7 @@ footer {
     border-color: #2B2D2F !important;
     background-color: white !important;
 }
+
 
 /* child dashboard */
 .points{
@@ -339,5 +346,13 @@ footer {
  }
 }
 
+.total-points {
+    text-align: center;
+    font-family: 'Pirata One', cursive;
+    font-size: 6rem;
+    line-height: .7;
+}
 
-
+.col-md-4 {
+    float: left;
+}
