@@ -19,8 +19,6 @@ public class Child extends AbstractEntity{
 
     private int points;
 
-    private int earnedPoints; // Add this field
-
     @ManyToOne
     private Parent parent;
 

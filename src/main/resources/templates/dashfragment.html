@@ -50,14 +50,14 @@
 
     <!-- Points Display -->
     <div class="points">
-      <h2>Points: <span th:text="${child.earnedPoints}"></span></h2>
+      <h2>Points: <span th:text="${child.points}"></span></h2>
     </div>
 
 
     <!-- Redeem Reward Button -->
     <form th:action="@{/redeem}" method="post">
       <input type="hidden" name="childId" th:value="${child.id}" />
-      <button type="submit" class="btn btn-primary" th:disabled="${child.earnedPoints < 10}">
+      <button type="submit" class="btn btn-primary" th:disabled="${child.points < 10}">
         Redeem Points
       </button>
     </form>

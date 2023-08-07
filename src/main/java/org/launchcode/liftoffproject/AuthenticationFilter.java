@@ -67,9 +67,9 @@ public class AuthenticationFilter extends HandlerInterceptorAdapter {
         if (user instanceof ChildUser) {
             System.out.println("This is a child user");
             if (model == null) {
-                model = new ModelAndView("child");
+                model = new ModelAndView("childUser");
             }
-            model.addObject("userType", "child");
+            model.addObject("childUser", "childUser");
         }
     }
 

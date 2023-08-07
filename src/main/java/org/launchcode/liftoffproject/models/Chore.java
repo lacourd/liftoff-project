@@ -45,10 +45,6 @@ public class Chore extends AbstractEntity {
 
     // Getters and Setters
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
