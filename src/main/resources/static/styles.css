@@ -163,6 +163,20 @@ footer {
     background-color: white !important;
 }
 
+.card-container {
+     justify-content: center;
+     align-items: center;
+     max-width: 1850px;
+     flex-wrap: wrap;
+   }
+
+
+/* Style for the individual card */
+.card {
+  width: 300px;
+  margin-bottom: 20px; /* Add margin between cards */
+  margin-right: 20px
+}
 
 /* child dashboard */
 .points{
