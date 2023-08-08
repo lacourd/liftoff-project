@@ -162,16 +162,15 @@ footer {
     border-color: #2B2D2F !important;
     background-color: white !important;
 }
-
+/* style for creator page */
 .card-container {
      justify-content: center;
      align-items: center;
      max-width: 1850px;
-     flex-wrap: wrap;
    }
 
 
-/* Style for the individual card */
+/* Style for the individual creator card */
 .card {
   width: 300px;
   margin-bottom: 20px; /* Add margin between cards */
