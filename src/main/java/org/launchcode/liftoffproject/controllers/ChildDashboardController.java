@@ -46,10 +46,11 @@ public class ChildDashboardController {
         model.addAttribute("earnedRewards", earnedRewards);
         return "dashboard";
     }
-    @GetMapping("/chores/{dueDate}")
-    public List<Chore> getChoresForDate(@PathVariable("dueDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dueDate) {
 
-        return choreRepository.findByDueDate(dueDate);
+    @GetMapping("/chores/{dueDate}")
+    public List<Chore> getChoresForDate(@PathVariable("dueDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dueDate, HttpSession session) {
+        Child child = authenticationController.getChildFromSession(session);
+        return choreRepository.findAllByChildAssignedAndDueDate(child, dueDate);
     }
     @PostMapping("/redeemReward")
     @ResponseBody

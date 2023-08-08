@@ -18,4 +18,6 @@ public interface ChoreRepository extends PagingAndSortingRepository<Chore, Integ
     List<Chore> findAllByChildAssignedAndApprovedByParent(Child child, boolean approved);
 
     List<Chore> findByDueDate(LocalDate dueDate);
+
+    List<Chore> findAllByChildAssignedAndDueDate(Child child, LocalDate dueDate);
 }
