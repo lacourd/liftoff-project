@@ -42,7 +42,7 @@
   </form>
 
   <!-- Approve Chore Form -->
-  <form th:action="@{/chores/approve}" method="post">
+  <form th:unless="${childUser}" th:action="@{/chores/approve}" method="post">
       <input type="hidden" name="choreId" th:value="${chore.id}" />
       <button type="submit" class="btn btn-success">Approve</button>
   </form>
