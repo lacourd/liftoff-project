@@ -119,24 +119,14 @@ public class ChoreController {
         if (chore != null) {
             if (completed) {
                 // Mark the chore as complete and add a new completion entry
-                ChoreCompletion completion = new ChoreCompletion();
-                completion.setChore(chore);
-                completion.setCompletedByChild(true);
-                completion.setApprovedByParent(false);
-                chore.getCompletions().add(completion);
+                chore.setCompleted(true);
+                chore.setApprovedByParent(false);
             } else {
-                // Update existing completion if it exists and is marked by the child
-                for (ChoreCompletion completion : chore.getCompletions()) {
-                    if (completion.isCompletedByChild()) {
-                        // Update the existing completion to indicate it is not complete
-                        completion.setCompletedByChild(false);
-                        completion.setApprovedByParent(false);
-                        break;
-                    }
+                chore.setCompleted(false);
+                chore.setApprovedByParent(false);
                 }
             }
             choreRepository.save(chore);
-        }
 
         return "redirect:/chores";
     }
@@ -150,21 +140,20 @@ public class ChoreController {
         Chore chore = choreRepository.findById(choreId).orElse(null);
 
         if (chore != null) {
-            for (ChoreCompletion completion : chore.getCompletions()) {
-                if (completion.isCompletedByChild() && !completion.isApprovedByParent()) {
-                    completion.setApprovedByParent(true);
+            if (!chore.isApprovedByParent()) {
+                    chore.setCompleted(true);
+                    chore.setApprovedByParent(true);
 
                     // Update the child's earnedPoints field
                     Child childAssigned = chore.getChildAssigned();
                     childAssigned.setPoints(childAssigned.getPoints() + chore.getRewardPoints());
 
                     childRepository.save(childAssigned);
-                }
             }
+        }
             completedChoreRepository.save(chore);
             choreRepository.delete(chore);
 
-        }
 
         return "redirect:/chores";
 
