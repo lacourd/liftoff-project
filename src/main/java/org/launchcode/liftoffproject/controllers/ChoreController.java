@@ -42,7 +42,7 @@ public class ChoreController {
             model.addAttribute("chores", choreRepository.findAllByChildAssigned(child));
         } else {
             Parent parent = authenticationController.getParentFromSession(session);
-            model.addAttribute("chores", choreRepository.findAllByParentCreator(parent));
+            model.addAttribute("chores", choreRepository.findAllByParentCreatorAndApprovedByParent(parent, false));
         }
 
         return "chores/index";
@@ -151,8 +151,8 @@ public class ChoreController {
                     childRepository.save(childAssigned);
             }
         }
-            completedChoreRepository.save(chore);
-            choreRepository.delete(chore);
+
+            choreRepository.save(chore);
 
 
         return "redirect:/chores";

@@ -72,6 +72,9 @@ public class AuthenticationFilter extends HandlerInterceptorAdapter {
             model.addObject("childUser", "childUser");
         }
         if (user != null) {
+            if (model == null) {
+                model = new ModelAndView("loggedInUser");
+            }
             model.addObject("loggedInUser","loggedInUser");
         }
     }
