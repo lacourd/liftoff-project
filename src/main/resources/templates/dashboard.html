@@ -15,7 +15,7 @@
 <main class="container" th:if="${childUser}">
 <!-- Display Selected Avatar -->
 <div class="mwanzo">
-    <img id="selectedAvatar" src="avatar1.png" alt="Selected Avatar" width="150" height="150">
+    <img id="selectedAvatar" src="images/avatar1.png" alt="Selected Avatar" width="150" height="150">
 
         <select id="avatarSelect" onchange="changeAvatar()">
             <option value="images/avatar1.png">Avatar 1</option>
@@ -38,24 +38,24 @@
 
 <!-- Chores table -->
     <div class="date-picker">
-        <h3>Filter Chores:</h3>
+        <h3>Find Tasks:</h3>
         <form th:action="@{/dashboard}" method="get">
-            <input type="date" id="selectedDueDate" name="dueDate">
-            <input type="text" id="selectedChoreName" name="choreName" placeholder="Chore Name">
-            <button type="submit">Show Chores</button>
+            <input type="date" id="selectedDueDate" name="dueDate" onchange="showDayOfWeek(this.value)">
+            <input type="text" id="selectedChoreName" name="choreName" placeholder="Task Name">
+            <button type="submit">Show Tasks</button>
         </form>
 
-
-        <h3>Chores for the Selected Criteria:</h3>
-        <ul>
+        <!--ul>
             <li th:each="chore : ${chores}" th:text="${chore.name}"></li>
-        </ul>
+        </ul-->
+
     </div>
 
 
-<!-- Chores and Rewards -->
 
-<h2>Chores</h2>
+    <!-- Chores and Rewards -->
+
+<h2>Tasks <span th:text="${dayOfWeekMessage}"></span>:</h2>
 
 <table class="table table-striped">
     <thead>
@@ -99,15 +99,20 @@
 </table>
 
 <!--Avatar script-->
-<script>
+    <script>
+    window.onload = function () {
+        // default image when the page loads
+        document.getElementById("selectedAvatar").src = "images/avatar1.png";
+    }
+
     function changeAvatar() {
-        const avatarSelect = document.getElementById("avatarSelect");
-        const selectedAvatar = avatarSelect.value;
-        const selectedAvatarImg = document.getElementById("selectedAvatar");
-        selectedAvatarImg.src = selectedAvatar;
+        var select = document.getElementById("avatarSelect");
+        var selectedValue = select.options[select.selectedIndex].value;
+
+
+        document.getElementById("selectedAvatar").src = selectedValue;
     }
 </script>
-
 </main>
 
 </body>

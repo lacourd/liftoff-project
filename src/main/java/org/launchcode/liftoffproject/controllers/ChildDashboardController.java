@@ -15,8 +15,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.format.TextStyle;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 public class ChildDashboardController {
@@ -56,9 +59,18 @@ public class ChildDashboardController {
         List<Reward> earnedRewards = earnedRewardsRepository.findAllByChild(child);
 
 
+        // What is the selected day of the week from calendar
+        String dayOfWeekMessage = null;
+        if (dueDate != null) {
+            DayOfWeek dayOfWeek = dueDate.getDayOfWeek();
+            dayOfWeekMessage = "for : " + dayOfWeek.getDisplayName(TextStyle.FULL, Locale.ENGLISH);
+        }
+
         model.addAttribute("child", child);
         model.addAttribute("chores", chores);
         model.addAttribute("earnedRewards", earnedRewards);
+        model.addAttribute("dayOfWeekMessage", dayOfWeekMessage); // Pass the calculated message
+
         return "dashboard";
     }
 
