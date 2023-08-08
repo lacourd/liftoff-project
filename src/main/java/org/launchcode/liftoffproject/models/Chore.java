@@ -24,7 +24,7 @@ public class Chore extends AbstractEntity {
 
     private boolean completed;
 
-    private Boolean approvedByParent;
+    private boolean approvedByParent;
 
     private int rewardPoints;
 
@@ -43,7 +43,7 @@ public class Chore extends AbstractEntity {
         this.rewardPoints = rewardPoints;
         this.dueDate = dueDate;
         this.completed = false;
-        this.approvedByParent = null;
+        this.approvedByParent = false;
     }
 
     // Getters and Setters
@@ -112,11 +112,11 @@ public class Chore extends AbstractEntity {
         this.completions = completions;
     }
 
-    public Boolean isApprovedByParent() {
+    public boolean isApprovedByParent() {
         return approvedByParent;
     }
 
-    public void setApprovedByParent(Boolean approvedByParent) {
+    public void setApprovedByParent(boolean approvedByParent) {
         this.approvedByParent = approvedByParent;
     }
 
