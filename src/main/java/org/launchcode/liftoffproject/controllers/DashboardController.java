@@ -4,6 +4,7 @@ package org.launchcode.liftoffproject.controllers;
 import org.launchcode.liftoffproject.data.ChildRepository;
 import org.launchcode.liftoffproject.data.ChoreRepository;
 import org.launchcode.liftoffproject.data.EarnedRewardsRepository;
+import org.launchcode.liftoffproject.data.RewardRepository;
 import org.launchcode.liftoffproject.models.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,13 +20,16 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Controller
-public class ChildDashboardController {
+public class DashboardController {
 
     @Autowired
     private ChildRepository childRepository;
 
     @Autowired
     private ChoreRepository choreRepository;
+
+    @Autowired
+    private RewardRepository rewardRepository;
 
     @Autowired
     private EarnedRewardsRepository earnedRewardsRepository;
@@ -39,33 +43,41 @@ public class ChildDashboardController {
             @RequestParam(name = "choreName", required = false) String choreName,
             Model model, HttpSession session) {
         Child child = authenticationController.getChildFromSession(session);
+        if (child != null) {
+            List<Chore> chores;
+            if (dueDate != null && choreName != null) {
+                chores = choreRepository.findByDueDateAndChildAssignedAndNameContaining(dueDate, child, choreName);
+            } else if (dueDate != null) {
+                chores = choreRepository.findByDueDateAndChildAssigned(dueDate, child);
+            } else if (choreName != null) {
+                chores = choreRepository.findByChildAssignedAndNameContaining(child, choreName);
+            } else {
+                chores = choreRepository.findAllByChildAssigned(child);
+            }
 
 
-        List<Chore> chores;
-        if (dueDate != null && choreName != null) {
-            chores = choreRepository.findByDueDateAndChildAssignedAndNameContaining(dueDate, child, choreName);
-        } else if (dueDate != null) {
-            chores = choreRepository.findByDueDateAndChildAssigned(dueDate, child);
-        } else if (choreName != null) {
-            chores = choreRepository.findByChildAssignedAndNameContaining(child, choreName);
+            List<Reward> earnedRewards = earnedRewardsRepository.findAllByChild(child);
+
+
+            model.addAttribute("child", child);
+            model.addAttribute("chores", chores);
+            model.addAttribute("earnedRewards", earnedRewards);
         } else {
-            chores = choreRepository.findAllByChildAssigned(child);
+            Parent parent = authenticationController.getParentFromSession(session);
+            List<Child> crew = childRepository.findAllByParent(parent);
+            model.addAttribute("crew", crew);
+            List<Chore> chores = choreRepository.findAllByParentCreator(parent);
+            model.addAttribute("chores", chores);
+            List<Reward> rewards = (List<Reward>) rewardRepository.findAll();
+            model.addAttribute("rewards", rewards);
         }
-
-
-        List<Reward> earnedRewards = earnedRewardsRepository.findAllByChild(child);
-
-
-        model.addAttribute("child", child);
-        model.addAttribute("chores", chores);
-        model.addAttribute("earnedRewards", earnedRewards);
         return "dashboard";
     }
 
     @GetMapping("/chores/{dueDate}")
     public List<Chore> getChoresForDate(@PathVariable("dueDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dueDate, HttpSession session) {
         Child child = authenticationController.getChildFromSession(session);
-        return choreRepository.findAllByChildAssignedAndDueDate(child, dueDate);
+        return choreRepository.findByDueDateAndChildAssigned(dueDate, child);
     }
     @PostMapping("/redeemReward")
     @ResponseBody
