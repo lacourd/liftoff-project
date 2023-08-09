@@ -19,7 +19,7 @@
     </tr>
     <tr>
         <th>Assigned</th>
-        <td th:text="${chore.childAssigned.firstName}"></td>-->
+        <td th:text="${chore.childAssigned.firstName}"></td>
     </tr>
     <tr>
         <th>Due Date</th>
@@ -38,6 +38,8 @@
         <td th:text="${chore.supplies}"></td>
     </tr>
 </table>
+
+    <a th:unless="${childUser}" class="btn btn-outline-dark" th:href="'/chores/edit?choreId=' + ${chore.id}" role="button">Edit This Task</a>
 
   <!-- Mark as Complete Form -->
   <form th:action="@{/chores/complete}" method="get">

@@ -71,11 +71,12 @@ public class ChoreController {
         return "redirect:/chores";
     }
     @GetMapping("edit")
-    public String displayEditChoreForm(@RequestParam("choreId") int choreId, Model model) {
+    public String displayEditChoreForm(@RequestParam("choreId") int choreId, HttpSession session, Model model) {
         Chore chore = choreRepository.findById(choreId).orElse(null);
         if (chore == null) {
             return "redirect:/chores";
         }
+        model.addAttribute("crew", childRepository.findAllByParent(authenticationController.getParentFromSession(session)));
         model.addAttribute("title", "Edit Chore");
         model.addAttribute("chore", chore);
         return "chores/edit";
