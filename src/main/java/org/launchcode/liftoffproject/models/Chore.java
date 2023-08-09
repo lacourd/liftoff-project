@@ -12,8 +12,7 @@ public class Chore extends AbstractEntity {
 
 
     private String supplies;
-    @NotBlank
-    private String dayOfTheWeek;
+
     @NotBlank
     private String name;
 
@@ -127,10 +126,6 @@ public class Chore extends AbstractEntity {
         this.approvedByParent = approvedByParent;
     }
 
-    public String getDayOfTheWeek() {return dayOfTheWeek; }
-
-    public void setDayOfTheWeek(String dayOfTheWeek) {this.dayOfTheWeek = dayOfTheWeek; }
-
     public String getSupplies() {return supplies; }
 
     public void setSupplies(String supplies) {this.supplies = supplies; }
@@ -138,6 +133,7 @@ public class Chore extends AbstractEntity {
     public String getDetailedDescription() {return detailedDescription; }
 
     public void setDetailedDescription(String detailedDescription) {this.detailedDescription = detailedDescription; }
+
     @Override
     public String toString() {
         return name;

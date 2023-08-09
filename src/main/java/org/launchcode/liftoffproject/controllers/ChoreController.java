@@ -92,7 +92,6 @@ public class ChoreController {
         //updatedChore.setDueDay(chore.getDueDay());
         updatedChore.setDueDate(chore.getDueDate());
         updatedChore.setRewardPoints(chore.getRewardPoints());
-        updatedChore.setDayOfTheWeek(chore.getDayOfTheWeek());
         updatedChore.setDetailedDescription(chore.getDetailedDescription());
         updatedChore.setSupplies(chore.getSupplies());
         choreRepository.save(updatedChore);

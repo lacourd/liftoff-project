@@ -58,6 +58,12 @@
           </label>
           <p class="error" th:if="${#fields.hasErrors('rewardPoints')}" th:errors="*{rewardPoints}"></p>
       </div>
+     <div class="form-group">
+         <label>Supplies:
+             <input th:field="*{supplies}" class="form-control">
+         </label>
+         <p class="error" th:if="${#fields.hasErrors('supplies')}" th:errors="*{supplies}"></p>
+     </div>
       <div class="form-group">
           <input type="submit" value="Add Chore" class="btn btn-success">
       </div>
