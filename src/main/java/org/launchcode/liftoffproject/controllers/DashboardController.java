@@ -64,6 +64,7 @@ public class DashboardController {
             model.addAttribute("earnedRewards", earnedRewards);
         } else {
             Parent parent = authenticationController.getParentFromSession(session);
+            model.addAttribute("parent", parent);
             List<Child> crew = childRepository.findAllByParent(parent);
             model.addAttribute("crew", crew);
             List<Chore> chores = choreRepository.findAllByParentCreator(parent);
