@@ -61,6 +61,7 @@ public class ChoreController {
     public String processCreateChoreForm(@ModelAttribute @Valid Chore newChore, Errors errors, Model model, HttpSession session) {
         if (errors.hasErrors()) {
             model.addAttribute("title", "New Chore");
+            model.addAttribute("crew", childRepository.findAllByParent(authenticationController.getParentFromSession(session)));
             return "chores/create";
         }
         newChore.setParentCreator(authenticationController.getParentFromSession(session));
