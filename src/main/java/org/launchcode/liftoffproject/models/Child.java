@@ -33,33 +33,32 @@ public class Child extends AbstractEntity{
     public Child() {
     }
 
-    //public Child(String firstName, String lastName, Parent parent, ChildUser newChildUser){}
 
-//    public Child(String firstName, String lastName, Parent parent, ChildUser newChildUser) {
-//        super();
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.parent = parent;
-//        this.userAccount = newChildUser;
-//    }
-
-
-//     added constructor for reward
-    public Child(String firstName, String lastName, Parent parent, ChildUser userAccount) {
-
-        if (parent != null) {
-            Integer id = parent.getId();
-            if (id == null) {
-                throw new IllegalArgumentException("Parent ID cannot be null");
-            }
-        } else {
-            throw new IllegalArgumentException("Parent cannot be null");
-        }
+    public Child(String firstName, String lastName, Parent parent, ChildUser newChildUser) {
+        super();
         this.firstName = firstName;
         this.lastName = lastName;
         this.parent = parent;
-        this.userAccount = userAccount;
+        this.userAccount = newChildUser;
     }
+
+
+//     added constructor for reward
+//    public Child(String firstName, String lastName, Parent parent, ChildUser userAccount) {
+//
+//        if (parent != null) {
+//            Integer id = parent.getId();
+//            if (id == null) {
+//                throw new IllegalArgumentException("Parent ID cannot be null");
+//            }
+//        } else {
+//            throw new IllegalArgumentException("Parent cannot be null");
+//        }
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.parent = parent;
+//        this.userAccount = userAccount;
+//    }
     public String getFirstName() {
         return firstName;
     }
