@@ -90,7 +90,7 @@ public class ChoreController {
         updatedChore.setChoreDescription(chore.getChoreDescription());
         updatedChore.setChildAssigned(chore.getChildAssigned());
         //updatedChore.setDueDay(chore.getDueDay());
-        updatedChore.setDueDate((LocalDate) chore.getDueDate());
+        updatedChore.setDueDate(chore.getDueDate());
         updatedChore.setRewardPoints(chore.getRewardPoints());
         updatedChore.setDayOfTheWeek(chore.getDayOfTheWeek());
         updatedChore.setDetailedDescription(chore.getDetailedDescription());
@@ -100,7 +100,7 @@ public class ChoreController {
     }
 
     @GetMapping("detail")
-    public String displayEventDetails(@RequestParam Integer choreId, Model model) {
+    public String displayChoreDetails(@RequestParam Integer choreId, Model model) {
 
         Optional<Chore> result = choreRepository.findById(choreId);
 
