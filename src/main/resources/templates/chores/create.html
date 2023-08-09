@@ -13,7 +13,7 @@
 
      <form th:object="${chore}" method="post" th:action="@{/chores/create}">
       <div class="form-group">
-          <label>Name:
+          <label>Task:
               <input th:field="*{name}" class="form-control">
           </label>
           <p class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>

@@ -162,7 +162,26 @@ footer {
     border-color: #2B2D2F !important;
     background-color: white !important;
 }
+.create-chore-btn {
+    color: #2B2D2F;
+    border: 2px solid black;
+    background-color: white;
+}
 
+.card-container {
+     justify-content: center;
+     align-items: center;
+     max-width: 1850px;
+     flex-wrap: wrap;
+   }
+
+
+/* Style for the individual card */
+.card {
+  width: 300px;
+  margin-bottom: 20px; /* Add margin between cards */
+  margin-right: 20px
+}
 
 /* child dashboard */
 .points{
