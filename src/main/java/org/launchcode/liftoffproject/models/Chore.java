@@ -19,7 +19,6 @@ public class Chore extends AbstractEntity{
     @ManyToOne
     private Child childAssigned;
 
-    @NotBlank
     private String detailedDescription;
 
     @ManyToOne
@@ -43,7 +42,6 @@ public class Chore extends AbstractEntity{
         this.rewardPoints = rewardPoints;
         this.dueDay = dueDay;
         this.dayOfTheWeek = dayOfTheWeek;
-        this.detailedDescription = detailedDescription;
         this.supplies = supplies;
         this.completed = false;
     }

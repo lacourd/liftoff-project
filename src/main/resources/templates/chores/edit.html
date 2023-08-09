@@ -33,11 +33,11 @@
   </div>
   <div class="form-group">
     <label for="detailedDescription">Detailed Description:</label>
-    <input type="number" id="detailedDescription" name="detailedDescription" th:value="${chore.detailedDescription}" th:field="${chore.detailedDescription}" class="form-control" required />
+    <input type="number" id="detailedDescription" name="detailedDescription" th:value="${chore.detailedDescription}" th:field="${chore.detailedDescription}" class="form-control" />
   </div>
   <div class="form-group">
     <label for="supplies">Supplies:</label>
-    <input type="number" id="supplies" name="supplies" th:value="${chore.supplies}" th:field="${chore.supplies}" class="form-control" required />
+    <input type="number" id="supplies" name="supplies" th:value="${chore.supplies}" th:field="${chore.supplies}" class="form-control" />
   </div>
   <button type="submit" class="btn btn-primary">Save Changes</button>
   <a th:href="@{/rewards}" class="btn btn-secondary">Cancel</a>
