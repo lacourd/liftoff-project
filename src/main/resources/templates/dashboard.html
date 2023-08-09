@@ -12,6 +12,42 @@
 
 <!--<header th:if="${childUser}" th:replace="dashfragment :: header"></header>-->
 
+<main class="container" th:unless="${childUser}">
+
+    <div>
+    <h3>Welcome, <span th:text="${parent.firstName}"></span>!</h3>
+    </div>
+
+    <div>
+        <h3 th:if="${pendingChores}">Tasks Pending Approval:</h3>
+        <h3 th:unless="${pendingChores}">No Tasks Pending Approval</h3>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <td>Task</td>
+                <td>Assigned to:</td>
+                <td>Reward Points</td>
+                <td>Approve?</td>
+            </tr>
+            <tr th:each="chore : ${pendingChores}">
+                <td><a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
+                <td th:text="${chore.childAssigned.firstName}"></td>
+                <td th:text="${chore.rewardPoints}"></td>
+                <td>
+                    <form th:action="@{/chores/approve}" method="post">
+                        <input type="hidden" name="choreId" th:value="${chore.id}" />
+                        <button type="submit" class="btn btn-success">Approve</button>
+                    </form>
+                </td>
+
+            </tr>
+            </thead>
+
+        </table>
+    </div>
+
+
+</main>
 <main class="container" th:if="${childUser}">
 <!-- Display Selected Avatar -->
 <div class="mwanzo">
@@ -24,7 +60,7 @@
 
         </select>
 
-            `
+
     <h3>Welcome, <span th:text="${child.firstName}"></span>!
     </h3>
 
