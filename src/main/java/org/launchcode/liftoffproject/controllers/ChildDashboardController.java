@@ -34,22 +34,38 @@ public class ChildDashboardController {
     private AuthenticationController authenticationController;
 
     @GetMapping("dashboard")
-    public String childDashboard(Model model, HttpSession session) {
+    public String childDashboard(
+            @RequestParam(name = "dueDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dueDate,
+            @RequestParam(name = "choreName", required = false) String choreName,
+            Model model, HttpSession session) {
         Child child = authenticationController.getChildFromSession(session);
 
-        // Fetch the child's chores and earned rewards
-        List<Chore> chores = choreRepository.findAllByChildAssigned(child);
+
+        List<Chore> chores;
+        if (dueDate != null && choreName != null) {
+            chores = choreRepository.findByDueDateAndChildAssignedAndNameContaining(dueDate, child, choreName);
+        } else if (dueDate != null) {
+            chores = choreRepository.findByDueDateAndChildAssigned(dueDate, child);
+        } else if (choreName != null) {
+            chores = choreRepository.findByChildAssignedAndNameContaining(child, choreName);
+        } else {
+            chores = choreRepository.findAllByChildAssigned(child);
+        }
+
+
         List<Reward> earnedRewards = earnedRewardsRepository.findAllByChild(child);
+
 
         model.addAttribute("child", child);
         model.addAttribute("chores", chores);
         model.addAttribute("earnedRewards", earnedRewards);
         return "dashboard";
     }
-    @GetMapping("/chores/{dueDate}")
-    public List<Chore> getChoresForDate(@PathVariable("dueDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dueDate) {
 
-        return choreRepository.findByDueDate(dueDate);
+    @GetMapping("/chores/{dueDate}")
+    public List<Chore> getChoresForDate(@PathVariable("dueDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dueDate, HttpSession session) {
+        Child child = authenticationController.getChildFromSession(session);
+        return choreRepository.findAllByChildAssignedAndDueDate(child, dueDate);
     }
     @PostMapping("/redeemReward")
     @ResponseBody

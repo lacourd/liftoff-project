@@ -24,6 +24,8 @@ public class Chore extends AbstractEntity {
 
     private boolean completed;
 
+    private boolean approvedByParent;
+
     private int rewardPoints;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -41,6 +43,7 @@ public class Chore extends AbstractEntity {
         this.rewardPoints = rewardPoints;
         this.dueDate = dueDate;
         this.completed = false;
+        this.approvedByParent = false;
     }
 
     // Getters and Setters
@@ -107,6 +110,14 @@ public class Chore extends AbstractEntity {
 
     public void setCompletions(List<ChoreCompletion> completions) {
         this.completions = completions;
+    }
+
+    public boolean isApprovedByParent() {
+        return approvedByParent;
+    }
+
+    public void setApprovedByParent(boolean approvedByParent) {
+        this.approvedByParent = approvedByParent;
     }
 
     @Override
