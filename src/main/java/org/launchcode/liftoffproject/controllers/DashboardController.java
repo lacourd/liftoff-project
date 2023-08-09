@@ -65,6 +65,8 @@ public class DashboardController {
         } else {
             Parent parent = authenticationController.getParentFromSession(session);
             model.addAttribute("parent", parent);
+            List<Chore> pendingApproval = choreRepository.findAllByParentCreatorAndCompletedAndApprovedByParent(parent, true,false);
+            model.addAttribute("pendingApproval", pendingApproval);
             List<Child> crew = childRepository.findAllByParent(parent);
             model.addAttribute("crew", crew);
             List<Chore> chores = choreRepository.findAllByParentCreator(parent);
