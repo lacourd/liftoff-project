@@ -19,9 +19,9 @@
     </div>
 
     <div>
-        <h3 th:if="${pendingChores}">Tasks Pending Approval:</h3>
-        <h3 th:unless="${pendingChores}">No Tasks Pending Approval</h3>
-        <table class="table table-striped">
+        <h3 th:if="${pendingChores} and ${pendingChores.size()}">Tasks Pending Approval:</h3>
+        <h3 th:unless="${pendingChores} and ${pendingChores.size()}">No Tasks Pending Approval</h3>
+        <table class="table table-striped" th:if="${pendingChores} and ${pendingChores.size()}">
             <thead>
             <tr>
                 <td>Task</td>
