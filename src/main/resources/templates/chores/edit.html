@@ -1,47 +1,56 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
-<body class="container">
+
+<body>
 
 <header th:replace="fragments :: header"></header>
 
-<form th:action="@{/chores/edit}" method="post">
-  <input type="hidden" name="choreId" th:value="${chore.id}" />
-  <div class="form-group">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" th:value="${chore.name}" th:field="${chore.name}" class="form-control" required />
-  </div>
-  <div class="form-group">
-    <label for="description">Description:</label>
-    <textarea id="description" name="description" class="form-control" required th:text="${chore.choreDescription}" th:field="${chore.choreDescription}"></textarea>
-  </div>
-  <div class="form-group">
-    <label for="childAssigned">Assigned to:</label>
-    <input type="text" id="childAssigned" name="childAssigned" th:value="${chore.childAssigned}" th:field="${chore.childAssigned}" class="form-control" required />
-  </div>
-  <div class="form-group">
-    <label for="dueDay">Due Day:</label>
-    <input type="number" id="dueDay" name="dueDay" th:value="${chore.dueDay}" th:field="${chore.dueDay}" class="form-control" required />
-  </div>
-  <div class="form-group">
-    <label for="rewardPoints">Rewards Value:</label>
-    <input type="number" id="rewardPoints" name="rewardPoints" th:value="${chore.rewardPoints}" th:field="${chore.rewardPoints}" class="form-control" required />
-  </div>
-  <div class="form-group">
-    <label for="dayOfTheWeek">Day of the Week:</label>
-    <input type="number" id="dayOfTheWeek" name="rewardPoints" th:value="${chore.dayOfTheWeek}" th:field="${chore.dayOfTheWeek}" class="form-control" required />
-  </div>
-  <div class="form-group">
-    <label for="detailedDescription">Detailed Description:</label>
-    <input type="number" id="detailedDescription" name="detailedDescription" th:value="${chore.detailedDescription}" th:field="${chore.detailedDescription}" class="form-control" />
-  </div>
-  <div class="form-group">
-    <label for="supplies">Supplies:</label>
-    <input type="number" id="supplies" name="supplies" th:value="${chore.supplies}" th:field="${chore.supplies}" class="form-control" />
-  </div>
-  <button type="submit" class="btn btn-primary">Save Changes</button>
-  <a th:href="@{/rewards}" class="btn btn-secondary">Cancel</a>
-</form>
+<main class="container">
+
+  <form th:action="@{/chores/edit}" method="post">
+    <input type="hidden" name="choreId" th:value="${chore.id}" />
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" th:value="${chore.name}" th:field="${chore.name}" class="form-control" required />
+    </div>
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <textarea id="description" name="description" class="form-control" required th:text="${chore.choreDescription}" th:field="${chore.choreDescription}"></textarea>
+    </div>
+    <div class="form-group">
+              <label>Assign to:
+              <select th:field="*{childAssigned}" class="form-control">
+                  <option th:each="child : ${crew}"
+                          th:value="${child.id}"
+                          th:text="${child.firstName}"></option>
+              </select>
+              <p class="error" th:errors="*{childAssigned}"></p>
+          </label>
+    </div>
+    <div class="form-group">
+      <label for="dueDate">Due Date:</label>
+      <input type="number" id="dueDate" name="dueDate" th:value="${chore.dueDate}" th:field="${chore.dueDate}" class="form-control" required />
+    </div>
+    <div class="form-group">
+      <label for="rewardPoints">Rewards Value:</label>
+      <input type="number" id="rewardPoints" name="rewardPoints" th:value="${chore.rewardPoints}" th:field="${chore.rewardPoints}" class="form-control" required />
+    </div>
+    <div class="form-group">
+      <label for="detailedDescription">Detailed Description:</label>
+      <input type="number" id="detailedDescription" name="detailedDescription" th:value="${chore.detailedDescription}" th:field="${chore.detailedDescription}" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="supplies">Supplies:</label>
+      <input type="number" id="supplies" name="supplies" th:value="${chore.supplies}" th:field="${chore.supplies}" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a th:href="@{/rewards}" class="btn btn-secondary">Cancel</a>
+  </form>
+
+</main>
+
+<footer th:replace="fragments :: footer"></footer>
 
 </body>
 </html>

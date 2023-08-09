@@ -1,11 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https//www.thymeleaf.org/">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
-<body class="container">
+
+<body>
+
 <header th:replace="fragments :: header"></header>
-<table class="table table-striped">
+
+<main class="container">
+  
+   <table class="table table-striped">
     <tr>
-        <th>Name</th>
+        <th>Task</th>
         <td th:text="${chore.name}"></td>
     </tr>
     <tr>
@@ -14,19 +19,15 @@
     </tr>
     <tr>
         <th>Assigned</th>
-        <td th:text="${chore.childAssigned}"></td>-->
+        <td th:text="${chore.childAssigned.firstName}"></td>-->
     </tr>
     <tr>
-        <th>Due Day</th>
-        <td th:text="${chore.dueDay}"></td>
+        <th>Due Date</th>
+        <td th:text="${#temporals.format(chore.dueDate, 'yyyy-MM-dd')}"></td>
     </tr>
     <tr>
         <th>Reward Points</th>
         <td th:text="${chore.rewardPoints}"></td>
-    </tr>
-    <tr>
-        <th>Day of the Week</th>
-        <td th:text="${chore.dayOfTheWeek}"></td>
     </tr>
     <tr>
         <th>Detailed Description</th>
@@ -37,6 +38,22 @@
         <td th:text="${chore.supplies}"></td>
     </tr>
 </table>
-<footer t:replace="fragments :: footer"></footer>
+
+  <!-- Mark as Complete Form -->
+  <form th:action="@{/chores/complete}" method="get">
+      <input type="hidden" name="choreId" th:value="${chore.id}" />
+      <button type="submit" class="btn btn-primary">Mark as Complete</button>
+  </form>
+
+  <!-- Approve Chore Form -->
+  <form th:unless="${childUser}" th:action="@{/chores/approve}" method="post">
+      <input type="hidden" name="choreId" th:value="${chore.id}" />
+      <button type="submit" class="btn btn-success">Approve</button>
+  </form>
+
+</main>
+
+<footer th:replace="fragments :: footer"></footer>
+
 </body>
 </html>

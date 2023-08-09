@@ -4,9 +4,13 @@
    <meta charset="UTF-8"/>
    <title>Liftoff Project</title>
 
+    <script src="https://kit.fontawesome.com/6eedae73ef.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <link th:href="@{/css/rotating-card.css}" rel="stylesheet" />
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
    <link rel="stylesheet" th:href="@{/styles.css}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,23 +29,49 @@
             </div>
 
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="/chores" class="nav-link pl-3">Chores!</a></li>
-                <li><a href="/rewards" class="nav-link pl-3">Rewards</a></li>
-                <li><a href="/crew" class="nav-link pl-3">Crew Members</a></li>
+                <li><a th:if="${loggedInUser}" href="/chores" class="nav-link pl-3">Chores!</a></li>
+                <li><a th:if="${loggedInUser}" href="/rewards" class="nav-link pl-3">Rewards</a></li>
+                <li><a th:if="${loggedInUser}" th:unless="${childUser}" href="/crew" class="nav-link pl-3">Crew Members</a></li>
             </ul>
 
             <div class="col-md-3 text-end mr-3" style="text-align: right;">
-                <a href="/#login"><span class="btn btn-outline-primary me-2 login-btn">Sign In</span></a>
-                <a href="/register"><span class="btn btn-primary register-btn">Register</span></a>
+                <a th:if="${loggedInUser}" href="/logout"><span class="btn btn-outline-primary me-2 login-btn">Logout</span></a>
+                <a th:unless="${loggedInUser}" href="/#login"><span class="btn btn-outline-primary me-2 login-btn">Sign In</span></a>
+                <a th:unless="${loggedInUser}" href="/register"><span class="btn btn-primary register-btn">Register</span></a>
             </div>
         </div>
 </header>
 
+<div th:fragment="reward-card" class="card-container">
+    <div class="card">
+        <div class="front">
+            <div class="content" style="padding-top: 30px; padding-bottom: 30px;">
+                <div class="main">
+<!--                    <h2 th:text="${reward.category}"></h2>-->
+                    <h2 style="font-size: 6rem; text-align: center;"><i class="fa-solid fa-ice-cream"></i></h2>
+                    <h3 class="name" th:text="${reward.name}"></h3>
+                    <p class="profession" th:text="${reward.description}"></p>
+                    <p class="text-center" th:text="${reward.points}"></p>
+                </div>
+            </div>
+        </div> <!-- end front panel -->
+        <div class="back">
+            <div class="content">
+                <div class="main">
+                    <h4 class="text-center">Job Description</h4>
+                    <p class="text-center">Web design, Adobe Photoshop, HTML5, CSS3, Corel and many others...</p>
+                </div>
+            </div>
+        </div> <!-- end back panel -->
+    </div> <!-- end card -->
+</div> <!-- end card-container -->
+
 <footer class="py-3">
     <ul class="nav justify-content-center pb-3">
-        <li class="nav-item"><a href="/"><img th:src="@{/images/treasureTask-logo.jpg}" alt="Logo Image" height="75"></a></li>
+        <li><a href="/aboutUs" class="nav-link pl-3">About the Creators</a></li>
     </ul>
     <p class="text-center text-body-secondary mb-0" style="font-family: 'Pirata One', cursive !important; color: white !important">Copyright &copy; TreasureTask | <a href="https://www.vecteezy.com/free-vector/pirate" target="_blank">Pirate Vectors by Vecteezy</a></p>
+
 </footer>
 
 </body>

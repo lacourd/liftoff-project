@@ -15,10 +15,6 @@ public class HomeController {
         return "index";
     }
 
-    @RequestMapping("/about")
-    public String aboutPage() {
-        return "about"; // Return the name of your Thymeleaf about page template
-    }
 
 
 }

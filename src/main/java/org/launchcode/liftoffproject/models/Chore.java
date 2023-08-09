@@ -1,10 +1,14 @@
 package org.launchcode.liftoffproject.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
+import java.util.List;
 
 @Entity
-public class Chore extends AbstractEntity{
+public class Chore extends AbstractEntity {
 
 
     private String supplies;
@@ -26,24 +30,27 @@ public class Chore extends AbstractEntity{
 
     private boolean completed;
 
+    private boolean approvedByParent;
+
     private int rewardPoints;
 
-//    @Enumerated(EnumType.STRING) // Storing the ENUM as a string in the database
-    private DayOfTheWeek dueDay;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dueDate;
 
-    public Chore(){}
+    @OneToMany(mappedBy = "chore", cascade = CascadeType.ALL)
+    private List<ChoreCompletion> completions;
 
+    public Chore() {
+    }
 
-
-
-    public Chore(String name, String choreDescription, int rewardPoints, DayOfTheWeek dueDay, String dayOfTheWeek, String detailedDescription, String supplies) {
+    public Chore(String name, String choreDescription, int rewardPoints, LocalDate dueDate, String supplies) {
         this.name = name;
         this.choreDescription = choreDescription;
         this.rewardPoints = rewardPoints;
-        this.dueDay = dueDay;
-        this.dayOfTheWeek = dayOfTheWeek;
+        this.dueDate = dueDate;
         this.supplies = supplies;
         this.completed = false;
+        this.approvedByParent = false;
     }
 
     // Getters and Setters
@@ -96,12 +103,28 @@ public class Chore extends AbstractEntity{
         this.rewardPoints = rewardPoints;
     }
 
-    public DayOfTheWeek getDueDay() {
-        return dueDay;
+    public LocalDate getDueDate() {
+        return dueDate;
     }
 
-    public void setDueDay(DayOfTheWeek dueDay) {
-        this.dueDay = dueDay;
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public List<ChoreCompletion> getCompletions() {
+        return completions;
+    }
+
+    public void setCompletions(List<ChoreCompletion> completions) {
+        this.completions = completions;
+    }
+
+    public boolean isApprovedByParent() {
+        return approvedByParent;
+    }
+
+    public void setApprovedByParent(boolean approvedByParent) {
+        this.approvedByParent = approvedByParent;
     }
 
     public String getDayOfTheWeek() {return dayOfTheWeek; }

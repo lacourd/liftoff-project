@@ -25,7 +25,7 @@ public class AuthenticationFilter extends HandlerInterceptorAdapter {
     @Autowired
     AuthenticationController authenticationController;
 
-    private static final List<String> whitelist = Arrays.asList("/login", "/register", "/logout", "/css", "/images");
+    private static final List<String> whitelist = Arrays.asList("/login", "/register", "/logout", "/css", "/images", "/aboutUs");
 
     private static boolean isWhitelisted(String path) {
         for (String pathRoot : whitelist) {
@@ -56,7 +56,7 @@ public class AuthenticationFilter extends HandlerInterceptorAdapter {
         }
 
         // The user is NOT logged in
-        response.sendRedirect("/login");
+        response.sendRedirect("/#login");
         return false;
     }
 
@@ -65,8 +65,16 @@ public class AuthenticationFilter extends HandlerInterceptorAdapter {
         User user = authenticationController.getUserFromSession(session);
 
         if (user instanceof ChildUser) {
-            System.out.println("This is a child user");
-            model.addObject("childUser","childUser");
+            if (model == null) {
+                model = new ModelAndView("childUser");
+            }
+            model.addObject("childUser", "childUser");
+        }
+        if (user != null) {
+            if (model == null) {
+                model = new ModelAndView("loggedInUser");
+            }
+            model.addObject("loggedInUser","loggedInUser");
         }
     }
 }

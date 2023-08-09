@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+
+<body>
+
+<header th:replace="fragments :: header"></header>
+
+<img src="/images/treasureTask-HP-hero.jpg" width="100%">
+
+<div class="bg-img">
+    <h1 hidden>About Us</h1>
+
+    <h2 style="text-align:center">About the Creators</h2>
+    <div class="row center-align">
+        <div th:each="author : ${authors}" class="column">
+            <div class="card">
+                <img th:src="${author.imageUrl}" class="form-control">
+                <div class="container">
+                    <h2 th:text="${author.name}" class="form-control"></h2>
+                    <p th:text="${author.descriptionOfFeatures}" class="form-control"></p>
+                    <p th:text="${author.bio}" class="form-control"></p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<footer th:replace="fragments :: footer"></footer>
+</body>
+</html>
