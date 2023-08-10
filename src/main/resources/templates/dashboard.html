@@ -49,7 +49,9 @@
         <h3>My Crew</h3>
         <div th:each="child : ${crew}">
             <div><img th:src="${child.avatar}"/></div>
-            <label th:text="${child.firstName}"></label>
+
+            <h4 th:text="${child.firstName}"></h4>
+            <h4 th:text="${child.points} + ' points'"></h4>
         </div>
         <a class="btn btn-outline-dark" href="/crew/add" role="button">Add a new Crew Member</a>
     </div>
