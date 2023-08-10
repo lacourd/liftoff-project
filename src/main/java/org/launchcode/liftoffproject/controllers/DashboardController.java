@@ -8,6 +8,10 @@ import org.launchcode.liftoffproject.data.RewardRepository;
 import org.launchcode.liftoffproject.models.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -71,6 +75,10 @@ public class DashboardController {
             model.addAttribute("crew", crew);
             List<Chore> incompleteChores = choreRepository.findAllByParentCreatorAndCompleted(parent, false);
             model.addAttribute("incompleteChores", incompleteChores);
+            Pageable pageable;
+            pageable = PageRequest.of(0, 5, Sort.by("id").ascending());
+            Page<Chore> recentlyCompleted = choreRepository.findByParentCreatorAndCompleted(parent,true, pageable);
+            model.addAttribute("recentlyCompleted", recentlyCompleted);
             List<Reward> rewards = (List<Reward>) rewardRepository.findAll();
             model.addAttribute("rewards", rewards);
         }
