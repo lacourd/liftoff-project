@@ -41,8 +41,9 @@
             <tr>
                 <th>Task</th>
                 <th>Description</th>
-                <th>Due Day</th>
+                <th>Due Date</th>
                 <th>Rewards Value</th>
+                <th>Supplies</th>
                 <th>Completed</th>
             </tr>
             </thead>
@@ -51,6 +52,7 @@
                 <td th:text="${chore.choreDescription}"></td>
                 <td th:text="${#temporals.format(chore.dueDate, 'yyyy-MM-dd')}"></td>
                 <td th:text="${chore.rewardPoints}"></td>
+                <td th:text="${chore.supplies}"></td>
             </tr>
         </table>
     </th:block>
