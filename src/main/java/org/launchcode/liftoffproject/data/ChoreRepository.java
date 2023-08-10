@@ -25,4 +25,5 @@ public interface ChoreRepository extends PagingAndSortingRepository<Chore, Integ
 
     List<Chore> findByChildAssignedAndNameContaining(Child child, String choreName);
 
+    List<Chore> findAllByChildAssignedAndDueDate(Child child, LocalDate dueDate);
 }

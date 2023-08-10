@@ -15,6 +15,17 @@ public class Reward extends AbstractEntity {
 
     private String description;
 
+    public Parent getParentCreator() {
+        return parentCreator;
+    }
+
+    public void setParentCreator(Parent parentCreator) {
+        this.parentCreator = parentCreator;
+    }
+
+    @ManyToOne
+    private Parent parentCreator;
+
     // points redemption
     private boolean redeemed;
 
@@ -82,5 +93,8 @@ public class Reward extends AbstractEntity {
 
     public void setRedemptionDate(LocalDate redemptionDate) {
         this.redemptionDate = redemptionDate;
+    }
+
+    public void setReward(Reward redeemedReward) {
     }
 }
