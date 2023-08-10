@@ -99,6 +99,45 @@
         </table>
     </div>
 
+    <div>
+        <h3>Recently Redeemed Rewards</h3>
+        <table class="table table-striped"><!--th:if="${recentlyCompleted} and ${recentlyCompleted.size()}">-->
+            <thead>
+            <tr>
+                <td>Reward</td>
+                <td>Redeemed by</td>
+                <td>Redeemed on</td>
+            </tr>
+            <tr th:each="reward : ${recentlyRedeemed}">
+                <td><a th:href="'/rewards/detail?rewardId=' + ${reward.id}" th:text="${reward.name}"></a></td>
+                <td th:text="${reward.child.firstName}"></td>
+                <td th:text="${reward.redemptionDate}"></td>
+
+            </tr>
+            </thead>
+
+        </table>
+    </div>
+
+    <div>
+        <h3>Available Rewards</h3>
+        <table class="table table-striped"><!--th:if="${recentlyCompleted} and ${recentlyCompleted.size()}">-->
+            <thead>
+            <tr>
+                <td>Reward</td>
+                <td>Points</td>
+            </tr>
+            <tr th:each="reward : ${availableRewards}">
+                <td><a th:href="'/rewards/detail?rewardId=' + ${reward.id}" th:text="${reward.name}"></a></td>
+                <td th:text="${reward.points}"></td>
+
+            </tr>
+            </thead>
+
+        </table>
+        <a class="btn btn-outline-dark" href="/rewards/index" role="button">Add a Reward</a>
+    </div>
+
 </main>
 <main class="container" th:if="${childUser}">
 <!-- Display Selected Avatar -->
