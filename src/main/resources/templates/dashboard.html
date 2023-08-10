@@ -55,7 +55,7 @@
     </div>
     <div>
         <h3>Available Tasks</h3>
-        <table class="table table-striped" th:if="${chores} and ${chores.size()}">
+        <table class="table table-striped" th:if="${incompleteChores} and ${incompleteChores.size()}">
             <thead>
             <tr>
                 <td>Task</td>
@@ -63,7 +63,7 @@
                 <td>Reward Points</td>
                 <td>Due Date</td>
             </tr>
-            <tr th:each="chore : ${chores}">
+            <tr th:each="chore : ${incompleteChores}">
                 <td><a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
                 <td th:text="${chore.childAssigned.firstName}"></td>
                 <td th:text="${chore.rewardPoints}"></td>

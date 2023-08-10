@@ -11,6 +11,8 @@ import java.util.List;
 public interface ChoreRepository extends PagingAndSortingRepository<Chore, Integer> {
     List<Chore> findAllByParentCreator(Parent parent);
 
+    List<Chore> findAllByParentCreatorAndCompleted(Parent parent, boolean completed);
+
     List<Chore> findAllByParentCreatorAndCompletedAndApprovedByParent(Parent parent, boolean completed, boolean approved);
 
     List<Chore> findAllByParentCreatorAndApprovedByParent(Parent parent, boolean approved);

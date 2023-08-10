@@ -69,8 +69,8 @@ public class DashboardController {
             model.addAttribute("pendingChores", pendingChores);
             List<Child> crew = childRepository.findAllByParent(parent);
             model.addAttribute("crew", crew);
-            List<Chore> chores = choreRepository.findAllByParentCreator(parent);
-            model.addAttribute("chores", chores);
+            List<Chore> incompleteChores = choreRepository.findAllByParentCreatorAndCompleted(parent, false);
+            model.addAttribute("incompleteChores", incompleteChores);
             List<Reward> rewards = (List<Reward>) rewardRepository.findAll();
             model.addAttribute("rewards", rewards);
         }
