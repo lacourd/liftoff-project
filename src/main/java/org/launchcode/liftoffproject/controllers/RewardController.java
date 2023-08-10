@@ -45,12 +45,14 @@ public class RewardController {
     };
 
     @PostMapping("create")
-    public String processCreateRewardForm(@ModelAttribute @Valid Reward newReward, Errors errors, Model model) {
+    public String processCreateRewardForm(@ModelAttribute @Valid Reward newReward, Errors errors, Model model, HttpSession session) {
         if (errors.hasErrors()) {
             model.addAttribute("title","New Reward");
             model.addAttribute(new Reward());
             return "redirect:/rewards";
         }
+        Parent parent = authenticationController.getParentFromSession(session);
+        newReward.setParentCreator(parent);
         rewardRepository.save(newReward);
         return "redirect:/rewards";
     }
