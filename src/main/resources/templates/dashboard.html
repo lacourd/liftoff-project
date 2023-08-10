@@ -75,6 +75,27 @@
         </table>
         <a class="btn btn-outline-dark" href="/chores/create" role="button">New Task</a>
     </div>
+    <div>
+        <h3>Recently Completed</h3>
+        <table class="table table-striped"><!--th:if="${recentlyCompleted} and ${recentlyCompleted.size()}">-->
+            <thead>
+            <tr>
+                <td>Task</td>
+                <td>Assigned to:</td>
+                <td>Reward Points</td>
+                <td>Due Date</td>
+            </tr>
+            <tr th:each="chore : ${recentlyCompleted}">
+                <td><a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
+                <td th:text="${chore.childAssigned.firstName}"></td>
+                <td th:text="${chore.rewardPoints}"></td>
+                <td th:text="${chore.dueDate}"></td>
+
+            </tr>
+            </thead>
+
+        </table>
+    </div>
 
 </main>
 <main class="container" th:if="${childUser}">
