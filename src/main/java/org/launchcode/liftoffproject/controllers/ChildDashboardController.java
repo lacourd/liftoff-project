@@ -77,7 +77,7 @@ public class ChildDashboardController {
     @GetMapping("/chores/{dueDate}")
     public List<Chore> getChoresForDate(@PathVariable("dueDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dueDate, HttpSession session) {
         Child child = authenticationController.getChildFromSession(session);
-        return choreRepository.findAllByChildAssignedAndDueDate(child, dueDate);
+        return choreRepository.findByDueDateAndChildAssigned(dueDate, child);
     }
     @PostMapping("/redeemReward")
     @ResponseBody

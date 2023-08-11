@@ -61,18 +61,8 @@
    </th:block>
 
    <th:block th:if="${childUser}">
-<!--      <table>-->
-<!--         <thead>-->
-<!--         <tr>-->
-<!--            <th>Name</th>-->
-<!--         </tr>-->
-<!--         </thead>-->
-<!--      <tr>-->
-<!--         <td>test</td>-->
-<!--         <td th:text="${loggedInUser.points}"></td>-->
-<!--      </tr>-->
-<!--      </table>-->
-      <h2 class="total-points">300</h2>
+
+      <h2 class="total-points" th:text="${child.points}"></h2>
       <h2 style="text-align: center; font-family: 'Pirata One', cursive;">Total Points</h2>
 
       <div class="row">
