@@ -19,7 +19,8 @@
       </tr>
       <tr>
           <th>Assigned</th>
-          <td th:text="${chore.childAssigned.firstName}"></td>
+          <td th:if="${chore.childAssigned}" th:text="${chore.childAssigned.firstName}"></td>
+          <td th:unless="${chore.childAssigned}">None</td>
       </tr>
       <tr>
           <th>Date</th>
