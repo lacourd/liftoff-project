@@ -5,6 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -34,6 +35,10 @@ public class Chore extends AbstractEntity {
 
     public Chore() {
     }
+
+
+    @OneToMany(mappedBy = "chore")
+    private List<Comment> comments = new ArrayList<>();
 
     public Chore(String name, String choreDescription, int rewardPoints, LocalDate dueDate) {
         this.name = name;
@@ -112,5 +117,13 @@ public class Chore extends AbstractEntity {
     @Override
     public String toString() {
         return name;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }

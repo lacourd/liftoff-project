@@ -2,10 +2,7 @@ package org.launchcode.liftoffproject.controllers;
 
 import org.launchcode.liftoffproject.data.ChildRepository;
 import org.launchcode.liftoffproject.data.ChoreRepository;
-import org.launchcode.liftoffproject.models.Chore;
-import org.launchcode.liftoffproject.models.Child;
-import org.launchcode.liftoffproject.models.ChoreCompletion;
-import org.launchcode.liftoffproject.models.DayOfTheWeek;
+import org.launchcode.liftoffproject.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -89,6 +86,7 @@ public class ChoreController {
         return "redirect:/chores";
     }
 
+
     @GetMapping("detail")
     public String displayEventDetails(@RequestParam Integer choreId, Model model) {
 
@@ -163,7 +161,8 @@ public class ChoreController {
 
     }
 
-
+    //@PostMapping ("addComment")
+    //public String addComment (RequestParam)
 
 //    @GetMapping("/chores/{dueDate}")
 //    public List<Chore> getChoresForDate(@PathVariable("dueDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dueDate) {
