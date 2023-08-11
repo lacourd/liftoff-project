@@ -31,7 +31,8 @@
             </tr>
             <tr th:each="chore : ${pendingChores}">
                 <td><a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
-                <td th:text="${chore.childAssigned.firstName}"></td>
+                <td th:if="${chore.childAssigned}" th:text="${chore.childAssigned.firstName}"></td>
+                <td th:unless="${chore.childAssigned}">None</td>
                 <td th:text="${chore.rewardPoints}"></td>
                 <td>
                     <form th:action="@{/chores/approve}" method="post">
@@ -67,7 +68,8 @@
             </tr>
             <tr th:each="chore : ${incompleteChores}">
                 <td><a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
-                <td th:text="${chore.childAssigned.firstName}"></td>
+                <td th:if="${chore.childAssigned}" th:text="${chore.childAssigned.firstName}"></td>
+                <td th:unless="${chore.childAssigned}">None</td>
                 <td th:text="${chore.rewardPoints}"></td>
                 <td th:text="${chore.dueDate}"></td>
 
@@ -89,7 +91,8 @@
             </tr>
             <tr th:each="chore : ${recentlyCompleted}">
                 <td><a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
-                <td th:text="${chore.childAssigned.firstName}"></td>
+                <td th:if="${chore.childAssigned}" th:text="${chore.childAssigned.firstName}"></td>
+                <td th:unless="${chore.childAssigned}">None</td>
                 <td th:text="${chore.rewardPoints}"></td>
                 <td th:text="${chore.dueDate}"></td>
 
