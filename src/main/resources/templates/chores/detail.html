@@ -9,35 +9,36 @@
 <main class="container">
   
    <table class="table table-striped">
-    <tr>
-        <th>Task</th>
-        <td th:text="${chore.name}"></td>
-    </tr>
-    <tr>
-        <th>Description</th>
-        <td th:text="${chore.choreDescription}"></td>
-    </tr>
-    <tr>
-        <th>Assigned</th>
-        <td th:text="${chore.childAssigned.firstName}"></td>
-    </tr>
-    <tr>
-        <th>Due Date</th>
-        <td th:text="${#temporals.format(chore.dueDate, 'yyyy-MM-dd')}"></td>
-    </tr>
-    <tr>
-        <th>Reward Points</th>
-        <td th:text="${chore.rewardPoints}"></td>
-    </tr>
-    <tr>
-        <th>Detailed Description</th>
-        <td th:text="${chore.detailedDescription}"></td>
-    </tr>
-    <tr>
-        <th>Supplies</th>
-        <td th:text="${chore.supplies}"></td>
-    </tr>
-</table>
+      <tr>
+          <th>Name</th>
+          <td th:text="${chore.name}"></td>
+      </tr>
+      <tr>
+          <th>Description</th>
+          <td th:text="${chore.choreDescription}"></td>
+      </tr>
+      <tr>
+          <th>Assigned</th>
+          <td th:if="${chore.childAssigned}" th:text="${chore.childAssigned.firstName}"></td>
+          <td th:unless="${chore.childAssigned}">None</td>
+      </tr>
+       <tr>
+           <th>Due Date</th>
+           <td th:text="${#temporals.format(chore.dueDate, 'yyyy-MM-dd')}"></td>
+       </tr>
+       <tr>
+           <th>Reward Points</th>
+           <td th:text="${chore.rewardPoints}"></td>
+       </tr>
+       <tr>
+           <th>Detailed Description</th>
+           <td th:text="${chore.detailedDescription}"></td>
+       </tr>
+       <tr>
+           <th>Supplies</th>
+           <td th:text="${chore.supplies}"></td>
+       </tr>
+  </table>
 
     <a th:unless="${childUser}" class="btn btn-outline-dark" th:href="'/chores/edit?choreId=' + ${chore.id}" role="button">Edit This Task</a>
 
