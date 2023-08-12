@@ -61,6 +61,7 @@ public class ChoreController {
     public String processCreateChoreForm(@ModelAttribute @Valid Chore newChore, Errors errors, Model model, HttpSession session) {
         if (errors.hasErrors()) {
             model.addAttribute("title", "New Chore");
+            model.addAttribute("crew", childRepository.findAllByParent(authenticationController.getParentFromSession(session)));
             return "chores/create";
         }
         newChore.setParentCreator(authenticationController.getParentFromSession(session));
@@ -70,11 +71,12 @@ public class ChoreController {
         return "redirect:/chores";
     }
     @GetMapping("edit")
-    public String displayEditChoreForm(@RequestParam("choreId") int choreId, Model model) {
+    public String displayEditChoreForm(@RequestParam("choreId") int choreId, HttpSession session, Model model) {
         Chore chore = choreRepository.findById(choreId).orElse(null);
         if (chore == null) {
             return "redirect:/chores";
         }
+        model.addAttribute("crew", childRepository.findAllByParent(authenticationController.getParentFromSession(session)));
         model.addAttribute("title", "Edit Chore");
         model.addAttribute("chore", chore);
         return "chores/edit";
@@ -89,14 +91,16 @@ public class ChoreController {
         updatedChore.setChoreDescription(chore.getChoreDescription());
         updatedChore.setChildAssigned(chore.getChildAssigned());
         //updatedChore.setDueDay(chore.getDueDay());
-        updatedChore.setDueDate((LocalDate) chore.getDueDate());
+        updatedChore.setDueDate(chore.getDueDate());
         updatedChore.setRewardPoints(chore.getRewardPoints());
+        updatedChore.setDetailedDescription(chore.getDetailedDescription());
+        updatedChore.setSupplies(chore.getSupplies());
         choreRepository.save(updatedChore);
         return "redirect:/chores";
     }
 
     @GetMapping("detail")
-    public String displayEventDetails(@RequestParam Integer choreId, Model model) {
+    public String displayChoreDetails(@RequestParam Integer choreId, Model model) {
 
         Optional<Chore> result = choreRepository.findById(choreId);
 

@@ -1,5 +1,6 @@
 package org.launchcode.liftoffproject.data;
 
+import org.launchcode.liftoffproject.models.Child;
 import org.launchcode.liftoffproject.models.Parent;
 import org.launchcode.liftoffproject.models.Reward;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -11,4 +12,7 @@ import java.util.List;
 public interface RewardRepository extends PagingAndSortingRepository<Reward, Integer> {
 
 //    List<Reward> findAllByParentCreatorAndRedeemed(Parent parent, boolean redeemed);
+
+    List<Reward> findAllByChild(Child child);
+
 }
