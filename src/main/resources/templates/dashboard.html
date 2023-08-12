@@ -26,7 +26,7 @@
             <tr>
                 <td>Task</td>
                 <td>Assigned to:</td>
-                <td>Reward Points</td>
+                <td>Point Value</td>
                 <td>Approve?</td>
             </tr>
             <tr th:each="chore : ${pendingChores}">
@@ -63,7 +63,7 @@
             <tr>
                 <td>Task</td>
                 <td>Assigned to:</td>
-                <td>Reward Points</td>
+                <td>Point Value</td>
                 <td>Due Date</td>
             </tr>
             <tr th:each="chore : ${incompleteChores}">
@@ -86,7 +86,7 @@
             <tr>
                 <td>Task</td>
                 <td>Assigned to:</td>
-                <td>Reward Points</td>
+                <td>Point Value</td>
                 <td>Due Date</td>
             </tr>
             <tr th:each="chore : ${recentlyCompleted}">
@@ -103,11 +103,11 @@
     </div>
 
     <div>
-        <h3>Recently Redeemed Rewards</h3>
+        <h3>Recently Redeemed Treasure</h3>
         <table class="table table-striped"><!--th:if="${recentlyCompleted} and ${recentlyCompleted.size()}">-->
             <thead>
             <tr>
-                <td>Reward</td>
+                <td>Treasure</td>
                 <td>Redeemed by</td>
                 <td>Redeemed on</td>
             </tr>
@@ -123,11 +123,11 @@
     </div>
 
     <div>
-        <h3>Available Rewards</h3>
+        <h3>Available Treasure</h3>
         <table class="table table-striped"><!--th:if="${recentlyCompleted} and ${recentlyCompleted.size()}">-->
             <thead>
             <tr>
-                <td>Reward</td>
+                <td>Treasure</td>
                 <td>Points</td>
             </tr>
             <tr th:each="reward : ${availableRewards}">
@@ -138,7 +138,7 @@
             </thead>
 
         </table>
-        <a class="btn btn-outline-dark" href="/rewards" role="button">Add a Reward</a>
+        <a class="btn btn-outline-dark" href="/rewards" role="button">Add Treasure</a>
     </div>
 
 </main>
@@ -195,7 +195,7 @@
             <th>Name</th>
             <th>Description</th>
             <th>Due Date</th>
-            <th>Reward Points</th>
+            <th>Point Value</th>
             <th>Complete</th>
         </tr>
         </thead>
@@ -213,14 +213,14 @@
         </tr>
     </table>
 
-    <h2>Earned Rewards</h2>
+    <h2>Earned Treasure</h2>
 
     <table class="table table-striped">
         <thead>
         <tr>
             <th>Name</th>
             <th>Description</th>
-            <th>Reward Points</th>
+            <th>Point Value</th>
         </tr>
         </thead>
         <tr th:each="reward : ${earnedRewards}">

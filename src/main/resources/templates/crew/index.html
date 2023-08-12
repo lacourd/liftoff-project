@@ -13,8 +13,8 @@
         <thead>
         <tr>
             <th>Name</th>
-            <th>Chores Assigned</th>
-            <th>Reward Points Earned</th>
+            <th>Tasks Assigned</th>
+            <th>Points Earned</th>
         </tr>
         </thead>
         <tr th:each="child : ${crew}">
@@ -22,7 +22,7 @@
             <!--        <a th:href="'/reward/detail?rewardId=' + ${reward.id}"-->
             <td th:text="${child.firstName}"></td>
     <!--        + ' ' child.lastName}"></td>-->
-            <td>Add chores assigned here</td>
+            <td>Add tasks assigned here</td>
             <td th:text="${child.points}"></td>
             </div>
         </tr>
