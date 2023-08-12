@@ -31,6 +31,7 @@
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li><a th:if="${loggedInUser}" href="/chores" class="nav-link pl-3">Tasks</a></li>
             <li><a th:if="${loggedInUser}" href="/rewards" class="nav-link pl-3">Treasure</a></li>
+            <li><a th:if="${loggedInUser}" href="/dashboard" class="nav-link pl-3">Dashboard</a></li>
             <li><a th:if="${loggedInUser}" th:unless="${childUser}" href="/crew" class="nav-link pl-3">Crew Members</a></li>
         </ul>
 
