@@ -17,20 +17,20 @@ public class AboutUsController {
 
         authors.add(new Author(
               "Darren LaCour ",
-              "/images/pic-of-darren.jpeg",
+              "/images/creators/pic-of-darren.jpeg",
               "Description of Darren LaCour" ,
               "Bio for DL"
         ));
 
         authors.add(new Author(
                 "Marcie DeFonce",
-                "/images/pic-of-Marcie.jpeg",
+                "/images/creators/pic-of-Marcie.jpeg",
                 "Description of MD",
                 "Bio for MD"
         ));
         authors.add(new Author(
                 "Audra Hartwell",
-                "/images/pic-of-audra.jpeg",
+                "/images/creators/pic-of-audra.jpeg",
                 "Description of AH",
                 "Bio for AH"
         ));
@@ -45,7 +45,7 @@ public class AboutUsController {
 
         authors.add(new Author(
                 "Rose Wachira",
-                "/images/pic-of-rose.jpeg",
+                "/images/creators/pic-of-rose.jpeg",
                 "Description of RW",
                 "Bio for RW"
         ));
