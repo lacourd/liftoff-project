@@ -15,6 +15,18 @@ public class Comment extends AbstractEntity {
     @Column(columnDefinition = "TEXT")
     private String text;
 
+    public Comment(){
+
+    }
+
+
+    public Comment(Chore chore, User createdBy, LocalDateTime createdDate, String text){
+        this.chore = chore;
+        this.createdBy = createdBy;
+        this.createdDate = createdDate;
+        this.text = text;
+
+    }
 
 
     public Chore getChore() {
