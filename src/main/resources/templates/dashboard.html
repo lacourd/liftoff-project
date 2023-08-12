@@ -9,33 +9,35 @@
 
 <header th:unless="${childUser}" th:replace="fragments :: header"></header>
 
+<img th:unless="${childUser}" src="/images/parent-header.jpg" width="100%">
 
 <!--<header th:if="${childUser}" th:replace="dashfragment :: header"></header>-->
 
-<main class="container" th:if="${childUser}">
+<div th:if="${childUser}">
+    <img src="/images/child-header.jpg" width="100%">
+    <main class="container">
     <!-- Display Selected Avatar -->
-    <div class="mwanzo">
-        <label for="avatarSelect">Choose your avatar:</label>
-        <select id="avatarSelect" onchange="changeAvatar()" name="avatar">
-            <option value="images/child-avatars/anchor-icon.png">Anchor</option>
-            <option value="images/child-avatars/barrel-icon.png">Barrel</option>
-            <option value="images/child-avatars/bottle-icon.png">Bottle</option>
-            <option value="images/child-avatars/flag-icon.png">Flag</option>
-            <option value="images/child-avatars/helm-icon.png">Helm</option>
-            <option value="images/child-avatars/hook-icon.png">Hook</option>
-            <option value="images/child-avatars/spyglass-icon.png">Spyglass</option>
-            <option value="images/child-avatars/potion-icon.png">Potion</option>
-        </select>
-        <p><img id="selectedAvatar" src="images/child-avatars/anchor-icon.png" alt="Selected Avatar" height="200"></p>
+        <div class="mwanzo">
+            <label for="avatarSelect">Choose your avatar:</label>
+            <select id="avatarSelect" onchange="changeAvatar()" name="avatar">
+                <option value="images/child-avatars/anchor-icon.png">Anchor</option>
+                <option value="images/child-avatars/barrel-icon.png">Barrel</option>
+                <option value="images/child-avatars/bottle-icon.png">Bottle</option>
+                <option value="images/child-avatars/flag-icon.png">Flag</option>
+                <option value="images/child-avatars/helm-icon.png">Helm</option>
+                <option value="images/child-avatars/hook-icon.png">Hook</option>
+                <option value="images/child-avatars/spyglass-icon.png">Spyglass</option>
+                <option value="images/child-avatars/potion-icon.png">Potion</option>
+            </select>
+            <p><img id="selectedAvatar" src="images/child-avatars/anchor-icon.png" alt="Selected Avatar" height="200"></p>
 
-        <h3>Welcome, <span th:text="${child.firstName}"></span>!</h3>
+            <h3>Welcome, <span th:text="${child.firstName}"></span>!</h3>
+        </div>
 
+</main>
+</div>
 
-    </div>
-
-
-
-
+<main class="container">
     <!-- Calendar -->
 
     <!-- Chores table -->
@@ -115,6 +117,8 @@
         document.getElementById("selectedAvatar").src = selectedValue;
     }
 </script>
+</div>
+
 </main>
 
 </body>
