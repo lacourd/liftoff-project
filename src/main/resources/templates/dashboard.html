@@ -9,7 +9,7 @@
 
 <header th:unless="${childUser}" th:replace="fragments :: header"></header>
 
-
+<img th:unless="${childUser}" src="/images/parent-header.jpg" width="100%">
 <!--<header th:if="${childUser}" th:replace="dashfragment :: header"></header>-->
 
 <main class="container" th:unless="${childUser}">
@@ -142,6 +142,9 @@
     </div>
 
 </main>
+
+<img th:if="${childUser}" src="/images/child-header.jpg" width="100%">
+
 <main class="container" th:if="${childUser}">
     <!-- Display Selected Avatar -->
     <div class="mwanzo">
@@ -156,7 +159,7 @@
             <option value="images/child-avatars/spyglass-icon.png">Spyglass</option>
             <option value="images/child-avatars/potion-icon.png">Potion</option>
         </select>
-        <p><img id="selectedAvatar" src="images/child-avatars/anchor-icon.png" alt="Selected Avatar" height="200"></p>
+        <p><img id="selectedAvatar" src="images/child-avatars/anchor-icon.png" alt="Selected Avatar" height="200" /></p>
 
         <h3>Welcome, <span th:text="${child.firstName}"></span>!</h3>
 
