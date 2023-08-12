@@ -13,30 +13,32 @@
 <!--<header th:if="${childUser}" th:replace="dashfragment :: header"></header>-->
 
 <main class="container" th:if="${childUser}">
-<!-- Display Selected Avatar -->
-<div class="mwanzo">
-    <img id="selectedAvatar" src="images/avatar1.png" alt="Selected Avatar" width="150" height="150">
-
-        <select id="avatarSelect" onchange="changeAvatar()">
-            <option value="images/avatar1.png">Avatar 1</option>
-            <option value="images/avatar2.png">Avatar 2</option>
-            <option value="images/avatar3.png">Avatar 3</option>
-
+    <!-- Display Selected Avatar -->
+    <div class="mwanzo">
+        <label for="avatarSelect">Choose your avatar:</label>
+        <select id="avatarSelect" onchange="changeAvatar()" name="avatar">
+            <option value="images/anchor-icon.png">Anchor</option>
+            <option value="images/barrel-icon.png">Barrel</option>
+            <option value="images/bottle-icon.png">Bottle</option>
+            <option value="images/flag-icon.png">Flag</option>
+            <option value="images/helm-icon.png">Helm</option>
+            <option value="images/hook-icon.png">Hook</option>
+            <option value="images/spyglass-icon.png">Spyglass</option>
+            <option value="images/potion-icon.png">Potion</option>
         </select>
+        <p><img id="selectedAvatar" src="images/anchor-icon.png" alt="Selected Avatar" height="200"></p>
 
-            `
-    <h3>Welcome, <span th:text="${child.firstName}"></span>!
-    </h3>
+        <h3>Welcome, <span th:text="${child.firstName}"></span>!</h3>
 
 
-</div>
-
+    </div>
 
 
 
-<!-- Calendar -->
 
-<!-- Chores table -->
+    <!-- Calendar -->
+
+    <!-- Chores table -->
     <div class="date-picker">
         <h3>Find Tasks:</h3>
         <form th:action="@{/dashboard}" method="get">
@@ -55,54 +57,54 @@
 
     <!-- Chores and Rewards -->
 
-<h2>Tasks <span th:text="${dayOfWeekMessage}"></span>:</h2>
+    <h2>Tasks <span th:text="${dayOfWeekMessage}"></span>:</h2>
 
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Due Date</th>
-        <th>Reward Points</th>
-        <th>Complete</th>
-    </tr>
-    </thead>
-    <tr th:each="chore : ${chores}">
-        <td th:text="${chore.name}"></td>
-        <td th:text="${chore.choreDescription}"></td>
-        <td th:text="${#temporals.format(chore.dueDate, 'yyyy-MM-dd')}"></td>
-        <td th:text="${chore.rewardPoints}"></td>
-        <td>
-            <a th:href="@{/chores/complete(choreId=${chore.id},completed=true)}"
-               class="btn btn-primary"
-               th:if="${not chore.completed}">Mark as Complete</a>
-            <span th:if="${chore.completed}" class="text-success">Completed</span>
-        </td>
-    </tr>
-</table>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Due Date</th>
+            <th>Reward Points</th>
+            <th>Complete</th>
+        </tr>
+        </thead>
+        <tr th:each="chore : ${chores}">
+            <td th:text="${chore.name}"></td>
+            <td th:text="${chore.choreDescription}"></td>
+            <td th:text="${#temporals.format(chore.dueDate, 'yyyy-MM-dd')}"></td>
+            <td th:text="${chore.rewardPoints}"></td>
+            <td>
+                <a th:href="@{/chores/complete(choreId=${chore.id},completed=true)}"
+                   class="btn btn-primary"
+                   th:if="${not chore.completed}">Mark as Complete</a>
+                <span th:if="${chore.completed}" class="text-success">Completed</span>
+            </td>
+        </tr>
+    </table>
 
-<h2>Earned Rewards</h2>
+    <h2>Earned Rewards</h2>
 
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Reward Points</th>
-    </tr>
-    </thead>
-    <tr th:each="reward : ${earnedRewards}">
-        <td th:text="${reward.name}"></td>
-        <td th:text="${reward.description}"></td>
-        <td th:text="${reward.points}"></td>
-    </tr>
-</table>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Reward Points</th>
+        </tr>
+        </thead>
+        <tr th:each="reward : ${earnedRewards}">
+            <td th:text="${reward.name}"></td>
+            <td th:text="${reward.description}"></td>
+            <td th:text="${reward.points}"></td>
+        </tr>
+    </table>
 
-<!--Avatar script-->
+    <!--Avatar script-->
     <script>
     window.onload = function () {
         // default image when the page loads
-        document.getElementById("selectedAvatar").src = "images/avatar1.png";
+        document.getElementById("selectedAvatar").src = "images/anchor-icon.png";
     }
 
     function changeAvatar() {
