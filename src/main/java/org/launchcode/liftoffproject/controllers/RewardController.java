@@ -31,23 +31,27 @@ public class RewardController {
     @GetMapping
     public String displayAllRewards(Model model, HttpSession session) {
         model.addAttribute("title","All Rewards");
-        model.addAttribute("rewards", rewardRepository.findAll());
 
         if (authenticationController.getChildFromSession(session) != null) {
             Child child = authenticationController.getChildFromSession(session);
             model.addAttribute("child", child);
+            model.addAttribute("rewards", rewardRepository.findAllByParentCreatorReward(child.getParent()));
+        } else {
+            Parent parent = authenticationController.getParentFromSession(session);
+            model.addAttribute("rewards", rewardRepository.findAllByParentCreatorReward(parent));
         }
 
         return "rewards/index";
     };
 
     @PostMapping("create")
-    public String processCreateRewardForm(@ModelAttribute @Valid Reward newReward, Errors errors, Model model) {
+    public String processCreateRewardForm(@ModelAttribute @Valid Reward newReward, Errors errors, Model model, HttpSession session) {
         if (errors.hasErrors()) {
             model.addAttribute("title","New Reward");
-            model.addAttribute(new Reward());
+//            model.addAttribute(new Reward());
             return "redirect:/rewards";
         }
+        newReward.setParentCreatorReward(authenticationController.getParentFromSession(session));
         rewardRepository.save(newReward);
         return "redirect:/rewards";
     }
@@ -88,3 +92,4 @@ public class RewardController {
     }
 
 }
+
