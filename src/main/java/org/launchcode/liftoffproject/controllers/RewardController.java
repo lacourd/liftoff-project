@@ -96,13 +96,13 @@ public class RewardController {
     @ResponseBody
     public ResponseEntity<String> redeemReward(@RequestBody int rewardId, HttpSession session) {
         Child child = authenticationController.getChildFromSession(session);
-        Reward redeemedReward = earnedRewardsRepository.findById(rewardId).orElse(null);
+        Reward redeemedReward = rewardRepository.findById(rewardId).orElse(null);
 
         if (child != null && redeemedReward != null && !redeemedReward.isRedeemed()) {
             redeemedReward.setRedeemed(true);
             redeemedReward.setRedemptionDate(LocalDate.now());
             redeemedReward.setChild(child);
-            earnedRewardsRepository.save(redeemedReward);
+            rewardRepository.save(redeemedReward);
 
             // Reduce child's earned points by the reward points
             child.setPoints(child.getPoints() - redeemedReward.getPoints());

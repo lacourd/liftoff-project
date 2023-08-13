@@ -94,7 +94,4 @@ public class Reward extends AbstractEntity {
     public void setRedemptionDate(LocalDate redemptionDate) {
         this.redemptionDate = redemptionDate;
     }
-
-    public void setReward(Reward redeemedReward) {
-    }
 }
