@@ -61,11 +61,11 @@
             </thead>
             <tr th:each="reward : ${pendingRewards}">
                 <td th:text="${reward.name}"></td>
-                <td th:text="${reward.details}"></td>
+                <td th:text="${reward.description}"></td>
                 <td th:text="${reward.child.firstName}"></td>
                 <td th:text="${reward.redemptionDate}"></td>
                 <td>
-                    <form th:action="@{/rewards/fulfill}" method="post">
+                    <form th:action="@{/rewards/fulfillReward}" method="post">
                         <input type="hidden" name="rewardId" th:value="${reward.id}" />
                         <button type="submit" class="btn btn-success">Fulfill</button>
                     </form>
