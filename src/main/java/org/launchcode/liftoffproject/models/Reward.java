@@ -23,6 +23,8 @@ public class Reward extends AbstractEntity {
     // points redemption
     private boolean redeemed;
 
+    private boolean fulfilled;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate redemptionDate;
 
@@ -33,6 +35,8 @@ public class Reward extends AbstractEntity {
         this.name = name;
         this.points = points;
         this.description = description;
+        this.redeemed = false;
+        this.fulfilled = false;
     }
 
     public Reward() {};
@@ -94,6 +98,14 @@ public class Reward extends AbstractEntity {
 
     public void setRedemptionDate(LocalDate redemptionDate) {
         this.redemptionDate = redemptionDate;
+    }
+
+    public boolean isFulfilled() {
+        return fulfilled;
+    }
+
+    public void setFulfilled(boolean fulfilled) {
+        this.fulfilled = fulfilled;
     }
 }
 
