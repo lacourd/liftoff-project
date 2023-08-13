@@ -15,5 +15,6 @@ public interface RewardRepository extends PagingAndSortingRepository<Reward, Int
 
     List<Reward> findAllByParentCreatorAndRedeemed(Parent parent, boolean redeemed);
 
+    List<Reward> findAllByParentCreatorAndRedeemedAndFulfilled(Parent parent, boolean redeemed, boolean fulfilled);
 }
 
