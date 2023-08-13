@@ -119,6 +119,20 @@ public class RewardController {
         return "redirect:/rewards";
     }
 
+    @PostMapping("fulfillReward")
+    public String processFulfillReward(@RequestParam int rewardId, HttpSession session) {
+        Reward fulfilledReward = rewardRepository.findById(rewardId).orElse(null);
+
+        if (fulfilledReward != null) {
+            if (!fulfilledReward.isFulfilled()) {
+                fulfilledReward.setFulfilled(true);
+
+                rewardRepository.save(fulfilledReward);
+            }
+        }
+        return "redirect:";
+    }
+
 
 
 }
