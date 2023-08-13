@@ -99,9 +99,8 @@ public class RewardController {
         return "redirect:/rewards";
     }
 
-    @PostMapping("/redeemReward")
-    @ResponseBody
-    public ResponseEntity<String> redeemReward(@RequestBody int rewardId, HttpSession session) {
+    @PostMapping("redeemReward")
+    public String processRedeemReward(@RequestParam int rewardId, HttpSession session) {
         Child child = authenticationController.getChildFromSession(session);
         Reward redeemedReward = rewardRepository.findById(rewardId).orElse(null);
 
@@ -115,10 +114,9 @@ public class RewardController {
             child.setPoints(child.getPoints() - redeemedReward.getPoints());
             childRepository.save(child);
 
-            return ResponseEntity.ok("Reward redeemed successfully.");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Reward not found or already redeemed.");
+
         }
+        return "redirect:/rewards";
     }
 
 
