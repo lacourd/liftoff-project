@@ -1,12 +1,18 @@
 package org.launchcode.liftoffproject.controllers;
 
+
+import org.hibernate.Session;
 import org.launchcode.liftoffproject.data.ChildRepository;
-import org.launchcode.liftoffproject.data.EarnedRewardsRepository;
+import org.launchcode.liftoffproject.data.ChildRepository;
 import org.launchcode.liftoffproject.data.RewardRepository;
 import org.launchcode.liftoffproject.models.Child;
 import org.launchcode.liftoffproject.models.Parent;
 import org.launchcode.liftoffproject.models.Reward;
+import org.launchcode.liftoffproject.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -14,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.time.LocalDate;
 
 @Controller
 @RequestMapping("rewards")
@@ -35,10 +42,10 @@ public class RewardController {
         if (authenticationController.getChildFromSession(session) != null) {
             Child child = authenticationController.getChildFromSession(session);
             model.addAttribute("child", child);
-            model.addAttribute("rewards", rewardRepository.findAllByParentCreatorReward(child.getParent()));
+            model.addAttribute("rewards", rewardRepository.findAllByParentCreator(child.getParent()));
         } else {
             Parent parent = authenticationController.getParentFromSession(session);
-            model.addAttribute("rewards", rewardRepository.findAllByParentCreatorReward(parent));
+            model.addAttribute("rewards", rewardRepository.findAllByParentCreator(parent));
         }
 
         return "rewards/index";
@@ -51,7 +58,8 @@ public class RewardController {
 //            model.addAttribute(new Reward());
             return "redirect:/rewards";
         }
-        newReward.setParentCreatorReward(authenticationController.getParentFromSession(session));
+        Parent parent = authenticationController.getParentFromSession(session);
+        newReward.setParentCreator(parent);
         rewardRepository.save(newReward);
         return "redirect:/rewards";
     }
@@ -90,6 +98,42 @@ public class RewardController {
         rewardRepository.save(updatedReward);
         return "redirect:/rewards";
     }
+
+    @PostMapping("redeemReward")
+    public String processRedeemReward(@RequestParam int rewardId, HttpSession session) {
+        Child child = authenticationController.getChildFromSession(session);
+        Reward redeemedReward = rewardRepository.findById(rewardId).orElse(null);
+
+        if (child != null && redeemedReward != null && !redeemedReward.isRedeemed()) {
+            redeemedReward.setRedeemed(true);
+            redeemedReward.setRedemptionDate(LocalDate.now());
+            redeemedReward.setChild(child);
+            rewardRepository.save(redeemedReward);
+
+            // Reduce child's earned points by the reward points
+            child.setPoints(child.getPoints() - redeemedReward.getPoints());
+            childRepository.save(child);
+
+
+        }
+        return "redirect:/rewards";
+    }
+
+    @PostMapping("fulfillReward")
+    public String processFulfillReward(@RequestParam int rewardId, HttpSession session) {
+        Reward fulfilledReward = rewardRepository.findById(rewardId).orElse(null);
+
+        if (fulfilledReward != null) {
+            if (!fulfilledReward.isFulfilled()) {
+                fulfilledReward.setFulfilled(true);
+
+                rewardRepository.save(fulfilledReward);
+            }
+        }
+        return "redirect:";
+    }
+
+
 
 }
 

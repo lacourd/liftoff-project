@@ -29,6 +29,7 @@
                 <td>Point Value</td>
                 <td>Approve?</td>
             </tr>
+            </thead>
             <tr th:each="chore : ${pendingChores}">
                 <td><a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
                 <td th:if="${chore.childAssigned}" th:text="${chore.childAssigned.firstName}"></td>
@@ -42,7 +43,35 @@
                 </td>
 
             </tr>
+
+        </table>
+    </div>
+    <div>
+        <h3 th:if="${pendingRewards} and ${pendingRewards.size()}">Rewards Pending Fulfillment:</h3>
+        <h3 th:unless="${pendingRewards} and ${pendingRewards.size()}">No Rewards Pending Fulfillment</h3>
+        <table class="table table-striped" th:if="${pendingRewards} and ${pendingRewards.size()}">
+            <thead>
+            <tr>
+                <td>Reward</td>
+                <td>Details</td>
+                <td>Redeemed By</td>
+                <td>Redemption Date</td>
+                <td>Fulfill?</td>
+            </tr>
             </thead>
+            <tr th:each="reward : ${pendingRewards}">
+                <td th:text="${reward.name}"></td>
+                <td th:text="${reward.description}"></td>
+                <td th:text="${reward.child.firstName}"></td>
+                <td th:text="${reward.redemptionDate}"></td>
+                <td>
+                    <form th:action="@{/rewards/fulfillReward}" method="post">
+                        <input type="hidden" name="rewardId" th:value="${reward.id}" />
+                        <button type="submit" class="btn btn-success">Fulfill</button>
+                    </form>
+                </td>
+
+            </tr>
 
         </table>
     </div>

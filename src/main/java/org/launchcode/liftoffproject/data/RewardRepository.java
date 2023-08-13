@@ -11,7 +11,10 @@ import java.util.List;
 @Repository
 public interface RewardRepository extends PagingAndSortingRepository<Reward, Integer> {
 
-    List<Reward> findAllByParentCreatorReward(Parent parent);
+    List<Reward> findAllByParentCreator(Parent parent);
 
+    List<Reward> findAllByParentCreatorAndRedeemed(Parent parent, boolean redeemed);
+
+    List<Reward> findAllByParentCreatorAndRedeemedAndFulfilled(Parent parent, boolean redeemed, boolean fulfilled);
 }
 

@@ -27,7 +27,7 @@ public class Parent extends AbstractEntity {
     @OneToMany(mappedBy = "parentCreator")
     private List<Chore> chores = new ArrayList<>();
 
-    @OneToMany(mappedBy = "parentCreatorReward")
+    @OneToMany(mappedBy = "parentCreator")
     private List<Reward> rewards = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -41,8 +41,6 @@ public class Parent extends AbstractEntity {
         this.lastName = lastName;
         this.userAccount = parentUser;
     }
-
-
 
     public String getFirstName() {
         return firstName;
@@ -68,20 +66,12 @@ public class Parent extends AbstractEntity {
         this.children = children;
     }
 
-    public List<Chore> getChores(String username) {
+    public List<Chore> getChores() {
         return chores;
     }
 
     public void setChores(List<Chore> chores) {
         this.chores = chores;
-    }
-
-    public List<Reward> getRewards(String username) {
-        return rewards;
-    }
-
-    public void setRewards(List<Reward> rewards) {
-        this.rewards = rewards;
     }
 
     public ParentUser getUserAccount() {
@@ -90,6 +80,14 @@ public class Parent extends AbstractEntity {
 
     public void setUserAccount(ParentUser userAccount) {
         this.userAccount = userAccount;
+    }
+
+    public List<Reward> getRewards() {
+        return rewards;
+    }
+
+    public void setRewards(List<Reward> rewards) {
+        this.rewards = rewards;
     }
 }
 
