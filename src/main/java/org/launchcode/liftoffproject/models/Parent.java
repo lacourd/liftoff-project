@@ -74,6 +74,14 @@ public class Parent extends AbstractEntity {
         this.chores = chores;
     }
 
+    public List<Reward> getRewards(String username) {
+        return rewards;
+    }
+
+    public void setRewards(List<Reward> rewards) {
+        this.rewards = rewards;
+    }
+
     public ParentUser getUserAccount() {
         return userAccount;
     }
@@ -90,3 +98,4 @@ public class Parent extends AbstractEntity {
         this.rewards = rewards;
     }
 }
+

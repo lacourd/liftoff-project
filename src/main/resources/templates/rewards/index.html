@@ -6,11 +6,11 @@
 
 <header th:replace="fragments :: header"></header>
 
-<img src="/images/rewards-hero.jpg" width="100%">
+<img src="/images/treasure-header.jpg" width="100%">
 
 <main class="container">
 
-   <h2 th:unless="${rewards} and ${rewards.size()}">No rewards!</h2>
+   <h2 th:unless="${rewards} and ${rewards.size()}">No Treasure Found!</h2>
 
    <th:block th:unless="${childUser}">
       <table class="table table-striped">
@@ -18,7 +18,7 @@
          <tr>
             <th>Name</th>
             <th>Description</th>
-            <th>Rewards Value</th>
+            <th>Point Value</th>
          </tr>
          </thead>
          <tr th:each="reward : ${rewards}">
@@ -41,7 +41,7 @@
          </tr>
       </table>
 
-      <h2>Create Reward</h2>
+      <h2>Create Treasure</h2>
 
       <form th:action="@{/rewards/create}" method="post">
          <div class="form-group">
@@ -53,26 +53,16 @@
             <textarea id="description" name="description" class="form-control" required></textarea>
          </div>
          <div class="form-group">
-            <label for="points">Reward Points:</label>
+            <label for="points">Point Value:</label>
             <input type="number" id="points" name="points" class="form-control" required />
          </div>
-         <button type="submit" class="btn btn-success">Add Reward</button>
+         <button type="submit" class="btn btn-success">Add Treasure</button>
       </form>
    </th:block>
 
    <th:block th:if="${childUser}">
-<!--      <table>-->
-<!--         <thead>-->
-<!--         <tr>-->
-<!--            <th>Name</th>-->
-<!--         </tr>-->
-<!--         </thead>-->
-<!--      <tr>-->
-<!--         <td>test</td>-->
-<!--         <td th:text="${loggedInUser.points}"></td>-->
-<!--      </tr>-->
-<!--      </table>-->
-      <h2 class="total-points">300</h2>
+
+      <h2 class="total-points" th:text="${child.points}"></h2>
       <h2 style="text-align: center; font-family: 'Pirata One', cursive;">Total Points</h2>
 
       <div class="row">
@@ -84,7 +74,7 @@
       </div>
 
       <h2 style="text-align: center;">Want to earn more points?</h2>
-      <div style="text-align: center;"><a href="/chores" class="btn btn-success">Complete A Chore!</a></div>
+      <div style="text-align: center;"><a href="/chores" class="btn btn-primary">Complete A Task!</a></div>
 
    </th:block>
 

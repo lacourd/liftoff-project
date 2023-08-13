@@ -2,12 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head">
     <meta charset="UTF-8"/>
-    <title>Create Chore</title>
+    <title>Create Task</title>
 </head>
 
 <body>
 
 <header th:replace="fragments :: header"></header>
+
+<img src="/images/chore-header.jpg" width="100%">
 
 <main class="container">
 
@@ -30,6 +32,7 @@
                   <option th:each="child : ${crew}"
                           th:value="${child.id}"
                           th:text="${child.firstName}"></option>
+                  <option th:value="${null}" th:text="None"></option>
               </select>
               <p class="error" th:errors="*{childAssigned}"></p>
           </label>
@@ -53,7 +56,7 @@
       </div>
 
       <div class="form-group">
-          <label>Reward Points:
+          <label>Point Value:
               <input th:field="*{rewardPoints}" class="form-control">
           </label>
           <p class="error" th:if="${#fields.hasErrors('rewardPoints')}" th:errors="*{rewardPoints}"></p>
@@ -65,7 +68,7 @@
          <p class="error" th:if="${#fields.hasErrors('supplies')}" th:errors="*{supplies}"></p>
      </div>
       <div class="form-group">
-          <input type="submit" value="Add Chore" class="btn btn-success">
+          <input type="submit" value="Add Task" class="btn btn-success">
       </div>
   </form>
 

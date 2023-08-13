@@ -9,105 +9,245 @@
 
 <header th:unless="${childUser}" th:replace="fragments :: header"></header>
 
-
+<img th:unless="${childUser}" src="/images/parent-header.jpg" width="100%">
 <!--<header th:if="${childUser}" th:replace="dashfragment :: header"></header>-->
 
+<main class="container" th:unless="${childUser}">
+
+    <div>
+    <h3>Welcome, <span th:text="${parent.firstName}"></span>!</h3>
+    </div>
+
+    <div>
+        <h3 th:if="${pendingChores} and ${pendingChores.size()}">Tasks Pending Approval:</h3>
+        <h3 th:unless="${pendingChores} and ${pendingChores.size()}">No Tasks Pending Approval</h3>
+        <table class="table table-striped" th:if="${pendingChores} and ${pendingChores.size()}">
+            <thead>
+            <tr>
+                <td>Task</td>
+                <td>Assigned to:</td>
+                <td>Point Value</td>
+                <td>Approve?</td>
+            </tr>
+            <tr th:each="chore : ${pendingChores}">
+                <td><a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
+                <td th:if="${chore.childAssigned}" th:text="${chore.childAssigned.firstName}"></td>
+                <td th:unless="${chore.childAssigned}">None</td>
+                <td th:text="${chore.rewardPoints}"></td>
+                <td>
+                    <form th:action="@{/chores/approve}" method="post">
+                        <input type="hidden" name="choreId" th:value="${chore.id}" />
+                        <button type="submit" class="btn btn-success">Approve</button>
+                    </form>
+                </td>
+
+            </tr>
+            </thead>
+
+        </table>
+    </div>
+    <div>
+        <h3>My Crew</h3>
+        <div th:each="child : ${crew}">
+            <div><img th:src="${child.avatar}"/></div>
+
+            <h4 th:text="${child.firstName}"></h4>
+            <h4 th:text="${child.points} + ' points'"></h4>
+        </div>
+        <a class="btn btn-outline-dark" href="/crew/add" role="button">Add a new Crew Member</a>
+    </div>
+    <div>
+        <h3>Available Tasks</h3>
+        <table class="table table-striped" th:if="${incompleteChores} and ${incompleteChores.size()}">
+            <thead>
+            <tr>
+                <td>Task</td>
+                <td>Assigned to:</td>
+                <td>Point Value</td>
+                <td>Due Date</td>
+            </tr>
+            <tr th:each="chore : ${incompleteChores}">
+                <td><a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
+                <td th:if="${chore.childAssigned}" th:text="${chore.childAssigned.firstName}"></td>
+                <td th:unless="${chore.childAssigned}">None</td>
+                <td th:text="${chore.rewardPoints}"></td>
+                <td th:text="${chore.dueDate}"></td>
+
+            </tr>
+            </thead>
+
+        </table>
+        <a class="btn btn-outline-dark" href="/chores/create" role="button">New Task</a>
+    </div>
+    <div>
+        <h3>Recently Completed</h3>
+        <table class="table table-striped"><!--th:if="${recentlyCompleted} and ${recentlyCompleted.size()}">-->
+            <thead>
+            <tr>
+                <td>Task</td>
+                <td>Assigned to:</td>
+                <td>Point Value</td>
+                <td>Due Date</td>
+            </tr>
+            <tr th:each="chore : ${recentlyCompleted}">
+                <td><a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
+                <td th:if="${chore.childAssigned}" th:text="${chore.childAssigned.firstName}"></td>
+                <td th:unless="${chore.childAssigned}">None</td>
+                <td th:text="${chore.rewardPoints}"></td>
+                <td th:text="${chore.dueDate}"></td>
+
+            </tr>
+            </thead>
+
+        </table>
+    </div>
+
+    <div>
+        <h3>Recently Redeemed Treasure</h3>
+        <table class="table table-striped"><!--th:if="${recentlyCompleted} and ${recentlyCompleted.size()}">-->
+            <thead>
+            <tr>
+                <td>Treasure</td>
+                <td>Redeemed by</td>
+                <td>Redeemed on</td>
+            </tr>
+            <tr th:each="reward : ${recentlyRedeemed}">
+                <td><a th:href="'/rewards/detail?rewardId=' + ${reward.id}" th:text="${reward.name}"></a></td>
+                <td th:text="${reward.child.firstName}"></td>
+                <td th:text="${reward.redemptionDate}"></td>
+
+            </tr>
+            </thead>
+
+        </table>
+    </div>
+
+    <div>
+        <h3>Available Treasure</h3>
+        <table class="table table-striped"><!--th:if="${recentlyCompleted} and ${recentlyCompleted.size()}">-->
+            <thead>
+            <tr>
+                <td>Treasure</td>
+                <td>Points</td>
+            </tr>
+            <tr th:each="reward : ${availableRewards}">
+                <td><a th:href="'/rewards/detail?rewardId=' + ${reward.id}" th:text="${reward.name}"></a></td>
+                <td th:text="${reward.points}"></td>
+
+            </tr>
+            </thead>
+
+        </table>
+        <a class="btn btn-outline-dark" href="/rewards" role="button">Add Treasure</a>
+    </div>
+
+</main>
+
+<img th:if="${childUser}" src="/images/child-header.jpg" width="100%">
+
 <main class="container" th:if="${childUser}">
-<!-- Display Selected Avatar -->
-<div class="mwanzo">
-    <img id="selectedAvatar" src="avatar1.png" alt="Selected Avatar" width="150" height="150">
-
-        <select id="avatarSelect" onchange="changeAvatar()">
-            <option value="images/avatar1.png">Avatar 1</option>
-            <option value="images/avatar2.png">Avatar 2</option>
-            <option value="images/avatar3.png">Avatar 3</option>
-
+    <!-- Display Selected Avatar -->
+    <div class="mwanzo">
+        <label for="avatarSelect">Choose your avatar:</label>
+        <select id="avatarSelect" onchange="changeAvatar()" name="avatar">
+            <option value="images/child-avatars/anchor-icon.png">Anchor</option>
+            <option value="images/child-avatars/barrel-icon.png">Barrel</option>
+            <option value="images/child-avatars/bottle-icon.png">Bottle</option>
+            <option value="images/child-avatars/flag-icon.png">Flag</option>
+            <option value="images/child-avatars/helm-icon.png">Helm</option>
+            <option value="images/child-avatars/hook-icon.png">Hook</option>
+            <option value="images/child-avatars/spyglass-icon.png">Spyglass</option>
+            <option value="images/child-avatars/potion-icon.png">Potion</option>
         </select>
+        <p><img id="selectedAvatar" src="images/child-avatars/anchor-icon.png" alt="Selected Avatar" height="200" /></p>
 
-            `
-    <h3>Welcome, <span th:text="${child.firstName}"></span>!
-    </h3>
-
-
-</div>
+        <h3>Welcome, <span th:text="${child.firstName}"></span>!</h3>
 
 
-
-
-<!-- Calendar -->
-
-<!-- Chores table -->
-    <div class="date-picker">
-        <h3>Filter Chores:</h3>
-        <form th:action="@{/dashboard}" method="get">
-            <input type="date" id="selectedDueDate" name="dueDate">
-            <input type="text" id="selectedChoreName" name="choreName" placeholder="Chore Name">
-            <button type="submit">Show Chores</button>
-        </form>
-
-
-        <h3>Chores for the Selected Criteria:</h3>
-        <ul>
-            <li th:each="chore : ${chores}" th:text="${chore.name}"></li>
-        </ul>
     </div>
 
 
-<!-- Chores and Rewards -->
 
-<h2>Chores</h2>
 
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Due Date</th>
-        <th>Reward Points</th>
-        <th>Complete</th>
-    </tr>
-    </thead>
-    <tr th:each="chore : ${chores}">
-        <td th:text="${chore.name}"></td>
-        <td th:text="${chore.choreDescription}"></td>
-        <td th:text="${#temporals.format(chore.dueDate, 'yyyy-MM-dd')}"></td>
-        <td th:text="${chore.rewardPoints}"></td>
-        <td>
-            <a th:href="@{/chores/complete(choreId=${chore.id},completed=true)}"
-               class="btn btn-primary"
-               th:if="${not chore.completed}">Mark as Complete</a>
-            <span th:if="${chore.completed}" class="text-success">Completed</span>
-        </td>
-    </tr>
-</table>
+    <!-- Calendar -->
 
-<h2>Earned Rewards</h2>
+    <!-- Chores table -->
+    <div class="date-picker">
+        <h3>Find Tasks:</h3>
+        <form th:action="@{/dashboard}" method="get">
+            <input type="date" id="selectedDueDate" name="dueDate" onchange="showDayOfWeek(this.value)">
+            <input type="text" id="selectedChoreName" name="choreName" placeholder="Task Name">
+            <button type="submit">Show Tasks</button>
+        </form>
 
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Reward Points</th>
-    </tr>
-    </thead>
-    <tr th:each="reward : ${earnedRewards}">
-        <td th:text="${reward.name}"></td>
-        <td th:text="${reward.description}"></td>
-        <td th:text="${reward.points}"></td>
-    </tr>
-</table>
+        <!--ul>
+            <li th:each="chore : ${chores}" th:text="${chore.name}"></li>
+        </ul-->
 
-<!--Avatar script-->
-<script>
+    </div>
+
+
+
+    <!-- Chores and Rewards -->
+
+    <h2>Tasks <span th:text="${dayOfWeekMessage}"></span>:</h2>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Due Date</th>
+            <th>Point Value</th>
+            <th>Complete</th>
+        </tr>
+        </thead>
+        <tr th:each="chore : ${chores}">
+            <td th:text="${chore.name}"></td>
+            <td th:text="${chore.choreDescription}"></td>
+            <td th:text="${#temporals.format(chore.dueDate, 'yyyy-MM-dd')}"></td>
+            <td th:text="${chore.rewardPoints}"></td>
+            <td>
+                <a th:href="@{/chores/complete(choreId=${chore.id},completed=true)}"
+                   class="btn btn-primary"
+                   th:if="${not chore.completed}">Mark as Complete</a>
+                <span th:if="${chore.completed}" class="text-success">Completed</span>
+            </td>
+        </tr>
+    </table>
+
+    <h2>Earned Treasure</h2>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Point Value</th>
+        </tr>
+        </thead>
+        <tr th:each="reward : ${earnedRewards}">
+            <td th:text="${reward.name}"></td>
+            <td th:text="${reward.description}"></td>
+            <td th:text="${reward.points}"></td>
+        </tr>
+    </table>
+
+    <!--Avatar script-->
+    <script>
+    window.onload = function () {
+        // default image when the page loads
+        document.getElementById("selectedAvatar").src = "images/child-avatars/anchor-icon.png";
+    }
+
     function changeAvatar() {
-        const avatarSelect = document.getElementById("avatarSelect");
-        const selectedAvatar = avatarSelect.value;
-        const selectedAvatarImg = document.getElementById("selectedAvatar");
-        selectedAvatarImg.src = selectedAvatar;
+        var select = document.getElementById("avatarSelect");
+        var selectedValue = select.options[select.selectedIndex].value;
+
+
+        document.getElementById("selectedAvatar").src = selectedValue;
     }
 </script>
-
 </main>
 
 </body>

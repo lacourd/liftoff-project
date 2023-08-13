@@ -6,11 +6,13 @@
 
 <header th:replace="fragments :: header"></header>
 
+<img src="/images/chore-header.jpg" width="100%">
+
 <main class="container">
 
     <h1 th:if="${childUser}" th:text="${'THIS IS A CHILD USER'}"></h1>
     <h1 th:unless="${childUser}" th:text="${'THIS IS A PARENT USER'}"></h1>
-    <p th:unless="${chores} and ${chores.size()}">No chores!</p>
+    <p th:unless="${chores} and ${chores.size()}">No Tasks!</p>
 
     <th:block th:unless="${childUser}">
         <table class="table table-striped">
@@ -20,19 +22,20 @@
                 <th>Description</th>
                 <th>Assigned to:</th>
                 <th>Due Day</th>
-                <th>Rewards Value</th>
+                <th>Point Value</th>
                 <th>Completed</th>
             </tr>
             </thead>
             <tr th:each="chore : ${chores}">
                 <td> <a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
                 <td th:text="${chore.choreDescription}"></td>
-                <td th:text="${chore.childAssigned.firstName}"></td>
+                <td th:if="${chore.childAssigned}" th:text="${chore.childAssigned.firstName}"></td>
+                <td th:unless="${chore.childAssigned}">None</td>
                 <td th:text="${#temporals.format(chore.dueDate, 'yyyy-MM-dd')}"></td>
                 <td th:text="${chore.rewardPoints}"></td>
             </tr>
         </table>
-          <a class="btn btn-outline-dark" href="/chores/create" role="button">Create a Chore</a>
+          <a class="btn btn-outline-dark" href="/chores/create" role="button">Create a Task</a>
     </th:block>
 
     <th:block th:if="${childUser}">
@@ -42,7 +45,7 @@
                 <th>Task</th>
                 <th>Description</th>
                 <th>Due Date</th>
-                <th>Rewards Value</th>
+                <th>Point Value</th>
                 <th>Supplies</th>
                 <th>Completed</th>
             </tr>

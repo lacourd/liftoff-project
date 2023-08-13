@@ -1,11 +1,12 @@
 package org.launchcode.liftoffproject.controllers;
 
+
 import org.hibernate.Session;
-import org.launchcode.liftoffproject.data.RewardRepository;
 import org.launchcode.liftoffproject.data.ChildRepository;
-import org.launchcode.liftoffproject.data.EarnedRewardsRepository;
+import org.launchcode.liftoffproject.data.ChildRepository;
+import org.launchcode.liftoffproject.data.RewardRepository;
 import org.launchcode.liftoffproject.models.Child;
-import org.launchcode.liftoffproject.models.RedeemRewardRequest;
+import org.launchcode.liftoffproject.models.Parent;
 import org.launchcode.liftoffproject.models.Reward;
 import org.launchcode.liftoffproject.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,18 +30,24 @@ public class RewardController {
     private RewardRepository rewardRepository;
 
     @Autowired
-    private ChildRepository childRepository;
-
-    @Autowired
-    private EarnedRewardsRepository earnedRewardsRepository;
-
-    @Autowired
     private AuthenticationController authenticationController;
 
+    @Autowired
+    private ChildRepository childRepository;
+
     @GetMapping
-    public String displayAllRewards(Model model) {
+    public String displayAllRewards(Model model, HttpSession session) {
         model.addAttribute("title","All Rewards");
-        model.addAttribute("rewards", rewardRepository.findAll());
+
+        if (authenticationController.getChildFromSession(session) != null) {
+            Child child = authenticationController.getChildFromSession(session);
+            model.addAttribute("child", child);
+            model.addAttribute("rewards", rewardRepository.findAllByParentCreatorReward(child.getParent()));
+        } else {
+            Parent parent = authenticationController.getParentFromSession(session);
+            model.addAttribute("rewards", rewardRepository.findAllByParentCreatorReward(parent));
+        }
+
         return "rewards/index";
     };
 
@@ -48,7 +55,7 @@ public class RewardController {
     public String processCreateRewardForm(@ModelAttribute @Valid Reward newReward, Errors errors, Model model, HttpSession session) {
         if (errors.hasErrors()) {
             model.addAttribute("title","New Reward");
-            model.addAttribute(new Reward());
+//            model.addAttribute(new Reward());
             return "redirect:/rewards";
         }
         Parent parent = authenticationController.getParentFromSession(session);
@@ -117,3 +124,4 @@ public class RewardController {
 
 
 }
+

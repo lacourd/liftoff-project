@@ -1,5 +1,7 @@
 package org.launchcode.liftoffproject.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
@@ -15,21 +17,17 @@ public class Reward extends AbstractEntity {
 
     private String description;
 
-    public Parent getParentCreator() {
-        return parentCreator;
-    }
-
-    public void setParentCreator(Parent parentCreator) {
-        this.parentCreator = parentCreator;
-    }
-
     @ManyToOne
     private Parent parentCreator;
 
     // points redemption
     private boolean redeemed;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate redemptionDate;
+
+    @ManyToOne
+    private Child child;
 
     public Reward(String name, int points, String description) {
         this.name = name;
@@ -63,8 +61,13 @@ public class Reward extends AbstractEntity {
         this.description = description;
     }
 
-    @ManyToOne
-    private Child child;
+    public Parent getParentCreator() {
+        return parentCreator;
+    }
+
+    public void setParentCreator(Parent parentCreator) {
+        this.parentCreator = parentCreator;
+    }
 
     // Getters and setters
 
@@ -75,8 +78,6 @@ public class Reward extends AbstractEntity {
     public void setChild(Child child) {
         this.child = child;
     }
-
-
 
     //points redemption
     public boolean isRedeemed() {
@@ -95,3 +96,4 @@ public class Reward extends AbstractEntity {
         this.redemptionDate = redemptionDate;
     }
 }
+
