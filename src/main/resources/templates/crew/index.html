@@ -22,7 +22,7 @@
             <!--        <a th:href="'/reward/detail?rewardId=' + ${reward.id}"-->
             <td th:text="${child.firstName}"></td>
     <!--        + ' ' child.lastName}"></td>-->
-            <td>Add tasks assigned here</td>
+            <td th:text="${child.getActiveChores()}"></td>
             <td th:text="${child.points}"></td>
             </div>
         </tr>
