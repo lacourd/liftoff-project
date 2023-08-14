@@ -161,8 +161,7 @@ public class ChoreController {
 
     }
 
-    //@PostMapping ("addComment")
-    //public String addComment (RequestParam)
+
 
 //    @GetMapping("/chores/{dueDate}")
 //    public List<Chore> getChoresForDate(@PathVariable("dueDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dueDate) {

@@ -46,23 +46,18 @@
       <input type="hidden" name="choreId" th:value="${chore.id}" />
       <button type="submit" class="btn btn-success">Approve</button>
   </form>
-    <section id="app">
-        <div class="container">
-            <div class="row">
-                <div class="col-6">
-                    <div class="comment">
-                        <p v-for="items in item" v-text="items"></p>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <textarea type="text" class="input" placeholder="Write a comment" v-model="newItem" @keyup.enter="addItem()"></textarea>
-                    <button onclick="addItem()" class='primaryContained float-right' type="submit">Add Comment</button>
-                </div>
-            </div>
-        </div>
-    </section>
+
+  <form th:action="@{/chores/comment}" method="post">
+      <input type="hidden" name="choreId" th:value="${chore.id}" />
+      <button type="submit" class="btn btn-success">Add Comment</button>
+  </form>
+  <div th:each="comment : ${chore.comments}">
+      <tr>
+          <th>Comment</th>
+          <th>Created By</th>
+          <th>Date</th>
+      </tr>
+
 
 </main>
 
