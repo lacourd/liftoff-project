@@ -15,15 +15,18 @@ public class Reward extends AbstractEntity {
 
     private String description;
 
+    private String category;
+
     // points redemption
     private boolean redeemed;
 
     private LocalDate redemptionDate;
 
-    public Reward(String name, int points, String description) {
+    public Reward(String name, int points, String description, String category) {
         this.name = name;
         this.points = points;
         this.description = description;
+        this.category = category;
     }
 
     public Reward() {};
@@ -50,6 +53,14 @@ public class Reward extends AbstractEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     @ManyToOne

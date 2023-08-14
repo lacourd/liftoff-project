@@ -13,6 +13,16 @@
   <form th:action="@{/rewards/edit}" method="post">
     <input type="hidden" name="rewardId" th:value="${reward.id}" />
     <div class="form-group">
+      <label for="categorySelect">Choose a Reward Category:</label>
+        <select class="form-control" id="categorySelect" name="category">
+          <option value="activity">Activity</option>
+          <option value="toy">Toy</option>
+          <option value="treat">Treat</option>
+          <option value="screen-time">Screen Time</option>
+          <option value="money">Money</option>
+        </select>
+    </div>
+    <div class="form-group">
       <label for="name">Name:</label>
       <input type="text" id="name" name="name" th:value="${reward.name}" th:field="${reward.name}" class="form-control" required />
     </div>
