@@ -2,6 +2,8 @@ package org.launchcode.liftoffproject.controllers;
 
 import org.launchcode.liftoffproject.data.ChildRepository;
 import org.launchcode.liftoffproject.data.ChoreRepository;
+import org.launchcode.liftoffproject.data.CompletedChoreRepository;
+import org.launchcode.liftoffproject.models.*;
 import org.launchcode.liftoffproject.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -24,15 +26,26 @@ public class ChoreController {
     private ChoreRepository choreRepository;
 
     @Autowired
+    private CompletedChoreRepository completedChoreRepository;
+
+    @Autowired
     private AuthenticationController authenticationController;
 
     @Autowired
     private ChildRepository childRepository;
 
     @GetMapping
-    public String displayAllChores(Model model) {
+    public String displayAllChores(Model model, HttpSession session) {
         model.addAttribute("title","All Chores");
-        model.addAttribute("chores", choreRepository.findAll());
+
+        if (authenticationController.getChildFromSession(session) != null) {
+            Child child = authenticationController.getChildFromSession(session);
+            model.addAttribute("chores", choreRepository.findAllByChildAssigned(child));
+        } else {
+            Parent parent = authenticationController.getParentFromSession(session);
+            model.addAttribute("chores", choreRepository.findAllByParentCreatorAndApprovedByParent(parent, false));
+        }
+
         return "chores/index";
     };
 
@@ -46,26 +59,25 @@ public class ChoreController {
     };
 
     @PostMapping("create")
-    public String processCreateChoreForm(@ModelAttribute @Valid Chore chore, Errors errors, Model model, HttpSession session) {
+    public String processCreateChoreForm(@ModelAttribute @Valid Chore newChore, Errors errors, Model model, HttpSession session) {
         if (errors.hasErrors()) {
             model.addAttribute("title", "New Chore");
+            model.addAttribute("crew", childRepository.findAllByParent(authenticationController.getParentFromSession(session)));
             return "chores/create";
         }
-
-        Child child = chore.getChildAssigned();
-        chore.setChildAssigned(child);
-
-        choreRepository.save(chore);
+        newChore.setParentCreator(authenticationController.getParentFromSession(session));
+        choreRepository.save(newChore);
 
 
         return "redirect:/chores";
     }
     @GetMapping("edit")
-    public String displayEditChoreForm(@RequestParam("choreId") int choreId, Model model) {
+    public String displayEditChoreForm(@RequestParam("choreId") int choreId, HttpSession session, Model model) {
         Chore chore = choreRepository.findById(choreId).orElse(null);
         if (chore == null) {
             return "redirect:/chores";
         }
+        model.addAttribute("crew", childRepository.findAllByParent(authenticationController.getParentFromSession(session)));
         model.addAttribute("title", "Edit Chore");
         model.addAttribute("chore", chore);
         return "chores/edit";
@@ -80,15 +92,17 @@ public class ChoreController {
         updatedChore.setChoreDescription(chore.getChoreDescription());
         updatedChore.setChildAssigned(chore.getChildAssigned());
         //updatedChore.setDueDay(chore.getDueDay());
-        updatedChore.setDueDate((LocalDate) chore.getDueDate());
+        updatedChore.setDueDate(chore.getDueDate());
         updatedChore.setRewardPoints(chore.getRewardPoints());
+        updatedChore.setDetailedDescription(chore.getDetailedDescription());
+        updatedChore.setSupplies(chore.getSupplies());
         choreRepository.save(updatedChore);
         return "redirect:/chores";
     }
 
 
     @GetMapping("detail")
-    public String displayEventDetails(@RequestParam Integer choreId, Model model) {
+    public String displayChoreDetails(@RequestParam Integer choreId, Model model) {
 
         Optional<Chore> result = choreRepository.findById(choreId);
 
@@ -111,24 +125,14 @@ public class ChoreController {
         if (chore != null) {
             if (completed) {
                 // Mark the chore as complete and add a new completion entry
-                ChoreCompletion completion = new ChoreCompletion();
-                completion.setChore(chore);
-                completion.setCompletedByChild(true);
-                completion.setApprovedByParent(false);
-                chore.getCompletions().add(completion);
+                chore.setCompleted(true);
+                chore.setApprovedByParent(false);
             } else {
-                // Update existing completion if it exists and is marked by the child
-                for (ChoreCompletion completion : chore.getCompletions()) {
-                    if (completion.isCompletedByChild()) {
-                        // Update the existing completion to indicate it is not complete
-                        completion.setCompletedByChild(false);
-                        completion.setApprovedByParent(false);
-                        break;
-                    }
+                chore.setCompleted(false);
+                chore.setApprovedByParent(false);
                 }
             }
             choreRepository.save(chore);
-        }
 
         return "redirect:/chores";
     }
@@ -142,19 +146,20 @@ public class ChoreController {
         Chore chore = choreRepository.findById(choreId).orElse(null);
 
         if (chore != null) {
-            for (ChoreCompletion completion : chore.getCompletions()) {
-                if (completion.isCompletedByChild() && !completion.isApprovedByParent()) {
-                    completion.setApprovedByParent(true);
+            if (!chore.isApprovedByParent()) {
+                    chore.setCompleted(true);
+                    chore.setApprovedByParent(true);
 
                     // Update the child's earnedPoints field
                     Child childAssigned = chore.getChildAssigned();
                     childAssigned.setPoints(childAssigned.getPoints() + chore.getRewardPoints());
 
                     childRepository.save(childAssigned);
-                }
             }
-            choreRepository.save(chore);
         }
+
+            choreRepository.save(chore);
+
 
         return "redirect:/chores";
 

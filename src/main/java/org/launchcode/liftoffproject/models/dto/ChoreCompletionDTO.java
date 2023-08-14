@@ -1,6 +1,6 @@
-package org.launchcode.liftoffproject.models;
+package org.launchcode.liftoffproject.models.dto;
 
-public class ChoreCompletionRequest {
+public class ChoreCompletionDTO {
     private int choreId;
     private boolean completed;
 

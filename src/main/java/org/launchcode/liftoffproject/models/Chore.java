@@ -11,6 +11,9 @@ import java.util.List;
 @Entity
 public class Chore extends AbstractEntity {
 
+
+    private String supplies;
+
     @NotBlank
     private String name;
 
@@ -20,10 +23,14 @@ public class Chore extends AbstractEntity {
     @ManyToOne
     private Child childAssigned;
 
+    private String detailedDescription;
+
     @ManyToOne
     private Parent parentCreator;
 
     private boolean completed;
+
+    private boolean approvedByParent;
 
     private int rewardPoints;
 
@@ -36,16 +43,17 @@ public class Chore extends AbstractEntity {
     public Chore() {
     }
 
-
     @OneToMany(mappedBy = "chore")
     private List<Comment> comments = new ArrayList<>();
 
-    public Chore(String name, String choreDescription, int rewardPoints, LocalDate dueDate) {
+    public Chore(String name, String choreDescription, int rewardPoints, LocalDate dueDate, String supplies) {
         this.name = name;
         this.choreDescription = choreDescription;
         this.rewardPoints = rewardPoints;
         this.dueDate = dueDate;
+        this.supplies = supplies;
         this.completed = false;
+        this.approvedByParent = false;
     }
 
     // Getters and Setters
@@ -113,6 +121,22 @@ public class Chore extends AbstractEntity {
     public void setCompletions(List<ChoreCompletion> completions) {
         this.completions = completions;
     }
+
+    public boolean isApprovedByParent() {
+        return approvedByParent;
+    }
+
+    public void setApprovedByParent(boolean approvedByParent) {
+        this.approvedByParent = approvedByParent;
+    }
+
+    public String getSupplies() {return supplies; }
+
+    public void setSupplies(String supplies) {this.supplies = supplies; }
+
+    public String getDetailedDescription() {return detailedDescription; }
+
+    public void setDetailedDescription(String detailedDescription) {this.detailedDescription = detailedDescription; }
 
     @Override
     public String toString() {

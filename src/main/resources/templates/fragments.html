@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:fragment="head">
-   <meta charset="UTF-8"/>
-   <title>Liftoff Project</title>
+    <meta charset="UTF-8"/>
+    <title>Liftoff Project</title>
 
     <script src="https://kit.fontawesome.com/6eedae73ef.js" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -12,7 +12,7 @@
     <link th:href="@{/css/rotating-card.css}" rel="stylesheet" />
     <link href="https://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
-   <link rel="stylesheet" th:href="@{/styles.css}">
+    <link rel="stylesheet" th:href="@{/styles.css}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=IM+Fell+DW+Pica:ital@1&family=IM+Fell+English+SC&family=IM+Fell+Great+Primer+SC&family=Pirata+One&family=Poppins:wght@300&family=Syne&display=swap" rel="stylesheet">
@@ -21,25 +21,26 @@
 <body>
 
 <header th:fragment="header">
-        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-2">
-            <div class="col-md-3 mb-md-0 ml-3">
-                <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
-                    <img th:src="@{/images/treasureTask-logo.jpg}" alt="Logo Image" height="75">
-                </a>
-            </div>
-
-            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li><a th:if="${loggedInUser}" href="/chores" class="nav-link pl-3">Chores!</a></li>
-                <li><a th:if="${loggedInUser}" href="/rewards" class="nav-link pl-3">Rewards</a></li>
-                <li><a th:if="${loggedInUser}" th:unless="${childUser}" href="/crew" class="nav-link pl-3">Crew Members</a></li>
-            </ul>
-
-            <div class="col-md-3 text-end mr-3" style="text-align: right;">
-                <a th:if="${loggedInUser}" href="/logout"><span class="btn btn-outline-primary me-2 login-btn">Logout</span></a>
-                <a th:unless="${loggedInUser}" href="/#login"><span class="btn btn-outline-primary me-2 login-btn">Sign In</span></a>
-                <a th:unless="${loggedInUser}" href="/register"><span class="btn btn-primary register-btn">Register</span></a>
-            </div>
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-2">
+        <div class="col-md-3 mb-md-0 ml-3">
+            <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
+                <img th:src="@{/images/treasureTask-logo.jpg}" alt="Logo Image" height="75">
+            </a>
         </div>
+
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a th:if="${loggedInUser}" href="/chores" class="nav-link pl-3">Tasks</a></li>
+            <li><a th:if="${loggedInUser}" href="/rewards" class="nav-link pl-3">Treasure</a></li>
+            <li><a th:if="${loggedInUser}" href="/dashboard" class="nav-link pl-3">Dashboard</a></li>
+            <li><a th:if="${loggedInUser}" th:unless="${childUser}" href="/crew" class="nav-link pl-3">Crew Members</a></li>
+        </ul>
+
+        <div class="col-md-3 text-end mr-3" style="text-align: right;">
+            <a th:if="${loggedInUser}" href="/logout"><span class="btn btn-outline-primary me-2 login-btn">Logout</span></a>
+            <a th:unless="${loggedInUser}" href="/#login"><span class="btn btn-outline-primary me-2 login-btn">Sign In</span></a>
+            <a th:unless="${loggedInUser}" href="/register"><span class="btn btn-primary register-btn">Register</span></a>
+        </div>
+    </div>
 </header>
 
 <div th:fragment="reward-card" class="card-container">
@@ -47,19 +48,32 @@
         <div class="front">
             <div class="content" style="padding-top: 30px; padding-bottom: 30px;">
                 <div class="main">
-<!--                    <h2 th:text="${reward.category}"></h2>-->
-                    <h2 style="font-size: 6rem; text-align: center;"><i class="fa-solid fa-ice-cream"></i></h2>
-                    <h3 class="name" th:text="${reward.name}"></h3>
-                    <p class="profession" th:text="${reward.description}"></p>
-                    <p class="text-center" th:text="${reward.points}"></p>
+                    <!--                    <h2 th:text="${reward.category}"></h2>-->
+                    <h2 style="font-size: 4rem; text-align: center;"><i class="fa-solid fa-ice-cream"></i></h2>
+                    <h3 class="text-center" th:text="${reward.name}"></h3>
+                    <h3 class="name" th:text="${reward.points} + ' points'"></h3>
+                    <div style="text-align: center;" th:if="${child.points} > ${reward.points}">
+                        <!-- Redeem Reward "Form" -->
+                        <form th:action="@{/rewards/redeemReward}" method="post">
+                            <input type="hidden" name="rewardId" th:value="${reward.id}" />
+                            <button type="submit" class="btn btn-primary">Redeem Now!</button>
+                        </form></div>
+                    <div style="text-align: center;" th:if="${child.points} < ${reward.points}"><a class="btn btn-success disabled" th:text="${reward.points - child.points} + ' points to redeem'"></a></div>
                 </div>
             </div>
         </div> <!-- end front panel -->
         <div class="back">
-            <div class="content">
+            <div class="content" style="padding-top: 30px; padding-bottom: 30px;">
                 <div class="main">
-                    <h4 class="text-center">Job Description</h4>
-                    <p class="text-center">Web design, Adobe Photoshop, HTML5, CSS3, Corel and many others...</p>
+                    <h2 style="font-size: 4rem; text-align: center;"><i class="fa-solid fa-ice-cream"></i></h2>
+                    <h3 class="text-center" th:text="${reward.name}"></h3>
+                    <h3 class="name" th:text="${reward.description}"></h3>
+                    <div style="text-align: center; margin-top: 10px;" th:if="${child.points} > ${reward.points}"> <!-- Redeem Reward "Form" -->
+                        <form th:action="@{/rewards/redeemReward}" method="post">
+                            <input type="hidden" name="rewardId" th:value="${reward.id}" />
+                            <button type="submit" class="btn btn-primary">Redeem Now!</button>
+                        </form></div>
+                    <div style="text-align: center;" th:if="${child.points} < ${reward.points}"><a class="btn btn-success disabled" th:text="${reward.points - child.points} + ' points to redeem'"></a></div>
                 </div>
             </div>
         </div> <!-- end back panel -->

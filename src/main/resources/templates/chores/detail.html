@@ -6,6 +6,8 @@
 
 <header th:replace="fragments :: header"></header>
 
+<img src="/images/chore-header.jpg" width="100%">
+
 <main class="container">
   
    <table class="table table-striped">
@@ -19,21 +21,28 @@
       </tr>
       <tr>
           <th>Assigned</th>
-          <td th:text="${chore.childAssigned.firstName}"></td>
+          <td th:if="${chore.childAssigned}" th:text="${chore.childAssigned.firstName}"></td>
+          <td th:unless="${chore.childAssigned}">None</td>
       </tr>
-      <tr>
-          <th>Date</th>
-          <td th:text="${#temporals.format(chore.dueDate, 'yyyy-MM-dd')}"></td>
-      </tr>
-      <tr>
-          <th>Reward Points</th>
-          <td th:text="${chore.rewardPoints}"></td>
-      </tr>
-      <!--tr>
-          <th>Due Day</th>
-          <td th:text="${chore.dueDay}"></td>
-      </tr-->
+       <tr>
+           <th>Due Date</th>
+           <td th:text="${#temporals.format(chore.dueDate, 'yyyy-MM-dd')}"></td>
+       </tr>
+       <tr>
+           <th>Point Value</th>
+           <td th:text="${chore.rewardPoints}"></td>
+       </tr>
+       <tr>
+           <th>Detailed Description</th>
+           <td th:text="${chore.detailedDescription}"></td>
+       </tr>
+       <tr>
+           <th>Supplies</th>
+           <td th:text="${chore.supplies}"></td>
+       </tr>
   </table>
+
+    <a th:unless="${childUser}" class="btn btn-outline-dark" th:href="'/chores/edit?choreId=' + ${chore.id}" role="button">Edit This Task</a>
 
   <!-- Mark as Complete Form -->
   <form th:action="@{/chores/complete}" method="get">
@@ -42,7 +51,7 @@
   </form>
 
   <!-- Approve Chore Form -->
-  <form th:action="@{/chores/approve}" method="post">
+  <form th:unless="${childUser}" th:action="@{/chores/approve}" method="post">
       <input type="hidden" name="choreId" th:value="${chore.id}" />
       <button type="submit" class="btn btn-success">Approve</button>
   </form>
