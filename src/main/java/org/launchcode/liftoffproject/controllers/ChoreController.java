@@ -35,6 +35,7 @@ public class ChoreController {
 
     @GetMapping
     public String displayAllChores(@RequestParam(required = false) Integer childId, Model model, HttpSession session) {
+        model.addAttribute("today", LocalDate.now());
         if (childId==null){
             model.addAttribute("title","All Chores");
 

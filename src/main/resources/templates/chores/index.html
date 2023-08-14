@@ -32,9 +32,12 @@
                 <td th:unless="${chore.childAssigned}">None</td>
                 <td th:text="${#temporals.format(chore.dueDate, 'MM-dd-yyyy')}"></td>
                 <td th:text="${chore.rewardPoints}"></td>
-                <td th:if="${chore.isCompleted and chore.isApprovedByParent}">Approved</td>
-                <td th:if="${chore.isCompleted and !chore.isApprovedByParent}">Pending Approval</td>
-                <td th:if="${!chore.isCompleted and !chore.isApprovedByParent}">Incomplete</td>
+                <td th:if="${chore.isCompleted and chore.isApprovedByParent}"><span class="text-success">Approved</span></td>
+                <td th:if="${chore.isCompleted and !chore.isApprovedByParent}"><span class="text-warning">Pending Approval</span></td>
+                <td th:if="${!chore.isCompleted and !chore.isApprovedByParent}">
+                    <span th:if="${!chore.isCompleted and chore.dueDate < today}" class="text-danger">Overdue</span>
+                    <span th:if="${!chore.isCompleted and chore.dueDate > today}" class="primary">Incomplete</span>
+                </td>
             </tr>
         </table>
           <a class="btn btn-outline-dark" href="/chores/create" role="button">Create a Task</a>
