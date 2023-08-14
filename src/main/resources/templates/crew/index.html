@@ -22,7 +22,7 @@
             <!--        <a th:href="'/reward/detail?rewardId=' + ${reward.id}"-->
             <td th:text="${child.firstName}"></td>
     <!--        + ' ' child.lastName}"></td>-->
-            <td th:text="${child.getActiveChores()}"></td>
+            <td><a th:href="'chores?childId=' + ${child.id}" th:text="${child.getActiveChores()}"></a></td>
             <td th:text="${child.points}"></td>
             </div>
         </tr>
