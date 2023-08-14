@@ -34,15 +34,25 @@ public class ChoreController {
     private ChildRepository childRepository;
 
     @GetMapping
-    public String displayAllChores(Model model, HttpSession session) {
-        model.addAttribute("title","All Chores");
+    public String displayAllChores(@RequestParam(required = false) Integer childId, Model model, HttpSession session) {
+        if (childId==null){
+            model.addAttribute("title","All Chores");
 
-        if (authenticationController.getChildFromSession(session) != null) {
-            Child child = authenticationController.getChildFromSession(session);
-            model.addAttribute("chores", choreRepository.findAllByChildAssigned(child));
+            if (authenticationController.getChildFromSession(session) != null) {
+                Child child = authenticationController.getChildFromSession(session);
+                model.addAttribute("chores", choreRepository.findAllByChildAssigned(child));
+            } else {
+                Parent parent = authenticationController.getParentFromSession(session);
+                model.addAttribute("chores", choreRepository.findAllByParentCreatorAndApprovedByParent(parent, false));
+            }
         } else {
-            Parent parent = authenticationController.getParentFromSession(session);
-            model.addAttribute("chores", choreRepository.findAllByParentCreatorAndApprovedByParent(parent, false));
+            Child child = childRepository.findById(childId).orElse(null);
+            if (child != null) {
+                model.addAttribute("chores", child.getChores());
+                model.addAttribute("title", "Tasks assigned to " + child.getFirstName());
+            } else {
+                model.addAttribute("title", "Invalid Crew member");
+            }
         }
 
         return "chores/index";
