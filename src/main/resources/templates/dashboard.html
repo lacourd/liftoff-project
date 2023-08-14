@@ -94,6 +94,7 @@
                 <td>Assigned to:</td>
                 <td>Point Value</td>
                 <td>Due Date</td>
+                <td>Status</td>
             </tr>
             <tr th:each="chore : ${incompleteChores}">
                 <td><a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
@@ -101,7 +102,12 @@
                 <td th:unless="${chore.childAssigned}">None</td>
                 <td th:text="${chore.rewardPoints}"></td>
                 <td th:text="${chore.dueDate}"></td>
-
+                <td th:if="${chore.isCompleted and chore.isApprovedByParent}"><span class="text-success">Approved</span></td>
+                <td th:if="${chore.isCompleted and !chore.isApprovedByParent}"><span class="text-warning">Pending Approval</span></td>
+                <td th:if="${!chore.isCompleted and !chore.isApprovedByParent}">
+                    <span th:if="${!chore.isCompleted and chore.dueDate < today}" class="text-danger">Overdue</span>
+                    <span th:if="${!chore.isCompleted and chore.dueDate > today}" class="primary">Incomplete</span>
+                </td>
             </tr>
             </thead>
 
