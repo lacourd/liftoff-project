@@ -376,3 +376,8 @@ footer {
 .col-md-4 {
     float: left;
 }
+
+/* Style for parent reward cards*/
+.inline-form {
+        display: inline-block;
+    }

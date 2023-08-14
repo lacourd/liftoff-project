@@ -17,8 +17,12 @@ public class Reward extends AbstractEntity {
 
     private String description;
 
+
+    private String category;
+
     @ManyToOne
     private Parent parentCreator;
+
 
     // points redemption
     private boolean redeemed;
@@ -30,11 +34,12 @@ public class Reward extends AbstractEntity {
 
     @ManyToOne
     private Child child;
-
-    public Reward(String name, int points, String description) {
+  
+    public Reward(String name, int points, String description, String category) {
         this.name = name;
         this.points = points;
         this.description = description;
+        this.category = category;
         this.redeemed = false;
         this.fulfilled = false;
     }
@@ -65,6 +70,14 @@ public class Reward extends AbstractEntity {
         this.description = description;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     public Parent getParentCreator() {
         return parentCreator;
     }
@@ -72,6 +85,7 @@ public class Reward extends AbstractEntity {
     public void setParentCreator(Parent parentCreator) {
         this.parentCreator = parentCreator;
     }
+
 
     // Getters and setters
 

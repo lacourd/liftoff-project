@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head th:replace="fragments :: head"></head>
+<head th:replace="fragments :: head">
+</head>
 
 <body>
 
@@ -13,51 +14,71 @@
    <h2 th:unless="${rewards} and ${rewards.size()}">No Treasure Found!</h2>
 
    <th:block th:unless="${childUser}">
-      <table class="table table-striped">
-         <thead>
-         <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Point Value</th>
-         </tr>
-         </thead>
-         <tr th:each="reward : ${rewards}">
-            <!--        <a th:href="'/reward/detail?rewardId=' + ${reward.id}"-->
-            <td th:text="${reward.name}"></td>
-            <td th:text="${reward.description}"></td>
-            <td th:text="${reward.points}"></td>
-            <td>
-               <form th:action="@{/rewards/edit}" method="get">
-                  <input type="hidden" name="rewardId" th:value="${reward.id}" />
-                  <button type="submit" class="btn btn-primary">Edit</button>
-               </form>
-            </td>
-            <td>
-               <form th:action="@{/rewards/delete}" method="post">
-                  <input type="hidden" name="rewardIds" th:value="${reward.id}" />
-                  <button type="submit" class="btn btn-danger">Delete</button>
-               </form>
-            </td>
-         </tr>
-      </table>
 
-      <h2>Create Treasure</h2>
+   <div class="row">
+      <div class="col-sm-12">
+         <div th:each="reward : ${rewards}" class="col-md-4 col-sm-6">
+            <div class="card">
+               <div class="card-block">
+                  <h2 style="font-size: 6rem; text-align: center;">
+                     <i th:switch="${reward.category}">
+                        <i th:case="activity" class="fa-thin fa-car-side" style="color: #0ad1c4;"></i>
+                        <i th:case="toy" class="fa-thin fa-puzzle-piece" style="color: #004cff;"></i>
+                        <i th:case="treat" class="fa-thin fa-ice-cream" style="color: #ff1fe1;"></i>
+                        <i th:case="screen-time" class="fa-thin fa-desktop" style="color: #a2a0a2;"></i>
+                        <i th:case="money" class="fa-thin fa-sack-dollar" style="color: #41814c;"></i>
+                        <i th:case="other" class="fa-thin fa-shapes" style="color: #050505;"></i>
+                     </i>
+                  </h2>
+                  <h3 th:text="${reward.name}" style="text-align: center;"></h3>
+                  <p th:text="${reward.description}" style="text-align: center;"></p>
+                  <p th:text="${reward.points}" style="text-align: center;"></p>
+               </div>
+                  <a class="reward-links" style="text-align: center;">
+                     <form th:action="@{/rewards/edit}" method="get" class="inline-form" >
+                        <input type="hidden" name="rewardId" th:value="${reward.id}"/>
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                     </form>
+                     <form th:action="@{/rewards/delete}" method="post" class="inline-form" >
+                        <input type="hidden" name="rewardIds" th:value="${reward.id}"/>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                     </form>
+                  </a>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
 
-      <form th:action="@{/rewards/create}" method="post">
-         <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name" class="form-control" required />
-         </div>
-         <div class="form-group">
-            <label for="description">Description:</label>
-            <textarea id="description" name="description" class="form-control" required></textarea>
-         </div>
-         <div class="form-group">
-            <label for="points">Point Value:</label>
-            <input type="number" id="points" name="points" class="form-control" required />
-         </div>
-         <button type="submit" class="btn btn-success">Add Treasure</button>
-      </form>
+   <h2>Create Reward</h2>
+
+   <form th:action="@{/rewards/create}" method="post">
+      <div class="form-group">
+         <label for="categorySelect">Choose a Reward Category:</label>
+         <select class="form-control" id="categorySelect" name="category">
+            <option value="activity">Activity</option>
+            <option value="toy">Toy</option>
+            <option value="treat">Treat</option>
+            <option value="screen-time">Screen Time</option>
+            <option value="money">Money</option>
+            <option value="other">Other</option>
+         </select>
+      </div>
+      <div class="form-group">
+         <label for="name">Name:</label>
+         <input type="text" id="name" name="name" class="form-control" required />
+      </div>
+      <div class="form-group">
+         <label for="description">Description:</label>
+         <textarea id="description" name="description" class="form-control" required></textarea>
+      </div>
+      <div class="form-group">
+         <label for="points">Reward Points:</label>
+         <input type="number" id="points" name="points" class="form-control" required />
+      </div>
+      <button type="submit" class="btn btn-success">Add Reward</button>
+   </form>
+
    </th:block>
 
    <th:block th:if="${childUser}">

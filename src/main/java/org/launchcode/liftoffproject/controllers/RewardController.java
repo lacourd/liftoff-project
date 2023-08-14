@@ -92,6 +92,7 @@ public class RewardController {
 
         Reward updatedReward = rewardRepository.findById(rewardId).orElse(null);
 
+        updatedReward.setCategory(reward.getCategory());
         updatedReward.setName(reward.getName());
         updatedReward.setDescription(reward.getDescription());
         updatedReward.setPoints(reward.getPoints());
