@@ -119,7 +119,7 @@ public class Child extends AbstractEntity{
     public int getActiveChores() {
         int activeChores = 0;
         for (int i = 0; i < this.chores.size(); i++) {
-            if (this.chores.get(i).isCompleted() == false) {
+            if (this.chores.get(i).isApprovedByParent() == false) {
                 activeChores++;
             }
         }
