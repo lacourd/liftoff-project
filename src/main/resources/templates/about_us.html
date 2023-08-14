@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head th:replace="fragments :: head"></head>
-
+<head th:replace="fragments :: head">
+<link rel="stylesheet" href="path/to/font-awesome/css/all.min.css">
+</head>
 <body>
 
 <header th:replace="fragments :: header"></header>
@@ -22,6 +23,10 @@
                         <h2 th:text="${author.name}"></h2>
                         <p th:text="${author.descriptionOfFeatures}"></p>
                         <p th:text="${author.bio}"></p>
+                        <div class="card-body">
+                            <a th:href="${author.linkedInUrl}" target="_blank" class="card-link">LinkedIn Profile</a>
+                            <a th:href="${author.gitHubUrl}" target="_blank" class="card-link">gitHub Link</a>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -11,9 +11,10 @@
 
 <main class="container">
 
-   <h2 th:unless="${rewards} and ${rewards.size()}">No rewards!</h2>
+   <h2 th:unless="${rewards} and ${rewards.size()}">No Treasure Found!</h2>
 
    <th:block th:unless="${childUser}">
+
    <div class="row">
       <div class="col-sm-12">
          <div th:each="reward : ${rewards}" class="col-md-4 col-sm-6">
@@ -77,6 +78,7 @@
       </div>
       <button type="submit" class="btn btn-success">Add Reward</button>
    </form>
+
    </th:block>
 
    <th:block th:if="${childUser}">
@@ -93,7 +95,7 @@
       </div>
 
       <h2 style="text-align: center;">Want to earn more points?</h2>
-      <div style="text-align: center;"><a href="/chores" class="btn btn-success">Complete A Chore!</a></div>
+      <div style="text-align: center;"><a href="/chores" class="btn btn-primary">Complete A Task!</a></div>
 
    </th:block>
 

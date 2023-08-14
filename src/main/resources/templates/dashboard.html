@@ -26,9 +26,10 @@
             <tr>
                 <td>Task</td>
                 <td>Assigned to:</td>
-                <td>Reward Points</td>
+                <td>Point Value</td>
                 <td>Approve?</td>
             </tr>
+            </thead>
             <tr th:each="chore : ${pendingChores}">
                 <td><a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
                 <td th:if="${chore.childAssigned}" th:text="${chore.childAssigned.firstName}"></td>
@@ -42,7 +43,35 @@
                 </td>
 
             </tr>
+
+        </table>
+    </div>
+    <div>
+        <h3 th:if="${pendingRewards} and ${pendingRewards.size()}">Rewards Pending Fulfillment:</h3>
+        <h3 th:unless="${pendingRewards} and ${pendingRewards.size()}">No Rewards Pending Fulfillment</h3>
+        <table class="table table-striped" th:if="${pendingRewards} and ${pendingRewards.size()}">
+            <thead>
+            <tr>
+                <td>Reward</td>
+                <td>Details</td>
+                <td>Redeemed By</td>
+                <td>Redemption Date</td>
+                <td>Fulfill?</td>
+            </tr>
             </thead>
+            <tr th:each="reward : ${pendingRewards}">
+                <td th:text="${reward.name}"></td>
+                <td th:text="${reward.description}"></td>
+                <td th:text="${reward.child.firstName}"></td>
+                <td th:text="${reward.redemptionDate}"></td>
+                <td>
+                    <form th:action="@{/rewards/fulfillReward}" method="post">
+                        <input type="hidden" name="rewardId" th:value="${reward.id}" />
+                        <button type="submit" class="btn btn-success">Fulfill</button>
+                    </form>
+                </td>
+
+            </tr>
 
         </table>
     </div>
@@ -63,7 +92,7 @@
             <tr>
                 <td>Task</td>
                 <td>Assigned to:</td>
-                <td>Reward Points</td>
+                <td>Point Value</td>
                 <td>Due Date</td>
             </tr>
             <tr th:each="chore : ${incompleteChores}">
@@ -86,7 +115,7 @@
             <tr>
                 <td>Task</td>
                 <td>Assigned to:</td>
-                <td>Reward Points</td>
+                <td>Point Value</td>
                 <td>Due Date</td>
             </tr>
             <tr th:each="chore : ${recentlyCompleted}">
@@ -103,11 +132,11 @@
     </div>
 
     <div>
-        <h3>Recently Redeemed Rewards</h3>
+        <h3>Recently Redeemed Treasure</h3>
         <table class="table table-striped"><!--th:if="${recentlyCompleted} and ${recentlyCompleted.size()}">-->
             <thead>
             <tr>
-                <td>Reward</td>
+                <td>Treasure</td>
                 <td>Redeemed by</td>
                 <td>Redeemed on</td>
             </tr>
@@ -123,11 +152,11 @@
     </div>
 
     <div>
-        <h3>Available Rewards</h3>
+        <h3>Available Treasure</h3>
         <table class="table table-striped"><!--th:if="${recentlyCompleted} and ${recentlyCompleted.size()}">-->
             <thead>
             <tr>
-                <td>Reward</td>
+                <td>Treasure</td>
                 <td>Points</td>
             </tr>
             <tr th:each="reward : ${availableRewards}">
@@ -138,7 +167,7 @@
             </thead>
 
         </table>
-        <a class="btn btn-outline-dark" href="/rewards" role="button">Add a Reward</a>
+        <a class="btn btn-outline-dark" href="/rewards" role="button">Add Treasure</a>
     </div>
 
 </main>
@@ -198,7 +227,7 @@
             <th>Name</th>
             <th>Description</th>
             <th>Due Date</th>
-            <th>Reward Points</th>
+            <th>Point Value</th>
             <th>Complete</th>
         </tr>
         </thead>
@@ -216,14 +245,14 @@
         </tr>
     </table>
 
-    <h2>Earned Rewards</h2>
+    <h2>Earned Treasure</h2>
 
     <table class="table table-striped">
         <thead>
         <tr>
             <th>Name</th>
             <th>Description</th>
-            <th>Reward Points</th>
+            <th>Point Value</th>
         </tr>
         </thead>
         <tr th:each="reward : ${earnedRewards}">
@@ -237,7 +266,7 @@
     <script>
     window.onload = function () {
         // default image when the page loads
-        document.getElementById("selectedAvatar").src = "images/anchor-icon.png";
+        document.getElementById("selectedAvatar").src = "images/child-avatars/anchor-icon.png";
     }
 
     function changeAvatar() {

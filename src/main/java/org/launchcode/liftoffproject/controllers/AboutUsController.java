@@ -19,20 +19,26 @@ public class AboutUsController {
               "Darren LaCour ",
               "/images/creators/pic-of-darren.jpeg",
               "Description of Darren LaCour" ,
-              "Bio for DL"
+              "Bio for DL",
+                "LinkedIn Url",
+                "gitHub Link"
         ));
 
         authors.add(new Author(
                 "Marcie DeFonce",
                 "/images/creators/pic-of-Marcie.jpeg",
                 "Description of MD",
-                "Bio for MD"
+                "Bio for MD",
+                "LinkedIn Url",
+                "gitHub Link"
         ));
         authors.add(new Author(
                 "Audra Hartwell",
                 "/images/creators/pic-of-audra.jpeg",
-                "Description of AH",
-                "Bio for AH"
+                "User Authorization, About the Authors, Rewards Page",
+                "Former teacher turned coder. Check my links to learn more.",
+                "https://www.linkedin.com/in/audra-hartwell-252a66113/",
+                "https://github.com/AudraHartwell"
         ));
 
 
@@ -40,14 +46,18 @@ public class AboutUsController {
                 "Mike Zanger",
                 "/images/author4.jpg",
                 "Description of MZ",
-                "Bio for MZ"
+                "Bio for MZ",
+                "LinkedIn Url",
+                "gitHub Link"
         ));
 
         authors.add(new Author(
                 "Rose Wachira",
                 "/images/creators/pic-of-rose.jpeg",
                 "Description of RW",
-                "Bio for RW"
+                "Bio for RW",
+                "LinkedIn Url",
+                "gitHub Link"
         ));
 
         model.addAttribute("authors", authors);

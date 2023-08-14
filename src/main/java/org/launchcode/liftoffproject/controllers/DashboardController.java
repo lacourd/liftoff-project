@@ -89,10 +89,12 @@ public class DashboardController {
             pageable = PageRequest.of(0, 5, Sort.by("id").ascending());
             Page<Chore> recentlyCompleted = choreRepository.findByParentCreatorAndCompleted(parent,true, pageable);
             model.addAttribute("recentlyCompleted", recentlyCompleted);
-//            List<Reward> recentlyRedeemed = (List<Reward>) rewardRepository.findAllByParentCreatorAndRedeemed(parent, true);
-//            model.addAttribute("recentlyRedeemed", recentlyRedeemed);
-//            List<Reward> availableRewards = (List<Reward>) rewardRepository.findAllByParentCreatorAndRedeemed(parent, false);
-//            model.addAttribute("availableRewards", availableRewards);
+            List<Reward> pendingRewards = rewardRepository.findAllByParentCreatorAndRedeemedAndFulfilled(parent, true, false);
+            model.addAttribute("pendingRewards", pendingRewards);
+            List<Reward> recentlyRedeemed = rewardRepository.findAllByParentCreatorAndRedeemed(parent, true);
+            model.addAttribute("recentlyRedeemed", recentlyRedeemed);
+            List<Reward> availableRewards = rewardRepository.findAllByParentCreatorAndRedeemed(parent, false);
+            model.addAttribute("availableRewards", availableRewards);
         }
 
         return "dashboard";

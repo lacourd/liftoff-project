@@ -15,14 +15,21 @@ public class Author {
     @NotBlank
     private String bio;
 
+    private String linkedInUrl;
+
+    private String gitHubUrl;
+
     public Author(){
     }
 
-    public Author(String name, String imageUrl, String descriptionOfFeatures, String bio) {
+    public Author(String name, String imageUrl, String descriptionOfFeatures, String bio, String linkedInUrl, String gitHubUrl) {
         this.name = name;
         this.imageUrl = imageUrl;
         this.descriptionOfFeatures = descriptionOfFeatures;
         this.bio = bio;
+        this.linkedInUrl = linkedInUrl;
+        this.gitHubUrl= gitHubUrl;
+
     }
 
     public String getName() {
@@ -55,5 +62,21 @@ public class Author {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public String getLinkedInUrl() {
+        return linkedInUrl;
+    }
+
+    public void setLinkedInUrl(String linkedInUrl) {
+        this.linkedInUrl = linkedInUrl;
+    }
+
+    public String getGitHubUrl() {
+        return gitHubUrl;
+    }
+
+    public void setGitHubUrl(String gitHubUrl) {
+        this.gitHubUrl = gitHubUrl;
     }
 }

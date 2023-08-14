@@ -1,17 +1,3 @@
-/*
-body {
-	margin-top: 60px;
-	font-size: 14px;
-	font-family: "Helvetica Nueue",Arial,Verdana,sans-serif;
-	background-color: #E5E9ED;
-}
-.btn:hover,
-.btn:focus,
-.btn:active{
-    outline: 0 !important;
-}
-*/
-
 /* entire container, keeps perspective */
 .card-container {
 	  -webkit-perspective: 800px;
@@ -19,6 +5,7 @@ body {
      -o-perspective: 800px;
         perspective: 800px;
         margin-bottom: 30px;
+        margin-top: 20px;
 }
 /* flip the pane when hovered */
 .card-container:not(.manual-flip):hover .card,
@@ -131,15 +118,25 @@ body {
 .card .name {
     font-size: 22px;
     line-height: 28px;
-    margin: 10px 0 0;
+    margin: 0 0 10px;
     text-align: center;
     text-transform: capitalize;
+    font-weight: ;
 }
 .card h5{
     margin: 5px 0;
     font-weight: 400;
     line-height: 20px;
 }
+
+.card h2{
+    margin: 0px;
+}
+
+.card h3.text-center {
+     margin: 0px;
+ }
+
 .card .profession{
     color: #999999;
     text-align: center;
