@@ -45,7 +45,7 @@ public class DashboardController {
     private AuthenticationController authenticationController;
 
     @GetMapping("dashboard")
-    public String childDashboard(
+    public String renderDashboard(
             @RequestParam(name = "dueDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dueDate,
             @RequestParam(name = "choreName", required = false) String choreName,
             Model model, HttpSession session) {
@@ -77,6 +77,7 @@ public class DashboardController {
             model.addAttribute("earnedRewards", earnedRewards);
             model.addAttribute("dayOfWeekMessage", dayOfWeekMessage); // Pass the calculated message
               } else {
+            model.addAttribute("today", LocalDate.now());
             Parent parent = authenticationController.getParentFromSession(session);
             model.addAttribute("parent", parent);
             List<Chore> pendingChores = choreRepository.findAllByParentCreatorAndCompletedAndApprovedByParent(parent, true,false);
