@@ -32,7 +32,7 @@ public class Reward extends AbstractEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate redemptionDate;
 
-
+    @ManyToOne
     private Child child;
   
     public Reward(String name, int points, String description, String category) {
@@ -42,6 +42,7 @@ public class Reward extends AbstractEntity {
         this.category = category;
         this.redeemed = false;
         this.fulfilled = false;
+    }
 
     public Reward() {};
 
@@ -76,9 +77,6 @@ public class Reward extends AbstractEntity {
     public void setCategory(String category) {
         this.category = category;
     }
-
-    @ManyToOne
-    private Child child;
 
     public Parent getParentCreator() {
         return parentCreator;
