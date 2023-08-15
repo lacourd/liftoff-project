@@ -75,8 +75,9 @@ public class DashboardController {
             model.addAttribute("child", child);
             model.addAttribute("chores", chores);
             model.addAttribute("earnedRewards", earnedRewards);
+            model.addAttribute("avatar", child.getAvatar());
             model.addAttribute("dayOfWeekMessage", dayOfWeekMessage); // Pass the calculated message
-              } else {
+        } else {
             model.addAttribute("today", LocalDate.now());
             Parent parent = authenticationController.getParentFromSession(session);
             model.addAttribute("parent", parent);
@@ -99,6 +100,14 @@ public class DashboardController {
         }
 
         return "dashboard";
+    }
+
+    @PostMapping("avatar")
+    public String processAvatarForm(HttpSession session, @ModelAttribute Child child) {
+        Child updatedChild = authenticationController.getChildFromSession(session);
+        updatedChild.setAvatar(child.getAvatar());
+        childRepository.save(updatedChild);
+        return "redirect:/dashboard";
     }
 
     @GetMapping("/chores/{dueDate}")
@@ -143,5 +152,4 @@ public class DashboardController {
 //            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Chore not found.");
 //        }
 //    }
-
 
