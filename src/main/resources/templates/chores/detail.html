@@ -41,6 +41,22 @@
            <td th:text="${chore.supplies}"></td>
        </tr>
   </table>
+  <div th:each="comment : ${chore.comments}">
+      <tr>
+          <th>Comment</th>
+          <th>Created By</th>
+          <th>Date</th>
+      </tr>
+  </div>
+  <form th:action="@{/chores/comment}" method="post">
+      <input type="hidden" name="choreId" th:value="${chore.id}" />
+      <input type="hidden" name="createdBy" th:value="${user.id}" />
+
+      <div class="form-group">
+      <input class="form-control" type="text" th:field="${newComment.text}"/>
+      </div>
+      <button type="submit" class="btn btn-success">Add Comment</button>
+  </form>
 
     <a th:unless="${childUser}" class="btn btn-outline-dark" th:href="'/chores/edit?choreId=' + ${chore.id}" role="button">Edit This Task</a>
 
@@ -56,17 +72,6 @@
       <button type="submit" class="btn btn-success">Approve</button>
   </form>
 
-  <form th:action="@{/chores/comment}" method="post">
-      <input type="hidden" name="choreId" th:value="${chore.id}" />
-      <button type="submit" class="btn btn-success">Add Comment</button>
-  </form>
-  <div th:each="comment : ${chore.comments}">
-      <tr>
-          <th>Comment</th>
-          <th>Created By</th>
-          <th>Date</th>
-      </tr>
-  </div>
 
 
 </main>

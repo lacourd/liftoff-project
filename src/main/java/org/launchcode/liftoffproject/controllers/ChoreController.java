@@ -2,6 +2,7 @@ package org.launchcode.liftoffproject.controllers;
 
 import org.launchcode.liftoffproject.data.ChildRepository;
 import org.launchcode.liftoffproject.data.ChoreRepository;
+import org.launchcode.liftoffproject.data.CommentRepository;
 import org.launchcode.liftoffproject.data.CompletedChoreRepository;
 import org.launchcode.liftoffproject.models.*;
 import org.launchcode.liftoffproject.models.*;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +28,7 @@ public class ChoreController {
     private ChoreRepository choreRepository;
 
     @Autowired
-    private CompletedChoreRepository completedChoreRepository;
+    private CommentRepository commentRepository;
 
     @Autowired
     private AuthenticationController authenticationController;
@@ -102,7 +104,7 @@ public class ChoreController {
 
 
     @GetMapping("detail")
-    public String displayChoreDetails(@RequestParam Integer choreId, Model model) {
+    public String displayChoreDetails(@RequestParam Integer choreId, Model model, HttpSession session) {
 
         Optional<Chore> result = choreRepository.findById(choreId);
 
@@ -112,6 +114,8 @@ public class ChoreController {
             Chore chore = result.get();
             model.addAttribute("title", chore.getName() + " Details");
             model.addAttribute("chore", chore);
+            model.addAttribute("user", authenticationController.getUserFromSession(session));
+            model.addAttribute("newComment", new Comment());
         }
 
         return "chores/detail";
@@ -166,7 +170,17 @@ public class ChoreController {
 
     }
 
+    @PostMapping("comment")
+    public String addComment(@RequestParam int choreId, @ModelAttribute @Valid Comment newComment) {
+        Chore chore = choreRepository.findById(choreId).orElse(null);
+        newComment.setChore(chore);
+        //newComment.setText("hello");
+        newComment.setCreatedDate(LocalDate.now());
+        commentRepository.save(newComment);
 
+        return "redirect:/chores";
+
+    }
 
 //    @GetMapping("/chores/{dueDate}")
 //    public List<Chore> getChoresForDate(@PathVariable("dueDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dueDate) {

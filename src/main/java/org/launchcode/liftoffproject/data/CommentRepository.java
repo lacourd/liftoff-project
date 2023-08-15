@@ -1,4 +1,7 @@
 package org.launchcode.liftoffproject.data;
 
-public interface CommentRepository {
+import org.launchcode.liftoffproject.models.Comment;
+import org.springframework.data.repository.PagingAndSortingRepository;
+
+public interface CommentRepository extends PagingAndSortingRepository<Comment, Integer> {
 }

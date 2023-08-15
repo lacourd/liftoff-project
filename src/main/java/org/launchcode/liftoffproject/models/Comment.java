@@ -1,6 +1,7 @@
 package org.launchcode.liftoffproject.models;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -11,7 +12,7 @@ public class Comment extends AbstractEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User createdBy;
-    private LocalDateTime createdDate;
+    private LocalDate createdDate;
     @Column(columnDefinition = "TEXT")
     private String text;
 
@@ -20,12 +21,15 @@ public class Comment extends AbstractEntity {
     }
 
 
-    public Comment(Chore chore, User createdBy, LocalDateTime createdDate, String text){
+    public Comment(Chore chore, User createdBy, String text){
         this.chore = chore;
         this.createdBy = createdBy;
-        this.createdDate = createdDate;
         this.text = text;
 
+    }
+
+    public Comment(String text) {
+        this.text = text;
     }
 
 
@@ -45,11 +49,11 @@ public class Comment extends AbstractEntity {
         this.createdBy = createdBy;
     }
 
-    public LocalDateTime getCreatedDate() {
+    public LocalDate getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(LocalDateTime createdDate) {
+    public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
     }
 

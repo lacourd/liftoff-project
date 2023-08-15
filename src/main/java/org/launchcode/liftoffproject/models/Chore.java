@@ -1,6 +1,7 @@
 package org.launchcode.liftoffproject.models;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -55,6 +56,7 @@ public class Chore extends AbstractEntity {
         this.completed = false;
         this.approvedByParent = false;
     }
+
 
     // Getters and Setters
 
