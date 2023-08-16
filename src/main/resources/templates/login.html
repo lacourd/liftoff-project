@@ -1,21 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
-<body class="container">
+
+<body>
 
 <header th:replace="fragments :: header"></header>
 
-<main class="form-signin w-100 m-auto">
+<main class="container">
+
 <form method="post" th:action="@{/login}">
    <h2>Login</h2>
-   <div class="form-floating">
-      <label for="floatingUsername" hidden>Username</label>
-      <input type="text" class="form-control" id="floatingUsername" th:field="${loginFormDTO.username}" placeholder="Username">
+   <div class="form-group">
+      <label hidden>Username</label>
+      <input type="text" class="form-control" th:field="${loginFormDTO.username}" placeholder="Username">
       <p class="error" th:errors="${loginFormDTO.username}"></p>
    </div>
-   <div class="form-floating">
-         <input class="form-control" id="floatingPassword" th:field="${loginFormDTO.password}" type="password" placeholder="Password">
-      <label for="floatingPassword" hidden>Password</label>
+   <div class="form-group">
+      <label hidden>Password</label>
+      <input class="form-control" th:field="${loginFormDTO.password}" type="password" placeholder="Password">
       <p class="error" th:errors="${loginFormDTO.password}"></p>
    </div>
 
