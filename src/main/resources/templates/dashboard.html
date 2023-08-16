@@ -185,6 +185,7 @@
         <div class="form-group">
             <label for="avatarSelect">Choose your avatar:</label>
             <select class="form-control" id="avatarSelect" onchange="changeAvatar()" name="avatar">
+                     <option th:value="${child.avatar}">Current avatar</option>
                 <option value="images/child-avatars/anchor-icon.png">Anchor</option>
                 <option value="images/child-avatars/barrel-icon.png">Barrel</option>
                 <option value="images/child-avatars/bottle-icon.png">Bottle</option>
