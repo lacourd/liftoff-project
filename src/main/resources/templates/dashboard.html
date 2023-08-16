@@ -181,9 +181,13 @@
 
 <main class="container" th:if="${childUser}">
 
+    <h3>Welcome, <span th:text="${child.firstName}"></span>!</h3>
+    <img id="selectedAvatar" th:src="${child.avatar}" alt="Selected Avatar" height="200" />
+
     <form th:action="@{/avatar}" method="post">
         <div class="form-group">
-            <label for="avatarSelect">Choose your avatar:</label>
+            <label for="avatarSelect" th:unless="${child.avatar}">Choose your avatar:</label>
+            <label for="avatarSelect" th:if="${child.avatar}">Change your avatar:</label>
             <select class="form-control" id="avatarSelect" onchange="changeAvatar()" name="avatar">
                      <option th:value="${child.avatar}">Current avatar</option>
                 <option value="images/child-avatars/anchor-icon.png">Anchor</option>
@@ -199,10 +203,9 @@
         <button type="submit" class="btn btn-success">Save Avatar</button>
     </form>
 
-    <img id="selectedAvatar" th:src="${child.avatar}" alt="Selected Avatar" height="200" />
 
-    <h3>Welcome, <span th:text="${child.firstName}"></span>!</h3>
-    <img th:src="${child.avatar}" height="200">
+
+<!--    <img th:src="${child.avatar}" height="200">-->
 
     <!-- Calendar -->
 
