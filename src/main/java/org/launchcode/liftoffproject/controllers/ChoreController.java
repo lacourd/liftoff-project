@@ -44,7 +44,7 @@ public class ChoreController {
 
             if (authenticationController.getChildFromSession(session) != null) {
                 Child child = authenticationController.getChildFromSession(session);
-                model.addAttribute("chores", choreRepository.findAllByChildAssigned(child));
+                model.addAttribute("chores", choreRepository.findByChildAssignedOrChildAssignedIsNullAndParentCreator(child, child.getParent()));
             } else {
                 Parent parent = authenticationController.getParentFromSession(session);
                 model.addAttribute("chores", choreRepository.findAllByParentCreatorAndApprovedByParent(parent, false));
@@ -179,6 +179,18 @@ public class ChoreController {
         return "redirect:/chores";
 
 
+    }
+
+    @PostMapping("claim")
+    public String claimChore(@RequestParam Integer choreId, HttpSession session){
+        Chore chore = choreRepository.findById(choreId).orElse(null);
+        Child child = authenticationController.getChildFromSession(session);
+
+        if (chore != null) {
+            chore.setChildAssigned(child);
+            choreRepository.save(chore);
+        }
+        return "redirect:/chores";
     }
 
     @PostMapping("comment")

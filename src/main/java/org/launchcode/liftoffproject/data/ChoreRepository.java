@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -20,6 +21,8 @@ public interface ChoreRepository extends PagingAndSortingRepository<Chore, Integ
     List<Chore> findAllByParentCreatorAndApprovedByParent(Parent parent, boolean approved);
 
     List<Chore> findAllByChildAssigned(Child child);
+
+    List<Chore> findByChildAssignedOrChildAssignedIsNullAndParentCreator(Child child, Parent parent);
 
     List<Chore> findAllByChildAssignedAndApprovedByParent(Child child, boolean approved);
 

@@ -52,7 +52,7 @@
                 <th>Due Date</th>
                 <th>Point Value</th>
                 <th>Supplies</th>
-                <th>Completed</th>
+                <th>Action</th>
             </tr>
             </thead>
             <tr th:each="chore : ${chores}">
@@ -61,6 +61,17 @@
                 <td th:text="${#temporals.format(chore.dueDate, 'yyyy-MM-dd')}"></td>
                 <td th:text="${chore.rewardPoints}"></td>
                 <td th:text="${chore.supplies}"></td>
+                <td th:if="${chore.childAssigned}">
+                    <a th:href="@{/chores/complete(choreId=${chore.id},completed=true)}"
+                                       class="btn btn-primary"
+                                       th:if="${not chore.completed}">Mark as Complete</a>
+                    <span th:if="${chore.completed}" class="text-success">Completed</span>
+                </td>
+                <td th:unless="${chore.childAssigned}">
+                    <form th:action="@{/chores/claim}" method="post">
+                        <input type="hidden" name="choreId" th:value="${chore.id}" />
+                        <button type="submit" class="btn btn-outline-dark">Claim this task</button>
+                    </form></td>
             </tr>
         </table>
     </th:block>
