@@ -6,25 +6,36 @@
 
 <header th:replace="fragments :: header"></header>
 
-<main class="container">
+<img src="/images/treasureTask-HP-hero.jpg" width="100%">
 
-<form method="post" th:action="@{/login}" class="form-signin w-100 m-auto modal-content rounded-4 shadow">
-   <h2>Login</h2>
-   <div class="form-group">
-      <label hidden>Username</label>
-      <input type="text" class="form-control" th:field="${loginFormDTO.username}" placeholder="Username">
-      <p class="error" th:errors="${loginFormDTO.username}"></p>
-   </div>
-   <div class="form-group">
-      <label hidden>Password</label>
-      <input class="form-control" th:field="${loginFormDTO.password}" type="password" placeholder="Password">
-      <p class="error" th:errors="${loginFormDTO.password}"></p>
+<div class="bg-img">
+   <h1 hidden>Welcome to Treasure Task</h1>
+
+   <div class="scroll-img m-auto">
+      <p class="hp-about">With Treasure Task, parents can assign chores to their children to monitor weekly tasks. To better encourage children to not only complete their chores but also do them well, each chore can be worth a determined amount of points. Children can collect enough points to redeem rewards set by their parents. Child accounts can be created to help older children keep track of chores and rewards themselves, giving them a sense of responsibility.</p>
    </div>
 
-   <button type="submit" class="btn btn-primary w-100 py-2" value="Log In">Log in</button>
-   <p class="mt-3 mb-3 text-body-secondary" align="center">Don't have an account? <a href="/register">Register for one.</a></p>
-</form>
-</main>
+   <main class="container">
+
+      <form method="post" th:action="@{/login}" class="form-signin w-100 m-auto modal-content rounded-4 shadow" id="login">
+         <h2>Login</h2>
+         <div class="form-group">
+            <label hidden>Username</label>
+            <input type="text" class="form-control" th:field="${loginFormDTO.username}" placeholder="Username">
+            <p class="error" th:errors="${loginFormDTO.username}"></p>
+         </div>
+         <div class="form-group">
+            <label hidden>Password</label>
+            <input class="form-control" th:field="${loginFormDTO.password}" type="password" placeholder="Password">
+            <p class="error" th:errors="${loginFormDTO.password}"></p>
+         </div>
+
+         <button type="submit" class="btn btn-primary w-100 py-2" value="Log In">Log in</button>
+         <p class="mt-3 mb-3 text-body-secondary" align="center">Don't have an account? <a href="/register">Register for one.</a></p>
+      </form>
+   </main>
+
+</div>
 
 <footer th:replace="fragments :: footer"></footer>
 
