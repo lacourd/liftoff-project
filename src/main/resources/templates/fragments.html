@@ -97,6 +97,15 @@
     </div> <!-- end card -->
 </div> <!-- end card-container -->
 
+<block th:fragment="status">
+<td th:if="${chore.isCompleted and chore.isApprovedByParent}"><span class="text-success">Approved</span></td>
+<td th:if="${chore.isCompleted and !chore.isApprovedByParent}"><span class="text-warning">Pending Approval</span></td>
+<td th:if="${!chore.isCompleted and !chore.isApprovedByParent}">
+    <span th:if="${!chore.isCompleted and chore.dueDate < today}" class="text-danger">Overdue</span>
+    <span th:if="${!chore.isCompleted and chore.dueDate > today}" class="primary">Incomplete</span>
+</td>
+</block>
+
 <footer class="py-3">
     <ul class="nav justify-content-center pb-3">
         <li><a href="/aboutUs" class="nav-link pl-3">About the Creators</a></li>
