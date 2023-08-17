@@ -43,6 +43,38 @@
     </div>
 </header>
 
+<!-- Parent View Reward Card -->
+<div th:fragment="parent-reward-card">
+            <div class="card">
+                <div class="card-block">
+                    <h2 style="font-size: 4rem; text-align: center; margin-top: 20px;">
+                        <i th:switch="${reward.category}">
+                            <i th:case="activity" class="fa-light fa-bolt" style="color: #F2B705;"></i>
+                            <i th:case="toy" class="fa-light fa-shapes" style="color: #F27405;"></i>
+                            <i th:case="treat" class="fa-light fa-lollipop" style="color: #E3767B;"></i>
+                            <i th:case="screen-time" class="fa-light fa-desktop" style="color: #39A7BF;"></i>
+                            <i th:case="money" class="fa-light fa-sack-dollar" style="color: #3DD9AD;"></i>
+                            <i th:case="other" class="fa-light fa-sparkles" style="color: #2B2D2F;"></i>
+                        </i>
+                    </h2>
+                    <h3 th:text="${reward.name}" class="text-center"></h3>
+                    <p th:text="${reward.description}" style="text-align: center; margin-bottom: 0;"></p>
+                    <h3 class="name" th:text="${reward.points} + ' points'"></h3>
+                </div>
+                <a class="reward-links" style="text-align: center; margin-bottom: 20px;">
+                    <form th:action="@{/rewards/edit}" method="get" class="inline-form" >
+                        <input type="hidden" name="rewardId" th:value="${reward.id}"/>
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </form>
+                    <form th:action="@{/rewards/delete}" method="post" class="inline-form" >
+                        <input type="hidden" name="rewardIds" th:value="${reward.id}"/>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </a>
+            </div>
+</div>
+
+<!-- Child View Reward Card -->
 <div th:fragment="reward-card" class="card-container">
     <div class="card">
         <div class="front">
@@ -60,7 +92,7 @@
                     </h2>
                     <h3 class="text-center" th:text="${reward.name}"></h3>
                     <h3 class="name" th:text="${reward.points} + ' points'"></h3>
-                    <div style="text-align: center;" th:if="${child.points} > ${reward.points}">
+                    <div style="text-align: center;" th:if="${child.points} >= ${reward.points}">
                         <!-- Redeem Reward "Form" -->
                         <form th:action="@{/rewards/redeemReward}" method="post">
                             <input type="hidden" name="rewardId" th:value="${reward.id}" />
@@ -85,7 +117,7 @@
                     </h2>
                     <h3 class="text-center" th:text="${reward.name}"></h3>
                     <h3 class="name" th:text="${reward.description}"></h3>
-                    <div style="text-align: center; margin-top: 10px;" th:if="${child.points} > ${reward.points}"> <!-- Redeem Reward "Form" -->
+                    <div style="text-align: center; margin-top: 10px;" th:if="${child.points} >= ${reward.points}"> <!-- Redeem Reward "Form" -->
                         <form th:action="@{/rewards/redeemReward}" method="post">
                             <input type="hidden" name="rewardId" th:value="${reward.id}" />
                             <button type="submit" class="btn btn-success">Redeem Now!</button>
@@ -94,6 +126,21 @@
                 </div>
             </div>
         </div> <!-- end back panel -->
+    </div> <!-- end card -->
+</div> <!-- end card-container -->
+
+<!-- Child Info Card -->
+<div th:fragment="child-profile-card">
+    <div class="card">
+        <div class="card-block">
+            <div class="content" style="padding-top: 30px; padding-bottom: 30px;">
+                <div class="main">
+                    <div style="text-align: center; padding-bottom: 10px;"><img th:src="${child.avatar}" height="125"/></div>
+                    <h3 class="text-center" th:text="${child.firstName}"></h3>
+                    <h3 class="name" th:text="${child.points} + ' points'"></h3>
+                </div>
+            </div>
+        </div>
     </div> <!-- end card -->
 </div> <!-- end card-container -->
 

@@ -11,177 +11,182 @@
 
 <img th:unless="${childUser}" src="/images/parent-header.jpg" width="100%">
 
-<main class="container" th:unless="${childUser}">
-
-    <div>
-        <h3>Welcome, <span th:text="${parent.firstName}"></span>!</h3>
-    </div>
-
-    <div>
-        <h3 th:if="${pendingChores} and ${pendingChores.size()}">Tasks Pending Approval:</h3>
-        <h3 th:unless="${pendingChores} and ${pendingChores.size()}">No Tasks Pending Approval</h3>
-        <table class="table table-striped" th:if="${pendingChores} and ${pendingChores.size()}">
-            <thead>
-            <tr>
-                <td>Task</td>
-                <td>Assigned to:</td>
-                <td>Point Value</td>
-                <td>Approve?</td>
-            </tr>
-            </thead>
-            <tr th:each="chore : ${pendingChores}">
-                <td><a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
-                <td th:if="${chore.childAssigned}" th:text="${chore.childAssigned.firstName}"></td>
-                <td th:unless="${chore.childAssigned}">None</td>
-                <td th:text="${chore.rewardPoints}"></td>
-                <td>
-                    <form th:action="@{/chores/approve}" method="post">
-                        <input type="hidden" name="choreId" th:value="${chore.id}" />
-                        <button type="submit" class="btn btn-success">Approve</button>
-                    </form>
-                </td>
-
-            </tr>
-
-        </table>
-    </div>
-    <div>
-        <h3 th:if="${pendingRewards} and ${pendingRewards.size()}">Rewards Pending Fulfillment:</h3>
-        <h3 th:unless="${pendingRewards} and ${pendingRewards.size()}">No Rewards Pending Fulfillment</h3>
-        <table class="table table-striped" th:if="${pendingRewards} and ${pendingRewards.size()}">
-            <thead>
-            <tr>
-                <td>Reward</td>
-                <td>Details</td>
-                <td>Redeemed By</td>
-                <td>Redemption Date</td>
-                <td>Fulfill?</td>
-            </tr>
-            </thead>
-            <tr th:each="reward : ${pendingRewards}">
-                <td th:text="${reward.name}"></td>
-                <td th:text="${reward.description}"></td>
-                <td th:text="${reward.child.firstName}"></td>
-                <td th:text="${reward.redemptionDate}"></td>
-                <td>
-                    <form th:action="@{/rewards/fulfillReward}" method="post">
-                        <input type="hidden" name="rewardId" th:value="${reward.id}" />
-                        <button type="submit" class="btn btn-success">Fulfill</button>
-                    </form>
-                </td>
-
-            </tr>
-
-        </table>
-    </div>
-    <div>
-        <h3>My Crew</h3>
-        <div th:each="child : ${crew}">
-            <div><img th:src="${child.avatar}" height="200"/></div>
-
-            <h4 th:text="${child.firstName}"></h4>
-            <h4 th:text="${child.points} + ' points'"></h4>
+<main th:unless="${childUser}">
+    <div class="container">
+        <div class="text-center">
+            <h1>Ahoy, Captain <span th:text="${parent.firstName}"></span>!</h1>
         </div>
-        <a class="btn btn-outline-dark" href="/crew/add" role="button">Add a new Crew Member</a>
-    </div>
-    <div>
-        <h3>Available Tasks</h3>
-        <table class="table table-striped" th:if="${incompleteChores} and ${incompleteChores.size()}">
-            <thead>
-            <tr>
-                <td>Task</td>
-                <td>Assigned to:</td>
-                <td>Point Value</td>
-                <td>Due Date</td>
-                <td>Status</td>
-            </tr>
-            <tr th:each="chore : ${incompleteChores}">
-                <td><a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
-                <td th:if="${chore.childAssigned}" th:text="${chore.childAssigned.firstName}"></td>
-                <td th:unless="${chore.childAssigned}">None</td>
-                <td th:text="${chore.rewardPoints}"></td>
-                <td th:text="${chore.dueDate}"></td>
-                <td th:if="${chore.isCompleted and chore.isApprovedByParent}"><span class="text-success">Approved</span></td>
-                <td th:if="${chore.isCompleted and !chore.isApprovedByParent}"><span class="text-warning">Pending Approval</span></td>
-                <td th:if="${!chore.isCompleted and !chore.isApprovedByParent}">
-                    <span th:if="${!chore.isCompleted and chore.dueDate < today}" class="text-danger">Overdue</span>
-                    <span th:if="${!chore.isCompleted and chore.dueDate > today}" class="primary">Incomplete</span>
-                </td>
-            </tr>
-            </thead>
 
-        </table>
-        <a class="btn btn-outline-dark" href="/chores/create" role="button">New Task</a>
-    </div>
-    <div>
-        <h3>Recently Completed</h3>
-        <table class="table table-striped"><!--th:if="${recentlyCompleted} and ${recentlyCompleted.size()}">-->
-            <thead>
-            <tr>
-                <td>Task</td>
-                <td>Assigned to:</td>
-                <td>Point Value</td>
-                <td>Due Date</td>
-            </tr>
-            <tr th:each="chore : ${recentlyCompleted}">
-                <td><a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
-                <td th:if="${chore.childAssigned}" th:text="${chore.childAssigned.firstName}"></td>
-                <td th:unless="${chore.childAssigned}">None</td>
-                <td th:text="${chore.rewardPoints}"></td>
-                <td th:text="${chore.dueDate}"></td>
+        <div style="text-align: center; margin-top: 2rem; margin-bottom: 2rem;">
+            <h3>Crew Members</h3>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div th:each="child : ${crew}" class="col-md-4 col-sm-6">
+                        <div th:replace="fragments :: child-profile-card"></div>
+                    </div>
+                </div>
+            </div>
+            <p><a class="btn btn-outline-dark" href="/crew/add" role="button">Add a new Crew Member</a></p>
+        </div>
 
-            </tr>
-            </thead>
-
-        </table>
     </div>
 
-    <div>
-        <h3>Recently Redeemed Treasure</h3>
-        <table class="table table-striped"><!--th:if="${recentlyCompleted} and ${recentlyCompleted.size()}">-->
-            <thead>
-            <tr>
-                <td>Treasure</td>
-                <td>Redeemed by</td>
-                <td>Redeemed on</td>
-            </tr>
-            <tr th:each="reward : ${recentlyRedeemed}">
-                <td><a th:href="'/rewards/detail?rewardId=' + ${reward.id}" th:text="${reward.name}"></a></td>
-                <td th:text="${reward.child.firstName}"></td>
-                <td th:text="${reward.redemptionDate}"></td>
+        <div class="row text-center alt-row justify-content-center">
+            <div class="col-sm-5">
+                <h3>Tasks Pending Approval</h3>
+                <p th:unless="${pendingChores} and ${pendingChores.size()}">No Tasks Pending Approval</p>
+                <table class="table table-striped" th:if="${pendingChores} and ${pendingChores.size()}">
+                    <thead>
+                        <tr>
+                            <td>Task</td>
+                            <td>Assigned To</td>
+                            <td>Point Value</td>
+                            <td>Approve?</td>
+                        </tr>
+                    </thead>
+                    <tr th:each="chore : ${pendingChores}">
+                        <td><a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
+                        <td th:if="${chore.childAssigned}" th:text="${chore.childAssigned.firstName}"></td>
+                        <td th:unless="${chore.childAssigned}">None</td>
+                        <td th:text="${chore.rewardPoints}"></td>
+                        <td>
+                            <form th:action="@{/chores/approve}" method="post">
+                                <input type="hidden" name="choreId" th:value="${chore.id}" />
+                                <button type="submit" class="btn btn-success">Approve</button>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </div>
 
-            </tr>
-            </thead>
+            <div class="col-sm-5">
+                <h3>Recently Completed Tasks</h3>
+                <p th:unless="${recentlyCompleted}">No Recently Completed Tasks</p> <!-- th:unless="${recentlyCompleted} and ${recentlyCompleted.size()}" -->
+                <table class="table table-striped" th:if="${recentlyCompleted}"> <!-- th:if="${recentlyCompleted} and ${recentlyCompleted.size()}" -->
+                    <thead>
+                        <tr>
+                            <td>Task</td>
+                            <td>Assigned To</td>
+                            <td>Point Value</td>
+                            <td>Due Date</td>
+                        </tr>
+                    </thead>
+                    <tr th:each="chore : ${recentlyCompleted}">
+                        <td><a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
+                        <td th:if="${chore.childAssigned}" th:text="${chore.childAssigned.firstName}"></td>
+                        <td th:unless="${chore.childAssigned}">None</td>
+                        <td th:text="${chore.rewardPoints}"></td>
+                        <td th:text="${chore.dueDate}"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
 
-        </table>
+    <div class="container">
+        <div>
+            <h3>Available Tasks</h3>
+            <table class="table table-striped" th:if="${incompleteChores} and ${incompleteChores.size()}">
+                <thead>
+                    <tr>
+                        <td>Task</td>
+                        <td>Assigned to:</td>
+                        <td>Point Value</td>
+                        <td>Due Date</td>
+                        <td>Status</td>
+                    </tr>
+                </thead>
+                <tr th:each="chore : ${incompleteChores}">
+                    <td><a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
+                    <td th:if="${chore.childAssigned}" th:text="${chore.childAssigned.firstName}"></td>
+                    <td th:unless="${chore.childAssigned}">None</td>
+                    <td th:text="${chore.rewardPoints}"></td>
+                    <td th:text="${chore.dueDate}"></td>
+                    <td th:if="${chore.isCompleted and chore.isApprovedByParent}"><span class="text-success">Approved</span></td>
+                    <td th:if="${chore.isCompleted and !chore.isApprovedByParent}"><span class="text-warning">Pending Approval</span></td>
+                    <td th:if="${!chore.isCompleted and !chore.isApprovedByParent}">
+                        <span th:if="${!chore.isCompleted and chore.dueDate < today}" class="text-danger">Overdue</span>
+                        <span th:if="${!chore.isCompleted and chore.dueDate > today}" class="primary">Incomplete</span>
+                    </td>
+                </tr>
+            </table>
+            <a class="btn btn-outline-dark" href="/chores/create" role="button">New Task</a>
+        </div>
+
     </div>
 
-    <div>
-        <h3>Available Treasure</h3>
-        <table class="table table-striped"><!--th:if="${recentlyCompleted} and ${recentlyCompleted.size()}">-->
-            <thead>
-            <tr>
-                <td>Treasure</td>
-                <td>Points</td>
-            </tr>
-            <tr th:each="reward : ${availableRewards}">
-                <td><a th:href="'/rewards/detail?rewardId=' + ${reward.id}" th:text="${reward.name}"></a></td>
-                <td th:text="${reward.points}"></td>
 
-            </tr>
-            </thead>
+    <div class="row text-center alt-row justify-content-center">
 
-        </table>
-        <a class="btn btn-outline-dark" href="/rewards" role="button">Add Treasure</a>
+        <div class="col-sm-6">
+            <h3>Treasure Pending Approval</h3>
+            <p th:unless="${pendingRewards} and ${pendingRewards.size()}">No Treasure Pending Fulfillment</p>
+            <table class="table table-striped" th:if="${pendingRewards} and ${pendingRewards.size()}">
+                <thead>
+                    <tr>
+                        <td>Treasure</td>
+                        <td>Details</td>
+                        <td>Redeemed By</td>
+                        <td>Redemption Date</td>
+                        <td>Fulfill?</td>
+                    </tr>
+                </thead>
+                <tr th:each="reward : ${pendingRewards}">
+                    <td th:text="${reward.name}"></td>
+                    <td th:text="${reward.description}"></td>
+                    <td th:text="${reward.child.firstName}"></td>
+                    <td th:text="${reward.redemptionDate}"></td>
+                    <td>
+                        <form th:action="@{/rewards/fulfillReward}" method="post">
+                            <input type="hidden" name="rewardId" th:value="${reward.id}" />
+                            <button type="submit" class="btn btn-success">Fulfill</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="col-sm-5">
+            <h3>Recently Redeemed Treasure</h3>
+            <p th:unless="${recentlyRedeemed} and ${recentlyRedeemed.size()}">No Recently Redeemed Treasure</p>
+            <table class="table table-striped" th:if="${recentlyRedeemed} and ${recentlyRedeemed.size()}">
+                <thead>
+                    <tr>
+                        <td>Treasure</td>
+                        <td>Redeemed By</td>
+                        <td>Redemption Date</td>
+                    </tr>
+                </thead>
+                <tr th:each="reward : ${recentlyRedeemed}">
+                    <td><a th:href="'/rewards/detail?rewardId=' + ${reward.id}" th:text="${reward.name}"></a></td>
+                    <td th:text="${reward.child.firstName}"></td>
+                    <td th:text="${reward.redemptionDate}"></td>
+                </tr>
+            </table>
+        </div>
+
     </div>
 
+    <div class="container">
+        <div style="text-align: center; margin-top: 2rem; margin-bottom: 2rem;">
+            <h3>Available Treasure</h3>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div th:each="reward : ${availableRewards}" class="col-md-4 col-sm-6">
+                        <div th:replace="fragments :: parent-reward-card"></div>
+                    </div>
+                </div>
+            </div>
+
+            <p><a class="btn btn-outline-dark" href="/rewards" role="button">Add Treasure</a></p>
+        </div>
+    </div>
 </main>
 
 <img th:if="${childUser}" src="/images/child-header.jpg" width="100%">
 
 <main class="container" th:if="${childUser}">
 
-    <h3>Welcome, <span th:text="${child.firstName}"></span>!</h3>
+    <h1>Ahoy, <span th:text="${child.firstName}"></span>!</h1>
     <img id="selectedAvatar" th:src="${child.avatar}" alt="Selected Avatar" height="200" />
 
     <form th:action="@{/avatar}" method="post">
@@ -189,7 +194,7 @@
             <label for="avatarSelect" th:unless="${child.avatar}">Choose your avatar:</label>
             <label for="avatarSelect" th:if="${child.avatar}">Change your avatar:</label>
             <select class="form-control" id="avatarSelect" onchange="changeAvatar()" name="avatar">
-                     <option th:value="${child.avatar}">Current avatar</option>
+                <option th:value="${child.avatar}">Current avatar</option>
                 <option value="images/child-avatars/anchor-icon.png">Anchor</option>
                 <option value="images/child-avatars/barrel-icon.png">Barrel</option>
                 <option value="images/child-avatars/bottle-icon.png">Bottle</option>
@@ -205,7 +210,7 @@
 
 
 
-<!--    <img th:src="${child.avatar}" height="200">-->
+    <!--    <img th:src="${child.avatar}" height="200">-->
 
     <!-- Calendar -->
 
@@ -283,6 +288,8 @@
     }
 </script>
 </main>
+
+<footer th:replace="fragments :: footer"></footer>
 
 </body>
 </html>

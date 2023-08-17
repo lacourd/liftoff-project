@@ -42,10 +42,10 @@ public class RewardController {
         if (authenticationController.getChildFromSession(session) != null) {
             Child child = authenticationController.getChildFromSession(session);
             model.addAttribute("child", child);
-            model.addAttribute("rewards", rewardRepository.findAllByParentCreator(child.getParent()));
+            model.addAttribute("rewards", rewardRepository.findAllByParentCreatorAndRedeemed(child.getParent(), false));
         } else {
             Parent parent = authenticationController.getParentFromSession(session);
-            model.addAttribute("rewards", rewardRepository.findAllByParentCreator(parent));
+            model.addAttribute("rewards", rewardRepository.findAllByParentCreatorAndRedeemed(parent, false));
         }
 
         return "rewards/index";

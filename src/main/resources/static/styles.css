@@ -377,7 +377,22 @@ footer {
     float: left;
 }
 
-.flex-container {
+.alt-row {
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    background-color: #2B2D2F;
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+    color: white;
+}
+
+.alt-row h3, .alt-row table {
+    text-align: center;
+    color: white;
+}
+
+ .flex-container {
   display: flex;
   justify-content: space-between;
 }
