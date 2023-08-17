@@ -26,6 +26,7 @@
                   <option th:each="child : ${crew}"
                           th:value="${child.id}"
                           th:text="${child.firstName}"></option>
+                  <option th:value="${null}" th:text="None"></option>
               </select>
               <p class="error" th:errors="${chore.childAssigned}"></p>
           </label>
