@@ -77,7 +77,7 @@
     <div>
         <h3>My Crew</h3>
         <div th:each="child : ${crew}">
-            <div><img th:src="${child.avatar}"/></div>
+            <div><img th:src="${child.avatar}" height="200"/></div>
 
             <h4 th:text="${child.firstName}"></h4>
             <h4 th:text="${child.points} + ' points'"></h4>
@@ -181,9 +181,13 @@
 
 <main class="container" th:if="${childUser}">
 
+    <h3>Welcome, <span th:text="${child.firstName}"></span>!</h3>
+    <img id="selectedAvatar" th:src="${child.avatar}" alt="Selected Avatar" height="200" />
+
     <form th:action="@{/avatar}" method="post">
         <div class="form-group">
-            <label for="avatarSelect">Choose your avatar:</label>
+            <label for="avatarSelect" th:unless="${child.avatar}">Choose your avatar:</label>
+            <label for="avatarSelect" th:if="${child.avatar}">Change your avatar:</label>
             <select class="form-control" id="avatarSelect" onchange="changeAvatar()" name="avatar">
                      <option th:value="${child.avatar}">Current avatar</option>
                 <option value="images/child-avatars/anchor-icon.png">Anchor</option>
@@ -199,10 +203,9 @@
         <button type="submit" class="btn btn-success">Save Avatar</button>
     </form>
 
-    <img id="selectedAvatar" th:src="${child.avatar}" alt="Selected Avatar" height="200" />
 
-    <h3>Welcome, <span th:text="${child.firstName}"></span>!</h3>
-    <img th:src="${child.avatar}" height="200">
+
+<!--    <img th:src="${child.avatar}" height="200">-->
 
     <!-- Calendar -->
 
@@ -230,7 +233,7 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>Name</th>
+            <th>Task</th>
             <th>Description</th>
             <th>Due Date</th>
             <th>Point Value</th>
@@ -270,14 +273,10 @@
 
     <!--Avatar script-->
     <script>
-    window.onload = function () {
-        // default image when the page loads
-        document.getElementById("selectedAvatar").src = "images/child-avatars/anchor-icon.png";
-    }
 
     function changeAvatar() {
-        var select = document.getElementById("avatarSelect");
-        var selectedValue = select.options[select.selectedIndex].value;
+        let select = document.getElementById("avatarSelect");
+        let selectedValue = select.options[select.selectedIndex].value;
 
 
         document.getElementById("selectedAvatar").src = selectedValue;
