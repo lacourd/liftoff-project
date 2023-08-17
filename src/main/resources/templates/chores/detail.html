@@ -41,19 +41,18 @@
            <td th:text="${chore.supplies}"></td>
        </tr>
   </table>
-  <div th:each="comment : ${chore.comments}">
-      <tr>
-          <th>Comment</th>
-          <th>Created By</th>
-          <th>Date</th>
-      </tr>
+  <div class="flex-container" th:each="comment : ${chore.comments}">
+      <div th:text="${comment.createdBy.username}">Created By</div>
+      <div th:text= "${comment.text}">Comment</div>
+      <div>Created On</div>
+      <div th:text="${comment.createdDate}" >Date</div>
   </div>
   <form th:action="@{/chores/comment}" method="post">
       <input type="hidden" name="choreId" th:value="${chore.id}" />
       <input type="hidden" name="createdBy" th:value="${user.id}" />
 
       <div class="form-group">
-      <input class="form-control" type="text" th:field="${newComment.text}"/>
+          <input class="form-control" type="text" th:field="${newComment.text}"/>
       </div>
       <button type="submit" class="btn btn-success">Add Comment</button>
   </form>
