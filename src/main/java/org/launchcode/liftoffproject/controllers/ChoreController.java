@@ -41,7 +41,7 @@ public class ChoreController {
 
             if (authenticationController.getChildFromSession(session) != null) {
                 Child child = authenticationController.getChildFromSession(session);
-                model.addAttribute("chores", choreRepository.findAllByChildAssigned(child));
+                model.addAttribute("chores", choreRepository.findByChildAssignedOrChildAssignedIsNullAndParentCreator(child, child.getParent()));
             } else {
                 Parent parent = authenticationController.getParentFromSession(session);
                 model.addAttribute("chores", choreRepository.findAllByParentCreatorAndApprovedByParent(parent, false));
