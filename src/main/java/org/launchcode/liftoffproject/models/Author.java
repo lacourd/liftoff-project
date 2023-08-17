@@ -1,6 +1,8 @@
 package org.launchcode.liftoffproject.models;
 
+import javax.persistence.Entity;
 import javax.validation.constraints.NotBlank;
+
 
 public class Author {
 
