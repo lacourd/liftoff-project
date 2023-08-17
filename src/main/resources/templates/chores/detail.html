@@ -42,7 +42,8 @@
        </tr>
   </table>
   <div class="flex-container" th:each="comment : ${chore.comments}">
-      <div th:text="${comment.createdBy.username}">Created By</div>
+      <div th:if="${comment.createdBy instanceof T(org.launchcode.liftoffproject.models.ParentUser)}" th:text="${'Comment by Captain ' + comment.createdBy.getParent.firstName + ' ' + comment.createdBy.getParent.lastName}"></div>
+      <div th:if="${comment.createdBy instanceof T(org.launchcode.liftoffproject.models.ChildUser)}" th:text="${'Comment by Crew Member ' + comment.createdBy.getChild.firstName + ' ' + comment.createdBy.getChild.lastName}"></div>
       <div th:text= "${comment.text}">Comment</div>
       <div>Created On</div>
       <div th:text="${comment.createdDate}" >Date</div>
