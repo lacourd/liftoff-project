@@ -377,6 +377,15 @@ footer {
     float: left;
 }
 
+.alt-row {
+    text-align: center;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    background-color: #eee;
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+}
+
 /* Style for parent reward cards*/
 .inline-form {
         display: inline-block;
