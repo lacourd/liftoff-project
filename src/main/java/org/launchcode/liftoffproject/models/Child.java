@@ -26,7 +26,7 @@ public class Child extends AbstractEntity{
     private ChildUser userAccount;
 
     @OneToMany(mappedBy = "childAssigned")
-    private List<Chore> chore = new ArrayList<>();
+    private List<Chore> chores = new ArrayList<>();
 
     private String avatar;
 
@@ -106,5 +106,23 @@ public class Child extends AbstractEntity{
     public void setAvatar(String avatarUrl) {
         this.avatar
                 = avatarUrl;
+    }
+
+    public List<Chore> getChores() {
+        return chores;
+    }
+
+    public void setChores(List<Chore> chores) {
+        this.chores = chores;
+    }
+
+    public int getActiveChores() {
+        int activeChores = 0;
+        for (int i = 0; i < this.chores.size(); i++) {
+            if (this.chores.get(i).isApprovedByParent() == false) {
+                activeChores++;
+            }
+        }
+        return activeChores;
     }
 }

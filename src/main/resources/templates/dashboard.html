@@ -10,12 +10,11 @@
 <header th:unless="${childUser}" th:replace="fragments :: header"></header>
 
 <img th:unless="${childUser}" src="/images/parent-header.jpg" width="100%">
-<!--<header th:if="${childUser}" th:replace="dashfragment :: header"></header>-->
 
 <main class="container" th:unless="${childUser}">
 
     <div>
-    <h3>Welcome, <span th:text="${parent.firstName}"></span>!</h3>
+        <h3>Welcome, <span th:text="${parent.firstName}"></span>!</h3>
     </div>
 
     <div>
@@ -78,7 +77,7 @@
     <div>
         <h3>My Crew</h3>
         <div th:each="child : ${crew}">
-            <div><img th:src="${child.avatar}"/></div>
+            <div><img th:src="${child.avatar}" height="200"/></div>
 
             <h4 th:text="${child.firstName}"></h4>
             <h4 th:text="${child.points} + ' points'"></h4>
@@ -94,6 +93,7 @@
                 <td>Assigned to:</td>
                 <td>Point Value</td>
                 <td>Due Date</td>
+                <td>Status</td>
             </tr>
             <tr th:each="chore : ${incompleteChores}">
                 <td><a th:href="'/chores/detail?choreId=' + ${chore.id}" th:text="${chore.name}"></a></td>
@@ -101,7 +101,12 @@
                 <td th:unless="${chore.childAssigned}">None</td>
                 <td th:text="${chore.rewardPoints}"></td>
                 <td th:text="${chore.dueDate}"></td>
-
+                <td th:if="${chore.isCompleted and chore.isApprovedByParent}"><span class="text-success">Approved</span></td>
+                <td th:if="${chore.isCompleted and !chore.isApprovedByParent}"><span class="text-warning">Pending Approval</span></td>
+                <td th:if="${!chore.isCompleted and !chore.isApprovedByParent}">
+                    <span th:if="${!chore.isCompleted and chore.dueDate < today}" class="text-danger">Overdue</span>
+                    <span th:if="${!chore.isCompleted and chore.dueDate > today}" class="primary">Incomplete</span>
+                </td>
             </tr>
             </thead>
 
@@ -175,28 +180,32 @@
 <img th:if="${childUser}" src="/images/child-header.jpg" width="100%">
 
 <main class="container" th:if="${childUser}">
-    <!-- Display Selected Avatar -->
-    <div class="mwanzo">
-        <label for="avatarSelect">Choose your avatar:</label>
-        <select id="avatarSelect" onchange="changeAvatar()" name="avatar">
-            <option value="images/child-avatars/anchor-icon.png">Anchor</option>
-            <option value="images/child-avatars/barrel-icon.png">Barrel</option>
-            <option value="images/child-avatars/bottle-icon.png">Bottle</option>
-            <option value="images/child-avatars/flag-icon.png">Flag</option>
-            <option value="images/child-avatars/helm-icon.png">Helm</option>
-            <option value="images/child-avatars/hook-icon.png">Hook</option>
-            <option value="images/child-avatars/spyglass-icon.png">Spyglass</option>
-            <option value="images/child-avatars/potion-icon.png">Potion</option>
-        </select>
-        <p><img id="selectedAvatar" src="images/child-avatars/anchor-icon.png" alt="Selected Avatar" height="200" /></p>
 
-        <h3>Welcome, <span th:text="${child.firstName}"></span>!</h3>
+    <h3>Welcome, <span th:text="${child.firstName}"></span>!</h3>
+    <img id="selectedAvatar" th:src="${child.avatar}" alt="Selected Avatar" height="200" />
+
+    <form th:action="@{/avatar}" method="post">
+        <div class="form-group">
+            <label for="avatarSelect" th:unless="${child.avatar}">Choose your avatar:</label>
+            <label for="avatarSelect" th:if="${child.avatar}">Change your avatar:</label>
+            <select class="form-control" id="avatarSelect" onchange="changeAvatar()" name="avatar">
+                     <option th:value="${child.avatar}">Current avatar</option>
+                <option value="images/child-avatars/anchor-icon.png">Anchor</option>
+                <option value="images/child-avatars/barrel-icon.png">Barrel</option>
+                <option value="images/child-avatars/bottle-icon.png">Bottle</option>
+                <option value="images/child-avatars/flag-icon.png">Flag</option>
+                <option value="images/child-avatars/helm-icon.png">Helm</option>
+                <option value="images/child-avatars/hook-icon.png">Hook</option>
+                <option value="images/child-avatars/spyglass-icon.png">Spyglass</option>
+                <option value="images/child-avatars/potion-icon.png">Potion</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success">Save Avatar</button>
+    </form>
 
 
-    </div>
 
-
-
+<!--    <img th:src="${child.avatar}" height="200">-->
 
     <!-- Calendar -->
 
@@ -224,7 +233,7 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>Name</th>
+            <th>Task</th>
             <th>Description</th>
             <th>Due Date</th>
             <th>Point Value</th>
@@ -264,14 +273,10 @@
 
     <!--Avatar script-->
     <script>
-    window.onload = function () {
-        // default image when the page loads
-        document.getElementById("selectedAvatar").src = "images/child-avatars/anchor-icon.png";
-    }
 
     function changeAvatar() {
-        var select = document.getElementById("avatarSelect");
-        var selectedValue = select.options[select.selectedIndex].value;
+        let select = document.getElementById("avatarSelect");
+        let selectedValue = select.options[select.selectedIndex].value;
 
 
         document.getElementById("selectedAvatar").src = selectedValue;

@@ -45,7 +45,7 @@ public class DashboardController {
     private AuthenticationController authenticationController;
 
     @GetMapping("dashboard")
-    public String childDashboard(
+    public String renderDashboard(
             @RequestParam(name = "dueDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dueDate,
             @RequestParam(name = "choreName", required = false) String choreName,
             Model model, HttpSession session) {
@@ -75,8 +75,10 @@ public class DashboardController {
             model.addAttribute("child", child);
             model.addAttribute("chores", chores);
             model.addAttribute("earnedRewards", earnedRewards);
+            model.addAttribute("avatar", child.getAvatar());
             model.addAttribute("dayOfWeekMessage", dayOfWeekMessage); // Pass the calculated message
-              } else {
+        } else {
+            model.addAttribute("today", LocalDate.now());
             Parent parent = authenticationController.getParentFromSession(session);
             model.addAttribute("parent", parent);
             List<Chore> pendingChores = choreRepository.findAllByParentCreatorAndCompletedAndApprovedByParent(parent, true,false);
@@ -98,6 +100,14 @@ public class DashboardController {
         }
 
         return "dashboard";
+    }
+
+    @PostMapping("avatar")
+    public String processAvatarForm(HttpSession session, @ModelAttribute Child child) {
+        Child updatedChild = authenticationController.getChildFromSession(session);
+        updatedChild.setAvatar(child.getAvatar());
+        childRepository.save(updatedChild);
+        return "redirect:/dashboard";
     }
 
     @GetMapping("/chores/{dueDate}")
@@ -142,5 +152,4 @@ public class DashboardController {
 //            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Chore not found.");
 //        }
 //    }
-
 

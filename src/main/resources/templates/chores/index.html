@@ -10,8 +10,7 @@
 
 <main class="container">
 
-    <h1 th:if="${childUser}" th:text="${'THIS IS A CHILD USER'}"></h1>
-    <h1 th:unless="${childUser}" th:text="${'THIS IS A PARENT USER'}"></h1>
+    <h1 th:unless="${childUser}" th:text="${'title'}"></h1>
     <p th:unless="${chores} and ${chores.size()}">No Tasks!</p>
 
     <th:block th:unless="${childUser}">
@@ -21,9 +20,9 @@
                 <th>Task</th>
                 <th>Description</th>
                 <th>Assigned to:</th>
-                <th>Due Day</th>
+                <th>Due Date</th>
                 <th>Point Value</th>
-                <th>Completed</th>
+                <th>Status</th>
             </tr>
             </thead>
             <tr th:each="chore : ${chores}">
@@ -31,8 +30,14 @@
                 <td th:text="${chore.choreDescription}"></td>
                 <td th:if="${chore.childAssigned}" th:text="${chore.childAssigned.firstName}"></td>
                 <td th:unless="${chore.childAssigned}">None</td>
-                <td th:text="${#temporals.format(chore.dueDate, 'yyyy-MM-dd')}"></td>
+                <td th:text="${#temporals.format(chore.dueDate, 'MM-dd-yyyy')}"></td>
                 <td th:text="${chore.rewardPoints}"></td>
+                <td th:if="${chore.isCompleted and chore.isApprovedByParent}"><span class="text-success">Approved</span></td>
+                <td th:if="${chore.isCompleted and !chore.isApprovedByParent}"><span class="text-warning">Pending Approval</span></td>
+                <td th:if="${!chore.isCompleted and !chore.isApprovedByParent}">
+                    <span th:if="${!chore.isCompleted and chore.dueDate < today}" class="text-danger">Overdue</span>
+                    <span th:if="${!chore.isCompleted and chore.dueDate > today}" class="primary">Incomplete</span>
+                </td>
             </tr>
         </table>
           <a class="btn btn-outline-dark" href="/chores/create" role="button">Create a Task</a>

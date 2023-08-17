@@ -382,3 +382,7 @@ footer {
   justify-content: space-between;
 }
 
+/* Style for parent reward cards*/
+.inline-form {
+        display: inline-block;
+    }
