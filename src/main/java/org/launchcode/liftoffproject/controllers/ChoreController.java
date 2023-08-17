@@ -175,6 +175,18 @@ public class ChoreController {
 
     }
 
+    @PostMapping("claim")
+    public String claimChore(@RequestParam Integer choreId, HttpSession session){
+        Chore chore = choreRepository.findById(choreId).orElse(null);
+        Child child = authenticationController.getChildFromSession(session);
+
+        if (chore != null) {
+            chore.setChildAssigned(child);
+            choreRepository.save(chore);
+        }
+        return "redirect:/chores";
+    }
+
 
 
 //    @GetMapping("/chores/{dueDate}")
