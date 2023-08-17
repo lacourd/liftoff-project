@@ -67,7 +67,11 @@
                                        th:if="${not chore.completed}">Mark as Complete</a>
                     <span th:if="${chore.completed}" class="text-success">Completed</span>
                 </td>
-                <td th:unless="${chore.childAssigned}">Claim this task</td>
+                <td th:unless="${chore.childAssigned}">
+                    <form th:action="@{/chores/claim}" method="post">
+                        <input type="hidden" name="choreId" th:value="${chore.id}" />
+                        <button type="submit" class="btn btn-outline-dark">Claim this task</button>
+                    </form></td>
             </tr>
         </table>
     </th:block>
