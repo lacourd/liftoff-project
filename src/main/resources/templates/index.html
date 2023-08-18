@@ -15,8 +15,9 @@
         <p class="hp-about">With Treasure Task, parents can assign chores to their children to monitor weekly tasks. To better encourage children to not only complete their chores but also do them well, each chore can be worth a determined amount of points. Children can collect enough points to redeem rewards set by their parents. Child accounts can be created to help older children keep track of chores and rewards themselves, giving them a sense of responsibility.</p>
     </div>
 
+
     <div th:unless="${loggedInUser}" class="form-signin w-100 m-auto modal-content rounded-4 shadow" id="login">
-        <form method="post" th:action="@{/login}">
+        <form method="post" th:action="@{/login#login}">
             <h2 class="mb-2" align="center">Welcome Aboard</h2>
             <p align="center">Avast, ye landlubbers! Approach the plank and set foot to log in!</p>
             <div class="form-floating">
