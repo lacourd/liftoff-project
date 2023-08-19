@@ -1,38 +1,37 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head">
-<link rel="stylesheet" href="path/to/font-awesome/css/all.min.css">
 </head>
 <body>
 
 <header th:replace="fragments :: header"></header>
 
 <img src="/images/treasureTask-HP-hero.jpg" width="100%">
-
 <div class="bg-img">
-    <main class="container"/>
-    <h1 hidden>About Us</h1>
+    <h1 hidden>About the Creators</h1>
 
+<div class="container">
     <h2 style="text-align:center">Meet the Scallywags</h2>
-    <div class="row">
-        <div class="col-sm-12">
-            <div th:each="author : ${authors}" class="col-md-4 col-sm-6">
-                <div class="card">
-                    <img th:src="${author.imageUrl}">
-                    <div class="container">
-                        <h2 th:text="${author.name}"></h2>
-                        <p th:text="${author.descriptionOfFeatures}"></p>
-                        <p th:text="${author.bio}"></p>
-                        <div class="card-body">
-                            <a th:href="${author.linkedInUrl}" target="_blank" class="card-link" ><i class="fa-brands fa-linkedin" style="color: #0C66C2;" ></i></a>
-                            <a th:href="${author.gitHubUrl}" target="_blank" class="card-link"><i class="fab fa-github" style="color: #000000;"></i></a>
-                        </div>
+    <div class="container">
+        <div class="row justify-content-center">
+        <div th:each="author : ${authors}" class="col-md-4 col-sm-6">
+            <div class="card">
+                <img th:src="${author.imageUrl}" class="card-img-top">
+                <div class="card-body">
+                    <h3 th:text="${author.name}" class="card-title text-center"></h3>
+                    <p th:text="${author.descriptionOfFeatures}" class="card-text text-center"></p>
+                    <p th:text="${author.bio}" class="card-text text-center"></p>
+                    <div class="card-link-container">
+                        <a th:href="${author.linkedInUrl}" class="card-link" ><i class="fab fa-linkedin" style="color: #0C66C2;"></i></a>
+                        <a th:href="${author.gitHubUrl}" class="card-link"><i class="fab fa-github" style="color: #000000;"></i></a>
                     </div>
                 </div>
             </div>
         </div>
-    </main>
+        </div>
     </div>
+    </div>
+</div>
 
 
 

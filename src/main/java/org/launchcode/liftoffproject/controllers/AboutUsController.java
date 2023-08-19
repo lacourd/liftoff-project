@@ -35,7 +35,7 @@ public class AboutUsController {
         authors.add(new Author(
                 "Audra Hartwell",
                 "/images/creators/pic-of-audra.jpeg",
-                "User Authorization, About the Authors, Rewards Page",
+                "User Authorization, About the Creators, Rewards Page",
                 "Former teacher turned coder. Check my links to learn more.",
                 "https://www.linkedin.com/in/audra-hartwell-252a66113/",
                 "https://github.com/AudraHartwell"
@@ -44,7 +44,7 @@ public class AboutUsController {
 
         authors.add(new Author(
                 "Mike Zanger",
-                "/images/author4.jpg",
+                "/images/creators/pic-of-Mike.jpeg",
                 "Description of MZ",
                 "Bio for MZ",
                 "LinkedIn Url",
