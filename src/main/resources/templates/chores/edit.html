@@ -10,6 +10,8 @@
 
 <main class="container">
 
+  <h1 class="text-center">Edit Ship-Shapin Tasks</h1>
+
   <form th:action="@{/chores/edit}" method="post">
     <input type="hidden" name="choreId" th:value="${chore.id}" />
     <div class="form-group">
