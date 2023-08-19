@@ -10,6 +10,8 @@
 
 <main class="container">
 
+  <h1 class="text-center">Edit the Treasure Trove</h1>
+
   <form th:action="@{/rewards/edit}" method="post">
     <input type="hidden" name="rewardId" th:value="${reward.id}" />
     <div class="form-group">

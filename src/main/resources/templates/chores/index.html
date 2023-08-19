@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head th:replace="fragments :: head"></head>
-
 <body>
 
 <header th:replace="fragments :: header"></header>
@@ -10,7 +9,7 @@
 
 <main class="container">
 
-    <h1 th:unless="${childUser}" th:text="${'title'}"></h1>
+    <h1 class="text-center">Ship-Shapin Tasks</h1>
     <p th:unless="${chores} and ${chores.size()}">No Tasks!</p>
 
     <th:block th:unless="${childUser}">
