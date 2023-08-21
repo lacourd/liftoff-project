@@ -39,9 +39,6 @@ public class DashboardController {
     private RewardRepository rewardRepository;
 
     @Autowired
-    private EarnedRewardsRepository earnedRewardsRepository;
-
-    @Autowired
     private AuthenticationController authenticationController;
 
     @GetMapping("dashboard")
@@ -63,7 +60,7 @@ public class DashboardController {
             }
 
 
-            List<Reward> earnedRewards = earnedRewardsRepository.findAllByChild(child);
+            List<Reward> earnedRewards = rewardRepository.findAllByChildAndRedeemed(child, true);
 
             // What is the selected day of the week from calendar
             String dayOfWeekMessage = null;
@@ -115,41 +112,7 @@ public class DashboardController {
         Child child = authenticationController.getChildFromSession(session);
         return choreRepository.findByDueDateAndChildAssigned(dueDate, child);
     }
-    @PostMapping("/redeemReward")
-    @ResponseBody
-    public ResponseEntity<String> redeemReward(@RequestBody RedeemRewardRequest request, HttpSession session) {
-        Child child = authenticationController.getChildFromSession(session);
-        Reward redeemedReward = earnedRewardsRepository.findById(request.getRewardId()).orElse(null);
 
-        if (child != null && redeemedReward != null && !redeemedReward.isRedeemed()) {
-            redeemedReward.setRedeemed(true);
-            redeemedReward.setRedemptionDate(LocalDate.now());
-            redeemedReward.setChild(child);
-            earnedRewardsRepository.save(redeemedReward);
-
-            // Reduce child's earned points by the reward points
-            child.setPoints(child.getPoints() - redeemedReward.getPoints());
-            childRepository.save(child);
-
-            return ResponseEntity.ok("Reward redeemed successfully.");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Reward not found or already redeemed.");
-        }
-    }
 }
 
-
-
-//    @PostMapping("/updateChoreCompletion")
-//    @ResponseBody
-//    public ResponseEntity<String> updateChoreCompletion(@RequestBody ChoreCompletionRequest request) {
-//        Chore chore = choreRepository.findById(request.getChoreId()).orElse(null);
-//        if (chore != null) {
-//            chore.setCompleted(request.isCompleted());
-//            choreRepository.save(chore);
-//            return ResponseEntity.ok("Chore completion status updated successfully.");
-//        } else {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Chore not found.");
-//        }
-//    }
 
