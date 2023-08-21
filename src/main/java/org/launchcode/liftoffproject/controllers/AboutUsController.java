@@ -45,10 +45,10 @@ public class AboutUsController {
         authors.add(new Author(
                 "Mike Zanger",
                 "/images/creators/pic-of-Mike.jpeg",
-                "Description of MZ",
-                "Bio for MZ",
-                "LinkedIn Url",
-                "gitHub Link"
+                "Backend, Creating Chore Details Page",
+                "Current cook and coder.",
+                "https://www.linkedin.com/in/michael-zanger-ba8b1a287/",
+                "https://github.com/mikezanger"
         ));
 
         authors.add(new Author(
