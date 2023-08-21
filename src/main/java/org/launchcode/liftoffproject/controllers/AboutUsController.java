@@ -54,10 +54,10 @@ public class AboutUsController {
         authors.add(new Author(
                 "Rose Wachira",
                 "/images/creators/pic-of-rose.jpeg",
-                "Description of RW",
-                "Bio for RW",
-                "LinkedIn Url",
-                "gitHub Link"
+                "Backend, DatePicker, Creating Child Dashboard Page",
+                "Dietitian turned developer. Check my links to learn more.",
+                "https://www.linkedin.com/in/rosewachira",
+                "https://github.com/WachiraRose"
         ));
 
         model.addAttribute("authors", authors);
