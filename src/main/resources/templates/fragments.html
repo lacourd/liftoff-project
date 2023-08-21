@@ -93,13 +93,13 @@
                     </h2>
                     <h3 class="text-center" th:text="${reward.name}"></h3>
                     <h3 class="name" th:text="${reward.points} + ' points'"></h3>
-                    <div style="text-align: center;" th:if="${child.points} >= ${reward.points}">
+                    <div style="text-align: center;" th:if="${child.points} >= ${reward.points}" th:unless="${reward.redeemed}">
                         <!-- Redeem Reward "Form" -->
                         <form th:action="@{/rewards/redeemReward}" method="post">
                             <input type="hidden" name="rewardId" th:value="${reward.id}" />
                             <button type="submit" class="btn btn-success">Redeem Now!</button>
                         </form></div>
-                    <div style="text-align: center;" th:if="${child.points} < ${reward.points}"><a class="btn btn-success disabled" th:text="${reward.points - child.points} + ' points to redeem'"></a></div>
+                    <div style="text-align: center;" th:if="${child.points} < ${reward.points}" th:unless="${reward.redeemed}"><a class="btn btn-success disabled" th:text="${reward.points - child.points} + ' points to redeem'"></a></div>
                 </div>
             </div>
         </div> <!-- end front panel -->
@@ -118,12 +118,12 @@
                     </h2>
                     <h3 class="text-center" th:text="${reward.name}"></h3>
                     <h3 class="name" th:text="${reward.description}"></h3>
-                    <div style="text-align: center; margin-top: 10px;" th:if="${child.points} >= ${reward.points}"> <!-- Redeem Reward "Form" -->
+                    <div style="text-align: center; margin-top: 10px;" th:if="${child.points} >= ${reward.points}" th:unless="${reward.redeemed}"> <!-- Redeem Reward "Form" -->
                         <form th:action="@{/rewards/redeemReward}" method="post">
                             <input type="hidden" name="rewardId" th:value="${reward.id}" />
                             <button type="submit" class="btn btn-success">Redeem Now!</button>
                         </form></div>
-                    <div style="text-align: center;" th:if="${child.points} < ${reward.points}"><a class="btn btn-success disabled" th:text="${reward.points - child.points} + ' points to redeem'"></a></div>
+                    <div style="text-align: center;" th:if="${child.points} < ${reward.points}" th:unless="${reward.redeemed}"><a class="btn btn-success disabled" th:text="${reward.points - child.points} + ' points to redeem'"></a></div>
                 </div>
             </div>
         </div> <!-- end back panel -->
