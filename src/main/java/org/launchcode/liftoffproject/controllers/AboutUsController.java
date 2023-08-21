@@ -18,10 +18,10 @@ public class AboutUsController {
         authors.add(new Author(
               "Darren LaCour ",
               "/images/creators/pic-of-darren.jpeg",
-              "Description of Darren LaCour" ,
-              "Bio for DL",
-                "LinkedIn Url",
-                "gitHub Link"
+              "Backend, User Role Configuration, Creating Crew Members and Chores" ,
+              "Music theorist turned developer. Links below to say hello!",
+                "https://www.linkedin.com/in/darrenlacour/",
+                "https://github.com/lacourd"
         ));
 
         authors.add(new Author(
