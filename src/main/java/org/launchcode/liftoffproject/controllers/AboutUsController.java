@@ -18,24 +18,24 @@ public class AboutUsController {
         authors.add(new Author(
               "Darren LaCour ",
               "/images/creators/pic-of-darren.jpeg",
-              "Description of Darren LaCour" ,
-              "Bio for DL",
-                "LinkedIn Url",
-                "gitHub Link"
+              "Backend, User Role Configuration, Creating Crew Members and Chores" ,
+              "Music theorist turned developer. Links below to say hello!",
+                "https://www.linkedin.com/in/darrenlacour/",
+                "https://github.com/lacourd"
         ));
 
         authors.add(new Author(
                 "Marcie DeFonce",
                 "/images/creators/pic-of-Marcie.jpeg",
-                "Description of MD",
-                "Bio for MD",
-                "LinkedIn Url",
-                "gitHub Link"
+                "Front-End Development, Reward MVC, User Authentication",
+                "Client-Facing Project Manager and Developer",
+                "https://www.linkedin.com/in/marcie-defonce/",
+                "https://github.com/mdefonce"
         ));
         authors.add(new Author(
                 "Audra Hartwell",
                 "/images/creators/pic-of-audra.jpeg",
-                "User Authorization, About the Authors, Rewards Page",
+                "User Authorization, About the Creators, Rewards Page",
                 "Former teacher turned coder. Check my links to learn more.",
                 "https://www.linkedin.com/in/audra-hartwell-252a66113/",
                 "https://github.com/AudraHartwell"
@@ -44,20 +44,20 @@ public class AboutUsController {
 
         authors.add(new Author(
                 "Mike Zanger",
-                "/images/author4.jpg",
-                "Description of MZ",
-                "Bio for MZ",
-                "LinkedIn Url",
-                "gitHub Link"
+                "/images/creators/pic-of-Mike.jpeg",
+                "Backend, Creating Chore Details Page",
+                "Current cook and coder.",
+                "https://www.linkedin.com/in/michael-zanger-ba8b1a287/",
+                "https://github.com/mikezanger"
         ));
 
         authors.add(new Author(
                 "Rose Wachira",
                 "/images/creators/pic-of-rose.jpeg",
-                "Description of RW",
-                "Bio for RW",
-                "LinkedIn Url",
-                "gitHub Link"
+                "Backend, DatePicker, Creating Child Dashboard Page",
+                "Dietitian turned developer. Check my links to learn more.",
+                "https://www.linkedin.com/in/rosewachira",
+                "https://github.com/WachiraRose"
         ));
 
         model.addAttribute("authors", authors);
