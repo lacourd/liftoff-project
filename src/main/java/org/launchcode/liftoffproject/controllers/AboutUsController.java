@@ -27,10 +27,10 @@ public class AboutUsController {
         authors.add(new Author(
                 "Marcie DeFonce",
                 "/images/creators/pic-of-Marcie.jpeg",
-                "Description of MD",
-                "Bio for MD",
-                "LinkedIn Url",
-                "gitHub Link"
+                "Front-End Development, Reward MVC, User Authentication",
+                "Client-Facing Project Manager and Developer",
+                "https://www.linkedin.com/in/marcie-defonce/",
+                "https://github.com/mdefonce"
         ));
         authors.add(new Author(
                 "Audra Hartwell",
