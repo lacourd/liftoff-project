@@ -401,3 +401,18 @@ footer {
 .inline-form {
         display: inline-block;
     }
+
+/*style for child dashboard*/
+.child-view-chores-button {
+    text-align: center;
+    display: block
+}
+
+.date-picker{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.child-chore-table{
+    margin-top: 10px;
+}
