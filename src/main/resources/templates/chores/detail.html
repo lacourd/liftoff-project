@@ -68,6 +68,11 @@
       <button type="submit" class="btn btn-primary">Mark as Complete</button>
   </form>
 
+    <form th:if="${chore.completed}" th:action="@{/chores/reject(choreId=${chore.id},completed=true)}" method="post">
+        <input type="hidden" name="choreId" th:value="${chore.id}" />
+        <button type="submit" class="btn btn-warning">Reject (Mark as Incomplete)</button>
+    </form>
+
   <!-- Approve Chore Form -->
   <form th:unless="${childUser}" th:action="@{/chores/approve}" method="post">
       <input type="hidden" name="choreId" th:value="${chore.id}" />
