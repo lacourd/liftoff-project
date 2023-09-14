@@ -63,7 +63,7 @@
     <a th:unless="${childUser}" class="btn btn-outline-dark" th:href="'/chores/edit?choreId=' + ${chore.id}" role="button">Edit This Task</a>
 
   <!-- Mark as Complete Form -->
-  <form th:unless="${chore.completed}" th:action="@{/chores/complete(choreId=${chore.id},completed=true)}" method="get">
+  <form th:unless="${chore.completed}" th:action="@{/chores/complete(choreId=${chore.id},completed=true)}" method="post">
       <input type="hidden" name="choreId" th:value="${chore.id}" />
       <button type="submit" class="btn btn-primary">Mark as Complete</button>
   </form>

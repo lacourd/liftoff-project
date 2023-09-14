@@ -133,7 +133,7 @@ public class ChoreController {
     }
 
     // Endpoint for marking a chore complete by the child
-    @GetMapping("/complete")
+    @PostMapping("/complete")
     public String markChoreComplete(@RequestParam Integer choreId, @RequestParam boolean completed) {
         Chore chore = choreRepository.findById(choreId).orElse(null);
 
