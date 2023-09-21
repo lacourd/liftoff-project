@@ -254,6 +254,7 @@
             <td>
                 <form th:unless="${chore.completed}" th:action="@{/chores/complete(choreId=${chore.id},completed=true)}" method="post">
                     <input type="hidden" name="choreId" th:value="${chore.id}" />
+                    <input type="hidden" name="source" th:value="@{/dashboard}" />
                     <button type="submit" class="btn btn-primary">Mark as Complete</button>
                 </form>
                 <span th:if="${chore.completed}" class="text-success">Completed</span>

@@ -65,6 +65,7 @@
   <!-- Mark as Complete Form -->
   <form th:unless="${chore.completed}" th:action="@{/chores/complete(choreId=${chore.id},completed=true)}" method="post">
       <input type="hidden" name="choreId" th:value="${chore.id}" />
+      <input type="hidden" name="source" th:value="'/chores/detail?choreId=' + ${chore.id}" />
       <button type="submit" class="btn btn-primary">Mark as Complete</button>
   </form>
 
