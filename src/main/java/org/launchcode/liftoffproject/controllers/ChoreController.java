@@ -149,7 +149,7 @@ public class ChoreController {
             }
             choreRepository.save(chore);
 
-        return "redirect:/chores";
+        return "redirect:/chores/detail?choreId=" + choreId;
     }
 
     //Endpoint for reject a child's chore completion
@@ -163,7 +163,7 @@ public class ChoreController {
         }
         choreRepository.save(chore);
 
-        return "redirect:/chores";
+        return "redirect:/chores/detail?choreId=" + choreId;
     }
 
 
