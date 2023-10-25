@@ -417,3 +417,36 @@ footer {
 .child-chore-table{
     margin-top: 10px;
 }
+
+/*style for comments on chore detail*/
+
+.comment-area {
+    margin: auto;
+    width:70%;
+    padding: 10px;
+    border-radius: 4px;
+    background: #eeeeee;
+    box-shadow: 2px 2px 20px 23px #00000;
+}
+.comment-box {
+    margin: auto;
+    width: 95%;
+    align-items: center;
+    height: auto;
+    padding: 10px;
+    border-radius: 25px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+}
+.comments {
+    font-size: 120%;
+}
+
+.comment-attribution {
+    font-size: 60%;
+    text-align: right;
+}
+
+.section-buffer {
+    padding: 10px;
+}

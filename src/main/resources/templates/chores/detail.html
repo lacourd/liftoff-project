@@ -11,7 +11,7 @@
 <main class="container">
 
     <h1 class="text-center">Ship-Shapin Task Details</h1>
-  
+
    <table class="table table-striped">
       <tr>
           <th>Name</th>
@@ -43,36 +43,51 @@
            <td th:text="${chore.supplies}"></td>
        </tr>
   </table>
-  <div class="flex-container" th:each="comment : ${chore.comments}">
-      <div th:if="${comment.createdBy instanceof T(org.launchcode.liftoffproject.models.ParentUser)}" th:text="${'Comment by Captain ' + comment.createdBy.getParent.firstName + ' ' + comment.createdBy.getParent.lastName}"></div>
-      <div th:if="${comment.createdBy instanceof T(org.launchcode.liftoffproject.models.ChildUser)}" th:text="${'Comment by Crew Member ' + comment.createdBy.getChild.firstName + ' ' + comment.createdBy.getChild.lastName}"></div>
-      <div th:text= "${comment.text}">Comment</div>
-      <div>Created On</div>
-      <div th:text="${comment.createdDate}" >Date</div>
-  </div>
-  <form th:action="@{/chores/comment}" method="post">
-      <input type="hidden" name="choreId" th:value="${chore.id}" />
-      <input type="hidden" name="createdBy" th:value="${user.id}" />
-
-      <div class="form-group">
-          <input class="form-control" type="text" th:field="${newComment.text}"/>
-      </div>
-      <button type="submit" class="btn btn-success">Add Comment</button>
-  </form>
-
+<div class="section-buffer">
     <a th:unless="${childUser}" class="btn btn-outline-dark" th:href="'/chores/edit?choreId=' + ${chore.id}" role="button">Edit This Task</a>
+</div>
+<div class="comment-area">
+    <h2 class="text-center">Squawk</h2>
+</div>
+  <div class="comment-area" th:each="comment : ${chore.comments}">
+      <div class="comment-box">
+          <p class="comments" th:text= "${comment.text}"></p>
+          <div class="comment-attribution">
+          <p th:if="${comment.createdBy instanceof T(org.launchcode.liftoffproject.models.ParentUser)}" th:text="${'Comment by Captain ' + comment.createdBy.getParent.firstName + ' ' + comment.createdBy.getParent.lastName}"></p>
+          <p th:if="${comment.createdBy instanceof T(org.launchcode.liftoffproject.models.ChildUser)}" th:text="${'Comment by Crew Member ' + comment.createdBy.getChild.firstName + ' ' + comment.createdBy.getChild.lastName}"></p>
+          <p th:text="${'Created on ' +  #temporals.format(comment.createdDate, 'MM-dd-yyyy')} "></p>
+          </div>
+      </div>
+  </div>
+    <div class="comment-area">
+        <form th:action="@{/chores/comment}" method="post">
+          <input type="hidden" name="choreId" th:value="${chore.id}" />
+          <input type="hidden" name="createdBy" th:value="${user.id}" />
+
+          <div class="form-group">
+              <input class="form-control" type="text" th:field="${newComment.text}"/>
+          </div>
+          <button type="submit" class="btn btn-outline-dark">Add Comment</button>
+        </form>
+    </div>
 
   <!-- Mark as Complete Form -->
+    <div class="section-buffer">
+        <h2 class="text-center">Task Status</h2>
   <form th:unless="${chore.completed}" th:action="@{/chores/complete(choreId=${chore.id},completed=true)}" method="get">
       <input type="hidden" name="choreId" th:value="${chore.id}" />
       <button type="submit" class="btn btn-primary">Mark as Complete</button>
   </form>
+        <p th:if="${chore.completed}" th:text="${chore.childAssigned.firstName + ' marked this task as complete.'}"></p>
+    </div>
 
   <!-- Approve Chore Form -->
+    <div class="section-buffer">
   <form th:unless="${childUser}" th:action="@{/chores/approve}" method="post">
       <input type="hidden" name="choreId" th:value="${chore.id}" />
       <button type="submit" class="btn btn-success">Approve</button>
   </form>
+    </div>
 
 
 
