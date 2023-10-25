@@ -76,9 +76,17 @@
         <h2 class="text-center">Task Status</h2>
   <form th:unless="${chore.completed}" th:action="@{/chores/complete(choreId=${chore.id},completed=true)}" method="get">
       <input type="hidden" name="choreId" th:value="${chore.id}" />
+      <input type="hidden" name="source" th:value="'/chores/detail?choreId=' + ${chore.id}" />
       <button type="submit" class="btn btn-primary">Mark as Complete</button>
   </form>
         <p th:if="${chore.completed}" th:text="${chore.childAssigned.firstName + ' marked this task as complete.'}"></p>
+    </div>
+
+    <div th:unless="${childUser}">
+    <form th:if="${chore.completed}" th:action="@{/chores/reject(choreId=${chore.id},completed=true)}" method="post">
+        <input type="hidden" name="choreId" th:value="${chore.id}" />
+        <button type="submit" class="btn btn-warning">Reject (Mark as Incomplete)</button>
+    </form>
     </div>
 
   <!-- Approve Chore Form -->
