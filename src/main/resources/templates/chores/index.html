@@ -35,7 +35,7 @@
                 <td th:if="${chore.isCompleted and !chore.isApprovedByParent}"><span class="text-warning">Pending Approval</span></td>
                 <td th:if="${!chore.isCompleted and !chore.isApprovedByParent}">
                     <span th:if="${!chore.isCompleted and chore.dueDate < today}" class="text-danger">Overdue</span>
-                    <span th:if="${!chore.isCompleted and chore.dueDate > today}" class="primary">Incomplete</span>
+                    <span th:if="${!chore.isCompleted and chore.dueDate >= today}" class="primary">Incomplete</span>
                 </td>
             </tr>
         </table>
