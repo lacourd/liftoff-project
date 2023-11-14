@@ -34,6 +34,9 @@ public class CrewController {
     @Autowired
     private ParentRepository parentRepository;
 
+    @Autowired
+    private AuthenticationController authenticationController;
+
     private static final String userSessionKey = "user";
 
     public ParentUser getParentFromSession(HttpSession session) {
@@ -57,6 +60,18 @@ public class CrewController {
         model.addAttribute("crew", childRepository.findAllByParent(getParentFromSession(session).getParent()));
         return "crew/index";
     };
+
+    @PostMapping("create")
+    public String processAddCrewMemberNoAccount(@ModelAttribute @Valid Child newChild, Errors errors, Model model, HttpSession session) {
+        if (errors.hasErrors()) {
+            model.addAttribute("title","New Crew Member");
+            return "redirect:/crew";
+        }
+        Parent parent = authenticationController.getParentFromSession(session);
+        newChild.setParent(parent);
+        childRepository.save(newChild);
+        return "redirect:/crew";
+    }
 
     @GetMapping("add")
     public String renderAddCrewMemberForm(Model model) {

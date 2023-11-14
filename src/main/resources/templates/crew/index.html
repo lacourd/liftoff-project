@@ -30,7 +30,27 @@
         </tr>
     </table>
 
-  <a class="btn btn-outline-dark" href="/crew/add" role="button">Add a new Crew Member</a>
+
+
+    <h2 class="text-center">Add Crew Members</h2>
+
+    <p>Add a crew member below.</p>
+    <form method="post" action="/crew/create">
+        <div class="form-group">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" class="form-control" required />
+        </div>
+        <div class="form-group">
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" class="form-control" required />
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Add Crew Member" class="btn btn-success">
+        </div>
+    </form>
+
+    <p>Want your crew member to have an account instead? Click the button below:</p>
+    <a class="btn btn-outline-dark" href="/crew/add" role="button">Add a new Crew Member with an Account</a>
   
 </main>
 
