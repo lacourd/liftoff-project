@@ -133,8 +133,8 @@ public class ChoreController {
     }
 
     // Endpoint for marking a chore complete by the child
-    @GetMapping("/complete")
-    public String markChoreComplete(@RequestParam Integer choreId, @RequestParam boolean completed) {
+    @PostMapping("/complete")
+    public String markChoreComplete(@RequestParam Integer choreId, @RequestParam boolean completed, @RequestParam String source) {
         Chore chore = choreRepository.findById(choreId).orElse(null);
 
         if (chore != null) {
@@ -149,9 +149,22 @@ public class ChoreController {
             }
             choreRepository.save(chore);
 
-        return "redirect:/chores";
+        return "redirect:" + source;
     }
 
+    //Endpoint for reject a child's chore completion
+    @PostMapping("/reject")
+    public String markChoreIncomplete(@RequestParam Integer choreId, @RequestParam boolean completed) {
+        Chore chore = choreRepository.findById(choreId).orElse(null);
+
+        if (chore != null) {
+            chore.setCompleted(false);
+            chore.setApprovedByParent(false);
+        }
+        choreRepository.save(chore);
+
+        return "redirect:/chores/detail?choreId=" + choreId;
+    }
 
 
 

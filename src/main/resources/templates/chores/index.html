@@ -61,9 +61,11 @@
                 <td th:text="${chore.rewardPoints}"></td>
                 <td th:text="${chore.supplies}"></td>
                 <td th:if="${chore.childAssigned}">
-                    <a th:href="@{/chores/complete(choreId=${chore.id},completed=true)}"
-                                       class="btn btn-primary"
-                                       th:if="${not chore.completed}">Mark as Complete</a>
+                    <form th:unless="${chore.completed}" th:action="@{/chores/complete(choreId=${chore.id},completed=true)}" method="post">
+                        <input type="hidden" name="choreId" th:value="${chore.id}" />
+                        <input type="hidden" name="source" th:value="@{/chores}" />
+                        <button type="submit" class="btn btn-primary">Mark as Complete</button>
+                    </form>
                     <span th:if="${chore.completed}" class="text-success">Completed</span>
                 </td>
                 <td th:unless="${chore.childAssigned}">
