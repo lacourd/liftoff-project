@@ -122,4 +122,15 @@ public class CrewController {
         return "crew/edit";
     }
 
+    @PostMapping("edit")
+    public String processEditCrewMemberForm(@RequestParam(required = false) int childId, @ModelAttribute Child child) {
+
+        Child updatedChild = childRepository.findById(childId).orElse(null);
+
+        updatedChild.setFirstName(child.getFirstName());
+        updatedChild.setLastName(child.getLastName());
+        childRepository.save(updatedChild);
+        return "redirect:/crew";
+    }
+
 }
