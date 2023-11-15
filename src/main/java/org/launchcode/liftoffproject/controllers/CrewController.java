@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -111,6 +108,18 @@ public class CrewController {
         childRepository.save(newChild);
         parentRepository.save(parent);
         return "redirect:";
+    }
+
+    @GetMapping("edit")
+    public String renderEditCrewMemberForm(@RequestParam("childId") int childId, Model model, HttpSession session) {
+        Child child = childRepository.findById(childId).orElse(null);
+        Parent parent = authenticationController.getParentFromSession(session);
+        if (child == null || child.getParent() != parent) {
+            return "redirect:/crew";
+        }
+        model.addAttribute("title", "Edit Crew Member");
+        model.addAttribute("child", child);
+        return "crew/edit";
     }
 
 }

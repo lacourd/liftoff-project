@@ -20,10 +20,8 @@
         </tr>
         </thead>
         <tr th:each="child : ${crew}">
-    <!--        <div th:if="child.parent.id == parentId">-->
-            <!--        <a th:href="'/reward/detail?rewardId=' + ${reward.id}"-->
-            <td th:text="${child.firstName}"></td>
-    <!--        + ' ' child.lastName}"></td>-->
+            <td><a th:href="'crew/edit?childId=' + ${child.id}" th:text="${child.firstName}"></a></td>
+
             <td><a th:href="'chores?childId=' + ${child.id}" th:text="${child.getActiveChores()}"></a></td>
             <td th:text="${child.points}"></td>
             </div>
